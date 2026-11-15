@@ -421,7 +421,7 @@ function ensureSlotStrip() {
     button.className = 'slot';
     button.dataset.index = String(index);
     button.setAttribute('aria-label', `Tecla ${index + 1}`);
-    button.innerHTML = '<span class="slot__cap"><span class="slot__glyph"></span></span><span class="slot__num">' + (index + 1) + '</span>';
+    button.innerHTML = '<span class="slot__cap" aria-hidden="true"><span class="slot__glyph"></span></span><span class="slot__num" aria-hidden="true" data-num="' + (index + 1) + '"></span>';
     button.addEventListener('click', () => selectSlot(index));
     els.slotStrip.append(button);
   });
