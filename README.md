@@ -1,83 +1,100 @@
-# 🦙 Vicuña - Control de Inventario y Pedidos para Mundo Suni
+# Vicunia 🦙
 
-¡Bienvenida, **Sulley**! Este es **Vicuña**, tu nuevo sistema inteligente de gestión de inventario y cálculo de costos para **Mundo Suni**. 
+**Un detalle tuyo, hecho en Cajamarca.**
+Regalos personalizados con impresión 3D: figuras a partir de una foto, clickers de nombres y lápices con el nombre en relieve.
 
-Este sistema ha sido diseñado con un enfoque **Mobile-First** (ideal para usarlo cómodamente desde el celular) y **Local-First** (funciona al instante sin necesidad de registrar cuentas, guardando todo en tu propio dispositivo de forma segura). Opcionalmente, puedes conectarlo a una hoja de cálculo de **Google Sheets** de forma **100% gratuita** para tener un respaldo en la nube automático.
-
----
-
-## ✨ Características Principales
-
-1. **Dashboard de Mundo Suni**:
-   - **Indicadores rápidos**: Total de materiales, pedidos pendientes, valor total de tu inventario y tu ganancia proyectada.
-   - **Alertas de Stock Mínimo**: Te avisa de inmediato cuando te queden pocos metros de algún hilo o pocas unidades de limpiapipas.
-   - **Agenda de entregas**: Una lista organizada de tus pedidos ordenados por fecha límite para que nunca se te pase una entrega.
-
-2. **Gestión de Inventario**:
-   - Registra **Hilos**, **Limpiapipas**, **Herramientas** y más.
-   - Visualiza los colores exactos de tus materiales en pantalla gracias a insignias de color dinámicas.
-   - Botones rápidos de `+` y `-` para actualizar tu cantidad disponible al instante desde tu teléfono.
-
-3. **Calculadora Flexible de Costeo e Historial de Pedidos ("El Carrito")**:
-   - Agrega materiales a un pedido directamente desde tu inventario a modo de "carrito de compras".
-   - **Cálculo automático**: El sistema suma el costo real de los materiales que usarás (ej. 25m de hilo amarillo y 4 limpiapipas) y te sugiere un precio de venta cobrando tu mano de obra.
-   - **Que no sea rígido ("Flexibilidad en el camino")**: Si a mitad de camino necesitas agregar más materiales a un amigurumi, simplemente entra al pedido, presiona "+ Agregar", suma los materiales y el costo se recalculará automáticamente. Puedes elegir si descontar esos materiales del inventario de forma inmediata.
-
-4. **100% Gratuito y sin Servidores**:
-   - Se puede alojar gratis en **GitHub Pages** para que entres desde tu celular con un enlace privado.
-   - Respaldo opcional en tu propio **Google Sheets**.
+Este repositorio contiene la marca, la web pública y las herramientas de producción. No hay backend: todo lo que ve el cliente es estático y los pedidos llegan por WhatsApp.
 
 ---
 
-## 🛠️ Cómo Iniciar en tu Computadora (Local)
+## 🚀 Arrancar la web en local
 
-Para abrir la aplicación y verla funcionando en tu máquina:
+La web usa módulos ES, `fetch` y `DecompressionStream`, así que **necesita un servidor HTTP**; abrir el `index.html` con doble clic no funciona.
 
-1. Ve a la carpeta donde están los archivos (`/home/jair/vicunia`).
-2. Abre el archivo `index.html` haciendo doble clic en él en tu navegador web.
-3. ¡Eso es todo! La aplicación cargará con datos de demostración para que puedas probarla inmediatamente.
+```bash
+node server.js
+```
 
----
-
-## ☁️ Paso a Paso: Conectar con Google Sheets (Sincronización Gratuita)
-
-Si deseas que los datos se guarden automáticamente en un Google Sheet para verlos desde cualquier dispositivo o compartirlos con Jair, sigue estos sencillos pasos:
-
-### Paso 1: Crear tu Hoja de Cálculo
-1. Entra a tu cuenta de [Google Drive](https://drive.google.com) y crea un nuevo **Google Sheet** (Hoja de cálculo).
-2. Ponle el nombre que desees (ej: *Base de Datos Mundo Suni*).
-
-### Paso 2: Configurar el Google Apps Script
-1. Dentro de tu Google Sheet, ve al menú superior y selecciona **Extensiones** > **Apps Script**.
-2. Borra todo el código que aparezca por defecto.
-3. Abre el archivo [google-apps-script.js](file:///home/jair/vicunia/google-apps-script.js), copia todo su contenido y pégalo en el editor de Apps Script.
-4. Presiona el ícono de **Guardar** (el disquete).
-
-### Paso 3: Publicar la API
-1. En la parte superior derecha, haz clic en el botón azul **Implementar** > **Nueva implementación**.
-2. En tipo de implementación, haz clic en el engranaje y selecciona **Aplicación web**.
-3. Configura las siguientes opciones exactamente así:
-   - *Descripción*: `API Vicuña`
-   - *Ejecutar como*: **Tu cuenta de Google (Tu correo)**
-   - *Quién tiene acceso*: **Cualquiera** (Esto es clave para que tu aplicación web pueda enviarle los datos).
-4. Haz clic en **Implementar**. Si Google te pide autorizar permisos, acéptalos (es completamente seguro, es tu propio script).
-5. Al finalizar, Google te dará una **URL de la aplicación web** (un enlace largo que termina en `/exec`). ¡Copialo!
-
-### Paso 4: Activar la Sincronización en la App
-1. Abre tu aplicación web de Vicuña en tu celular o computadora.
-2. Ve a la sección de **Ajustes** (ícono de engranaje en la barra inferior).
-3. Cambia el *Modo de Almacenamiento* a **Sincronizado (Google Sheets)**.
-4. Pega el enlace largo en la casilla *URL de tu Web App*.
-5. Haz clic en **Probar Conexión**. 
-6. ¡Listo! A partir de ahora, cada vez que agregues un hilo o modifiques un pedido, este se sincronizará automáticamente y tus datos estarán 100% a salvo en tu Google Sheet.
+- Web pública (Vicunia): <http://localhost:8080/web/>
+- App de inventario (Vicuña · Mundo Suni): <http://localhost:8080/>
 
 ---
 
-## 🚀 Cómo Subir la Web a Internet (Gratis para siempre)
+## 📂 Cómo está ordenado el proyecto
 
-Puedes hospedar esta página web en **GitHub Pages** para que tanto tú como Jair puedan abrirla en su celular desde cualquier parte del mundo usando un link como `https://jair.github.io/vicunia/`.
+```
+vicunia/
+├── web/                       Web pública de Vicunia (lo que ve el cliente)
+│   ├── index.html             Landing: foto a 3D, clicker, lápiz, cómo funciona, galería, FAQ
+│   ├── styles.css             Tokens de color, componentes y responsive
+│   ├── js/
+│   │   ├── config.js          WhatsApp y redes oficiales
+│   │   ├── main.js            Estado de la página, formulario de foto, exportaciones
+│   │   ├── clicker3d.js       Visor del clicker sobre la malla real de producción
+│   │   ├── geo-manifest.js    Índices de la malla del clicker
+│   │   ├── palette.js         Filamentos, colores base, formas y teclas
+│   │   ├── pencil.js          Vista 3D del lápiz (Three.js)
+│   │   └── pencil-geo.js      Generador real de nombres (motor JSCAD)
+│   ├── vendor/                Three.js, addons, JSCAD y la malla comprimida del clicker
+│   └── img/                   Fotos reales de producto y logo de la marca
+│
+├── identidad-vicunia/         Identidad y comunicación
+│   ├── README.md              Paleta, tono, promesa y reglas de uso del logo
+│   ├── muestra.html           Muestra visual de la identidad
+│   ├── tarjeta-producto.svg   Plantilla de tarjeta para el empaque
+│   └── video/                 Proyecto de reels (Remotion). Los renders no se versionan
+│
+├── index.html · app.js · styles.css · google-apps-script.js
+│                              App "Vicuña" de inventario y costos (Mundo Suni)
+│                              Instrucciones: docs/inventario-mundo-suni.md
+├── server.js                  Servidor estático local en el puerto 8080
+├── docs/                      Documentación de apoyo
+│
+├── calculadora_costos.py      Costos y precio sugerido por pieza
+├── banners_ideas_vicunia.py   Banners de campaña (SVG + PNG)
+├── whatsapp_dummys*.py        Guías de armado para WhatsApp
+├── imprimir_dummys_a3.py      Pliegos A3 de instrucciones
+├── dummy13_caratula_*.py      Carátulas A4 y de libro
+└── adaptar_dummys_a4.py       Adaptación de PDFs a A4
+```
 
-1. Sube esta carpeta (`vicunia`) a un repositorio público en tu cuenta de GitHub.
-2. En GitHub, entra al repositorio, ve a **Settings** (Ajustes) > **Pages** (en el menú izquierdo).
-3. En la sección **Build and deployment**, selecciona la rama `main` y la carpeta `/ (root)`. Presiona **Save**.
-4. Espera 1 minuto y GitHub te dará el enlace de tu sitio web listo para usar. Puedes añadirlo a la pantalla de inicio de tu celular para que se sienta como una aplicación nativa.
+Los scripts de producción escriben en `output/`, `outputs/` y `tmp/`; esas carpetas y los renders de video están en `.gitignore` porque se regeneran.
+
+---
+
+## 🎨 Paleta
+
+Proporción 60 · 25 · 10 · 5: el lienzo manda, el índigo sostiene la lectura, el violeta cierra la venta y los acentos viven en detalles.
+
+| Rol | Color | Hex |
+|---|---|---|
+| Fondo principal | Lavanda | `#E9EDFC` |
+| Fondo secundario | Rosa nube | `#F6E4F1` |
+| Texto y estructura | Índigo tinta | `#222446` |
+| Acción y botones | Violeta | `#5A4FE0` |
+| Badges «Personalizado» | Rosado intenso | `#F0357E` |
+| Reseñas y avisos | Amarillo | `#FFC24D` |
+| Etiquetas técnicas | Celeste glaciar | `#C0E4FF` |
+
+Reglas rápidas: nunca texto amarillo sobre lavanda, nunca rosado como fondo de sección completa, y el celeste se usa solo para datos técnicos (medidas, envíos, estados). El modo oscuro usa una base ciruela con los mismos acentos.
+
+---
+
+## 📱 Contacto oficial
+
+- WhatsApp de pedidos: [+51 907 677 175](https://wa.me/51907677175)
+- Instagram: [@vicuniacax](https://www.instagram.com/vicuniacax)
+- TikTok: [@vicuniacax](https://www.tiktok.com/@vicuniacax)
+- Facebook: [Vicunia](https://www.facebook.com/profile.php?id=61590919520057)
+
+Los enlaces viven en `web/js/config.js`; si cambian, se edita solo ese archivo.
+
+---
+
+## 📦 Productos
+
+1. **Figura 3D desde una foto** — el cliente envía la foto por WhatsApp (perro, persona, pareja) y se convierte en figura impresa.
+2. **Clicker de nombre** — visor 3D con la malla real, 1 a 9 teclas, 17 filamentos y 15 formas de tecla. Incluye argolla metálica estándar.
+3. **Lápiz con nombre** — hasta 24 caracteres, una o dos caras de color, medidas ajustables y descarga de STL.
+
+No se publican precios en la web: se confirman por WhatsApp según tamaño, colores y plazo.
