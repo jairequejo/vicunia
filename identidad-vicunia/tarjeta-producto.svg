@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1063" height="650" viewBox="0 0 1063 650" role="img" aria-labelledby="title">
+  <title id="title">Tarjeta de producto Vicunia, plantilla</title>
+  <rect width="1063" height="650" fill="#E9EDFC"/>
+  <rect x="22" y="22" width="1019" height="606" rx="24" fill="none" stroke="#222446" stroke-width="3"/>
+  <text x="82" y="147" fill="#222446" font-family="Georgia, serif" font-size="68" font-weight="700" letter-spacing="4">VICUNIA</text>
+  <text x="83" y="194" fill="#5D6086" font-family="Arial, sans-serif" font-size="21" letter-spacing="1">UN DETALLE TUYO, HECHO EN CAJAMARCA</text>
+  <path d="M82 273H981" stroke="#FFC24D" stroke-width="4"/>
+  <text x="82" y="339" fill="#222446" font-family="Arial, sans-serif" font-size="27" font-weight="700">HECHO PARA</text>
+  <text x="82" y="396" fill="#5D6086" font-family="Arial, sans-serif" font-size="32">[Nombre / dedicatoria]</text>
+  <path d="M82 427H981" stroke="#FFC24D" stroke-width="2"/>
+  <text x="82" y="479" fill="#5D6086" font-family="Arial, sans-serif" font-size="24">Producto: [nombre del producto]</text>
+  <text x="82" y="518" fill="#5D6086" font-family="Arial, sans-serif" font-size="24">Materiales: [materiales reales]</text>
+  <text x="82" y="575" fill="#5A4FE0" font-family="Arial, sans-serif" font-size="24" font-weight="700">GRACIAS POR ELEGIR UNA IDEA HECHA PARA TI</text>
+</svg>

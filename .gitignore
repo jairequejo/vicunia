@@ -1,0 +1,30 @@
+# ---------- Entornos y dependencias ----------
+.venv/
+.venv-video/
+node_modules/
+__pycache__/
+*.py[cod]
+
+# ---------- Archivos de sistema / editor ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+*Zone.Identifier
+*.swp
+.idea/
+.vscode/
+
+# ---------- Salidas generadas (se regeneran con los scripts) ----------
+output/
+outputs/
+tmp/
+identidad-vicunia/video/motion-v5/output/
+identidad-vicunia/video/motion-v5/voice/
+identidad-vicunia/video/*.mp4
+identidad-vicunia/video/*.wav
+identidad-vicunia/video/*.mp3
+
+# ---------- Secretos ----------
+.env
+.env.*
+*.local.json

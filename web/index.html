@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Vicunia · Tu foto en figura 3D, clickers y nombres para lápiz</title>
+<meta name="description" content="Envía una foto y la convertimos en figura 3D (Funko). También diseña tu clicker tecla por tecla o el nombre de tu lápiz con 17 colores reales. Impresión 3D en Cajamarca, Perú.">
+<meta name="theme-color" content="#E9EDFC">
+<meta property="og:title" content="Vicunia · Tu foto en figura 3D, hecha en Cajamarca">
+<meta property="og:description" content="Envía una foto y conviértela en figura 3D. O diseña tu clicker y el nombre de tu lápiz con colores reales de filamento.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/mini-orange.webp">
+<link rel="icon" href="img/logo-redes.webp" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/logo-redes.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.min.js",
+    "three/addons/": "./vendor/addons/"
+  }
+}
+</script>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M21 11.6a8.6 8.6 0 0 1-12.7 7.6L3 20.9l1.7-5.2A8.6 8.6 0 1 1 21 11.6Z"/><path d="M8.7 9.1c.3-.6.9-.6 1.2-.2l.7 1.1c.2.3.1.6-.1.9l-.4.4c.5 1 1.3 1.8 2.3 2.3l.4-.4c.3-.2.6-.3.9-.1l1.1.7c.4.3.4.9-.2 1.2-1.2.7-2.7.6-4.1-.4a8.2 8.2 0 0 1-2.3-2.3c-1-1.4-1.1-2.8-.5-3.2Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5 9 17l10.5-10.5"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14 8h3V4.5h-3c-2.2 0-4 1.8-4 4V11H7v3.5h3V21h3.5v-6.5h3l.5-3.5h-3.5V9c0-.6.4-1 1-1Z"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M14 4c.3 2.4 2 4.3 4.5 4.6v3.2c-1.7 0-3.2-.5-4.5-1.4v6.1A5.3 5.3 0 1 1 9 11.2v3.3a2.1 2.1 0 1 0 1.6 2.1V4Z"/></symbol>
+  <symbol id="i-spin" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.5L13 5v14L7.5 14.5H4z"/><path d="M16.5 9a4 4 0 0 1 0 6"/><path d="M19 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5h3.5L13 5v14L7.5 14.5H4z"/><path d="M17 9.5l4 5M21 9.5l-4 5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7M21 16v5h-5M14 14l7 7M3 3l7 7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="7" cy="8.5" r="2.1"/><circle cx="12" cy="6.8" r="2.1"/><circle cx="17" cy="8.5" r="2.1"/><path d="M6.2 15.6c0-2.6 2.6-4.4 5.8-4.4s5.8 1.8 5.8 4.4c0 2.2-2.1 3.4-4.3 3.4-.9 0-1.2.5-1.5.5s-.6-.5-1.5-.5c-2.2 0-4.3-1.2-4.3-3.4Z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.2s-7.8-4.6-7.8-10A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.8 2.8c0 5.4-7.8 10-7.8 10Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.9 6.3.7-4.7 4.3 1.3 6.3-5.6-3.2-5.6 3.2 1.3-6.3L3 9.6l6.3-.7z"/></symbol>
+  <symbol id="i-moon-sym" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-cat" viewBox="0 0 24 24"><path d="M4.5 9 4 3.5l5 2.6h6l5-2.6-.5 5.5"/><circle cx="12" cy="13" r="6"/><path d="M9.5 13h.01M14.5 13h.01M12 15.5v1.2"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.95A5.5 5.5 0 0 1 17 10.5a3.75 3.75 0 0 1 .4 7.5Z"/></symbol>
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2.5s4.8 4.4 4.8 8.4a4.8 4.8 0 0 1-9.6 0c0-1.7.7-3.2 1.7-4.3.2 1.4 1 2.4 2.1 2.8C11.5 7.5 11.2 4.6 12 2.5Z"/></symbol>
+  <symbol id="i-lightning" viewBox="0 0 24 24"><path d="M13.5 2 4 13.5h6L10.5 22 20 10.5h-6z"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17V6l9-2v11"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="15.5" cy="15.5" r="2.5"/></symbol>
+  <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="6" r="2.6"/><circle cx="12" cy="18" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="12" r="2.6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-clover" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.2"/><circle cx="15" cy="9" r="3.2"/><circle cx="9" cy="15" r="3.2"/><circle cx="15" cy="15" r="3.2"/><path d="M12 12v9"/></symbol>
+  <symbol id="i-ribbon" viewBox="0 0 24 24"><path d="M12 9.5 5 5v9l7-4.5 7 4.5V5z"/><circle cx="12" cy="12" r="2"/><path d="M10.5 14 8 21l4-2.5 4 2.5-2.5-7"/></symbol>
+  <symbol id="i-duck" viewBox="0 0 24 24"><path d="M13.5 7.5a2.5 2.5 0 1 1-2.2-2.5"/><path d="M11.5 7.5C7 7.5 4 10 4 13.5a5 5 0 0 0 5 5h5a5 5 0 0 0 5-5c0-2-1-3.6-2.5-4.6"/><path d="M16.5 10.5H21l-3.2 2"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 9.5h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3.5V5M11 3.5V5"/></symbol>
+  <symbol id="i-airplane" viewBox="0 0 24 24"><path d="M12 2c.9 0 1.4.9 1.4 2v4.6l7.6 4.4v2.2l-7.6-2.3v4.3l2.4 1.8v1.9L12 19.6l-3.8 1.3v-1.9l2.4-1.8v-4.3L3 15.2v-2.2l7.6-4.4V4c0-1.1.5-2 1.4-2Z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+</svg>
+
+<a class="skip-link" href="#disena">Saltar al diseño</a>
+
+<header class="site-header" id="top">
+  <div class="wrap header__inner">
+    <a class="brand" href="#top" aria-label="Vicunia, inicio">
+      <img src="img/logo-redes.webp" alt="" width="42" height="42" class="brand__mark">
+      <span class="brand__text">
+        <strong class="brand__word" aria-label="Vicunia"><span>V</span><span>I</span><span>C</span><span>U</span><span>N</span><span>I</span><span>A</span></strong>
+        <small>Un detalle tuyo</small>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="#sube">Tu foto a 3D</a>
+      <a href="#disena">Clicker</a>
+      <a href="#lapices">Lápices</a>
+      <a href="#galeria">Galería</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+
+    <div class="header__actions">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+        <svg class="icon icon--sun"><use href="#i-sun"></use></svg>
+        <svg class="icon icon--moon"><use href="#i-moon"></use></svg>
+      </button>
+      <a class="btn btn-primary btn-sm header__cta" href="#sube">Enviar mi foto</a>
+      <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">
+        <svg class="icon"><use href="#i-menu"></use></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="eyebrow__dot"></span> Impresión 3D en Cajamarca</p>
+        <h1>Envía una foto y la convertimos en <em>figura 3D</em>.</h1>
+        <p class="lead">Tu perro, tu persona o tu idea: con una foto armamos un Funko hecho a tu medida. Y si quieres algo ya listo, diseña tu clicker o el nombre de tu lápiz con colores reales.</p>
+        <div class="hero__cta">
+          <a class="btn btn-primary btn-lg" href="#sube">
+            <svg class="icon"><use href="#i-upload"></use></svg>
+            Enviar mi foto
+          </a>
+          <a class="btn btn-outline btn-lg" href="#disena">
+            Diseñar mi clicker
+            <svg class="icon"><use href="#i-arrow"></use></svg>
+          </a>
+        </div>
+        <p class="hero__alt">¿Prefieres un nombre? <a href="#lapices">Diseña tu lápiz</a> o <a href="#disena">tu clicker</a>.</p>
+        <ul class="hero__trust">
+          <li><svg class="icon"><use href="#i-check"></use></svg> De tu foto a figura 3D</li>
+          <li><svg class="icon"><use href="#i-check"></use></svg> Clickers y nombres para lápiz</li>
+          <li><svg class="icon"><use href="#i-check"></use></svg> 17 colores y envíos</li>
+        </ul>
+      </div>
+
+      <div class="hero__art">
+        <figure class="hero__photo">
+          <img src="img/mini-orange.webp" alt="Figura impresa en 3D de una mascota color naranja, sostenida en la mano" width="1100" height="1467" fetchpriority="high">
+          <figcaption>
+            <span class="tag">Encargo real</span>
+            <strong>Figura de mascota</strong>
+            <small>Modelada desde una foto</small>
+          </figcaption>
+        </figure>
+        <div class="hero__palette" aria-hidden="true">
+          <span style="--c:#F3F0E9"></span><span style="--c:#1F4FD8"></span><span style="--c:#D2262B"></span><span style="--c:#F0357E"></span><span style="--c:#A98BEE"></span><span style="--c:#9FD4F1"></span><span style="--c:#E7C39B"></span><span style="--c:#2E9B4F"></span><span style="--c:#F26A21"></span><span style="--c:#F7B21C"></span><span style="--c:#EFC453"></span><span style="--c:#1B1B1A"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CINTA DE COLORES -->
+  <div class="ribbon" aria-hidden="true">
+    <div class="ribbon__track">
+      <span>Blanco</span><i style="--c:#F3F0E9"></i><span>Rosa pastel</span><i style="--c:#FFD1E3"></i><span>Rosado</span><i style="--c:#F0357E"></i><span>Lavanda</span><i style="--c:#A98BEE"></i><span>Violeta</span><i style="--c:#5A4FE0"></i><span>Azul hielo</span><i style="--c:#9FD4F1"></i><span>Azul</span><i style="--c:#1F4FD8"></i><span>Turquesa</span><i style="--c:#2EC4A6"></i><span>Verde lima</span><i style="--c:#9BE564"></i><span>Verde</span><i style="--c:#2E9B4F"></i><span>Mango</span><i style="--c:#F7B21C"></i><span>Oro sedoso</span><i style="--c:#EFC453"></i><span>Naranja</span><i style="--c:#F26A21"></i><span>Coral</span><i style="--c:#FF7A59"></i><span>Arena</span><i style="--c:#E7C39B"></i><span>Rojo</span><i style="--c:#D2262B"></i><span>Negro</span><i style="--c:#1B1B1A"></i>
+      <span>Blanco</span><i style="--c:#F3F0E9"></i><span>Rosa pastel</span><i style="--c:#FFD1E3"></i><span>Rosado</span><i style="--c:#F0357E"></i><span>Lavanda</span><i style="--c:#A98BEE"></i><span>Violeta</span><i style="--c:#5A4FE0"></i><span>Azul hielo</span><i style="--c:#9FD4F1"></i><span>Azul</span><i style="--c:#1F4FD8"></i><span>Turquesa</span><i style="--c:#2EC4A6"></i><span>Verde lima</span><i style="--c:#9BE564"></i><span>Verde</span><i style="--c:#2E9B4F"></i><span>Mango</span><i style="--c:#F7B21C"></i><span>Oro sedoso</span><i style="--c:#EFC453"></i><span>Naranja</span><i style="--c:#F26A21"></i><span>Coral</span><i style="--c:#FF7A59"></i><span>Arena</span><i style="--c:#E7C39B"></i><span>Rojo</span><i style="--c:#D2262B"></i><span>Negro</span><i style="--c:#1B1B1A"></i>
+    </div>
+  </div>
+
+  <!-- TU FOTO A FIGURA 3D -->
+  <section class="section section--upload" id="sube">
+    <div class="wrap">
+      <div class="upload-grid">
+        <div class="upload__intro">
+          <p class="eyebrow">01 · Tu foto a 3D</p>
+          <h2>Envía una foto y <em>te la convertimos en figura</em>.</h2>
+          <p class="lead">Tu perro, tu persona o el personaje que quieras: lo modelamos desde tu foto y te mandamos la propuesta antes de imprimir. Si tienes una idea sin foto, la dibujamos contigo.</p>
+
+          <div class="beforeafter" aria-label="Ejemplo: de tu foto a tu figura 3D">
+            <figure class="ba">
+              <div class="ba__side">
+                <span class="ba__shot"><img src="img/real-golden.webp" alt="Foto real de un golden retriever" loading="lazy" decoding="async"></span>
+                <span class="ba__label">Tu foto</span>
+              </div>
+              <svg class="ba__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+              <div class="ba__side">
+                <span class="ba__shot"><img src="img/mini-orange.webp" alt="La misma mascota convertida en figura 3D impresa" loading="lazy" decoding="async"></span>
+                <span class="ba__label">Tu figura 3D</span>
+              </div>
+            </figure>
+            <figure class="ba">
+              <div class="ba__side">
+                <span class="ba__shot"><img src="img/real-blackwhite.webp" alt="Foto real de un perro blanco y negro" loading="lazy" decoding="async"></span>
+                <span class="ba__label">Tu foto</span>
+              </div>
+              <svg class="ba__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+              <div class="ba__side">
+                <span class="ba__shot"><img src="img/mini-blackwhite.webp" alt="Figura 3D impresa de un perro blanco y negro" loading="lazy" decoding="async"></span>
+                <span class="ba__label">Tu figura 3D</span>
+              </div>
+            </figure>
+          </div>
+
+          <ul class="format-list">
+            <li><strong>Mascotas</strong><span>Tu mejor amigo en versión Funko</span></li>
+            <li><strong>Personas</strong><span>Regalos y cumpleaños</span></li>
+            <li><strong>Personajes</strong><span>El que me cuentes</span></li>
+            <li><strong>Fotos claras</strong><span>De frente y con buena luz</span></li>
+          </ul>
+          <p class="fineprint">Con una foto alcanza. Si tienes más, mejor: de frente, de perfil y de cuerpo.</p>
+
+          <div class="note">
+            <svg class="icon"><use href="#i-check"></use></svg>
+            <p><strong>Tu foto no se sube a ningún servidor.</strong> Se queda en tu equipo hasta que la adjuntes en el chat. No se comparte sin tu permiso.</p>
+          </div>
+        </div>
+
+        <form class="card upload-form" id="upload-form" novalidate>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-describedby="drop-hint">
+            <input type="file" id="file" accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.gif" hidden>
+            <span class="dropzone__icon"><svg class="icon"><use href="#i-upload"></use></svg></span>
+            <strong>Adjunta tu foto aquí</strong>
+            <span>o toca para elegirla</span>
+            <span class="dropzone__hint" id="drop-hint">JPG, PNG, WEBP o HEIC · máx. 100 MB</span>
+          </div>
+
+          <div class="file-card" id="file-card" hidden>
+            <span class="file-card__icon">📷</span>
+            <div class="file-card__info">
+              <strong id="file-name">mi-foto.jpg</strong>
+              <span id="file-size">0 MB</span>
+            </div>
+            <button class="icon-btn" id="file-remove" type="button" aria-label="Quitar foto">
+              <svg class="icon"><use href="#i-x"></use></svg>
+            </button>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Tu nombre <span aria-hidden="true">*</span></label>
+              <input class="input" id="name" name="name" type="text" autocomplete="name" required placeholder="Ej. Jair Quispe">
+              <p class="error" data-error-for="name" hidden></p>
+            </div>
+            <div class="field">
+              <label for="phone">WhatsApp <span aria-hidden="true">*</span></label>
+              <input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="9XX XXX XXX">
+              <p class="error" data-error-for="phone" hidden></p>
+            </div>
+            <div class="field">
+              <label for="kind">¿Qué quieres convertir?</label>
+              <select class="input" id="kind" name="kind">
+                <option>Figura de mi mascota</option>
+                <option>Figura de una persona</option>
+                <option>Un personaje o idea</option>
+                <option>Clicker / nombre para lápiz</option>
+                <option>Otro (lo cuento abajo)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="qty">Cantidad</label>
+              <input class="input" id="qty" name="qty" type="number" min="1" max="500" value="1" inputmode="numeric">
+            </div>
+            <div class="field field--full">
+              <label for="notes">Cuéntanos tu idea</label>
+              <textarea class="input" id="notes" name="notes" rows="3" placeholder="El nombre de tu mascota, colores, para quién es, fecha en la que lo necesitas…"></textarea>
+            </div>
+          </div>
+
+          <label class="check">
+            <input type="checkbox" id="rights" required>
+            <span>Confirmo que la foto es mía o tengo permiso para usarla. <span aria-hidden="true">*</span></span>
+          </label>
+          <p class="error" data-error-for="rights" hidden></p>
+
+          <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit-design">
+            <svg class="icon"><use href="#i-whatsapp"></use></svg>
+            Enviar mi foto
+          </button>
+          <p class="fineprint">Se abre WhatsApp con tu pedido escrito. Adjunta tu foto en el chat y listo.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISEÑADOR -->
+  <section class="section section--design" id="disena">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">02 · Clicker</p>
+        <h2>Arma tu clicker <em>tecla por tecla</em></h2>
+        <p class="section-lead">Escribe tu palabra, toca cada tecla y elige su color: puedes usar la carta de filamentos o pedir un color exacto. La vista 3D es la misma pieza que vas a recibir: gírala, aprieta las teclas y escúchalas.</p>
+      </header>
+
+      <div class="designer">
+        <!-- Panel de controles -->
+        <div class="designer__panel card">
+
+          <div class="field">
+            <div class="field__head">
+              <label for="word">Tu nombre o palabra</label>
+              <span class="counter" id="word-count">7/10</span>
+            </div>
+            <input class="input input--word" id="word" type="text" value="VICUNIA" maxlength="10" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe hasta 10 letras">
+            <p class="hint" id="word-hint">Sin tildes ni espacios: así la letra sale nítida en la impresión. Puedes reemplazar cualquier tecla por un símbolo.</p>
+          </div>
+
+          <div class="field">
+            <div class="field__head">
+              <span class="field__label">Tus teclas</span>
+              <span class="hint hint--inline">Toca una para editarla</span>
+            </div>
+            <div class="slot-strip" id="slot-strip" role="tablist" aria-label="Teclas del clicker"></div>
+          </div>
+
+          <div class="field">
+            <span class="field__label" id="slots-label">Número de teclas</span>
+            <div class="segmented" id="slots-control" role="group" aria-labelledby="slots-label"></div>
+          </div>
+
+          <div class="editor" id="editor">
+            <div class="editor__head">
+              <span class="editor__badge" id="editor-badge">Tecla 1</span>
+              <div class="editor__char">
+                <label for="char-input">Letra</label>
+                <input class="input input--char" id="char-input" type="text" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" aria-describedby="char-hint">
+              </div>
+            </div>
+            <p class="hint" id="char-hint">Una letra o número. O elige un símbolo:</p>
+            <div class="symbol-grid" id="symbol-grid" role="group" aria-label="Símbolos"></div>
+
+            <span class="field__label field__label--sp">Color de esta tecla</span>
+            <div class="swatches" id="cap-colors" role="group" aria-label="Color de la tecla seleccionada"></div>
+            <button class="btn btn-ghost btn-sm btn-block" id="apply-all" type="button">Usar este color en todas las teclas</button>
+
+            <div class="field__head field__head--sp">
+              <span class="field__label">Color de la letra</span>
+              <button class="link-btn" id="ink-auto" type="button" aria-pressed="true">Automático</button>
+            </div>
+            <div class="swatches swatches--ink" id="ink-colors" role="group" aria-label="Color de la letra"></div>
+          </div>
+
+          <div class="field">
+            <span class="field__label">Color de la base</span>
+            <div class="swatches swatches--base" id="base-colors" role="group" aria-label="Color de la base"></div>
+            <p class="hint">Un solo color o dos: base de un color y teclas de otro.</p>
+          </div>
+
+          <p class="hint hint--ring">Todas las piezas llevan argolla metálica estándar (aro simple) para colgarlas.</p>
+
+          <div class="designer__actions">
+            <button class="btn btn-primary btn-block" id="send-design" type="button">
+              <svg class="icon"><use href="#i-whatsapp"></use></svg>
+              Pedir este diseño
+            </button>
+            <button class="btn btn-outline btn-block" id="shuffle" type="button">
+              <svg class="icon"><use href="#i-shuffle"></use></svg>
+              Sorpréndeme con colores
+            </button>
+          </div>
+          <p class="fineprint">Sin pagos por adelantado. Te confirmamos precio, colores y plazo por WhatsApp.</p>
+        </div>
+
+        <!-- Escenario 3D -->
+        <div class="designer__stage">
+          <div class="stage" id="stage">
+            <canvas id="clicker-canvas" aria-label="Vista previa 3D de tu clicker personalizado"></canvas>
+
+            <div class="stage__loading" id="stage-loading">
+              <span class="spinner" aria-hidden="true"></span>
+              <p>Cargando la vista 3D…</p>
+            </div>
+
+            <div class="stage__hud">
+              <span class="chip chip--live"><span class="chip__dot"></span> En vivo</span>
+              <span class="chip" id="stage-summary" aria-live="polite">7 teclas · Marfil</span>
+            </div>
+
+            <div class="stage__tools">
+              <button class="tool" id="btn-spin" type="button" aria-pressed="true" aria-label="Girar automáticamente" title="Girar automáticamente">
+                <svg class="icon"><use href="#i-spin"></use></svg>
+              </button>
+              <button class="tool" id="btn-sound" type="button" aria-pressed="true" aria-label="Sonido de las teclas" title="Sonido de las teclas">
+                <svg class="icon icon--on"><use href="#i-sound"></use></svg>
+                <svg class="icon icon--off"><use href="#i-mute"></use></svg>
+              </button>
+              <button class="tool" id="btn-reset" type="button" aria-label="Centrar la vista" title="Centrar la vista">
+                <svg class="icon"><use href="#i-target"></use></svg>
+              </button>
+              <button class="tool" id="btn-save" type="button" aria-label="Descargar imagen de mi diseño" title="Descargar imagen">
+                <svg class="icon"><use href="#i-download"></use></svg>
+              </button>
+            </div>
+
+            <p class="stage__hint">Arrastra para girar · Toca una tecla</p>
+          </div>
+
+          <ul class="stage__meta">
+            <li><strong>Switch mecánico</strong> real, con su clic</li>
+            <li><strong>PLA</strong> impreso capa por capa</li>
+            <li><strong>Hecho</strong> en Cajamarca</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOMBRES PARA LÁPICES -->
+  <section class="section section--pencils" id="lapices">
+    <div class="wrap">
+      <header class="section-head section-head--center">
+        <p class="eyebrow">03 · Lápiz</p>
+        <h2>Tu nombre, en relieve sobre el <em>lápiz</em></h2>
+        <p class="section-lead">Escribe el nombre, pon la parte de adelante de un color y la de atrás de otro, ajusta las medidas y mira la pieza real en 3D. Cada letra se desliza por el lápiz con un agujero a su medida.</p>
+      </header>
+
+      <div class="pencil-designer">
+        <div class="pencil-designer__panel card">
+          <div class="field">
+            <div class="field__head">
+              <label for="pencil-word">Tu nombre</label>
+              <span class="counter" id="pencil-word-count">0/24</span>
+            </div>
+            <input class="input input--word" id="pencil-word" type="text" value="KAREN" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej. KAREN">
+            <p class="hint" id="pencil-word-hint">Hasta 24 caracteres: letras, espacios, guion, tildes y Ñ.</p>
+            <p class="error" id="pencil-error" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <span class="field__label">Colores</span>
+            <div class="tone-toggle" id="pencil-tone-control" role="group" aria-label="Cantidad de colores">
+              <button class="tone" id="pencil-tone-one" type="button" aria-pressed="false">
+                <span class="tone__dots" aria-hidden="true"><i data-tone-dot="front"></i></span>
+                <span>1 color</span>
+              </button>
+              <button class="tone" id="pencil-tone-two" type="button" aria-pressed="true">
+                <span class="tone__dots" aria-hidden="true"><i data-tone-dot="front"></i><i data-tone-dot="back"></i></span>
+                <span>2 colores</span>
+              </button>
+            </div>
+            <div class="pencil-colors">
+              <div class="pencil-color" id="pencil-front-wrap">
+                <span class="field__label">Parte de adelante</span>
+                <div class="swatches" id="pencil-front-colors" role="group" aria-label="Color de la parte de adelante"></div>
+              </div>
+              <div class="pencil-color" id="pencil-back-wrap">
+                <span class="field__label">Parte de atrás</span>
+                <div class="swatches" id="pencil-back-colors" role="group" aria-label="Color de la parte de atrás"></div>
+              </div>
+            </div>
+            <p class="hint" id="pencil-tone-hint">La cara que se lee va de un color y todo lo demás de otro.</p>
+          </div>
+
+          <details class="adv" id="pencil-adv">
+            <summary>Medidas avanzadas (mm)</summary>
+            <div class="ranges" id="pencil-ranges"></div>
+          </details>
+
+          <label class="check" for="pencil-tube">
+            <input type="checkbox" id="pencil-tube">
+            <span>Con tubo de unión (una sola pieza)</span>
+          </label>
+
+          <div class="designer__actions">
+            <button class="btn btn-primary btn-block" id="pencil-send" type="button">
+              <svg class="icon"><use href="#i-whatsapp"></use></svg>
+              Pedir este lápiz
+            </button>
+            <button class="btn btn-outline btn-block" id="pencil-stl" type="button">
+              <svg class="icon"><use href="#i-download"></use></svg>
+              Descargar STL
+            </button>
+          </div>
+          <p class="fineprint">Sin pagos por adelantado. Te confirmamos precio, colores y medidas por WhatsApp.</p>
+        </div>
+
+        <div class="pencil-designer__stage">
+          <div class="pencil-stage" id="pencil-stage">
+            <canvas id="pencil-canvas" aria-label="Vista previa 3D de tu nombre para lápiz"></canvas>
+
+            <div class="stage__loading" id="pencil-loading">
+              <span class="spinner" aria-hidden="true"></span>
+              <p>Generando el nombre…</p>
+            </div>
+
+            <div class="stage__hud">
+              <span class="chip chip--live"><span class="chip__dot"></span> En vivo</span>
+              <span class="chip" id="pencil-summary" aria-live="polite"></span>
+            </div>
+
+            <div class="stage__tools">
+              <button class="tool" id="pencil-save" type="button" aria-label="Descargar imagen de mi lápiz" title="Descargar imagen">
+                <svg class="icon"><use href="#i-download"></use></svg>
+              </button>
+            </div>
+
+            <p class="stage__hint">Arrastra para girar · Toca una letra para elegirla</p>
+          </div>
+
+          <ul class="stage__meta">
+            <li><strong>Letras en relieve</strong> con alturas alternas</li>
+            <li><strong>Agujero a medida</strong> para tu lápiz</li>
+            <li><strong>2 colores</strong> adelante y atrás</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section section--steps" id="como">
+    <div class="wrap">
+      <header class="section-head section-head--center">
+        <p class="eyebrow">04 · Cómo funciona</p>
+        <h2>De tu idea a tus manos</h2>
+        <p class="section-lead">Sin formularios eternos ni sorpresas: cada paso se confirma contigo por WhatsApp.</p>
+      </header>
+
+      <ol class="steps">
+        <li>
+          <span class="steps__num">1</span>
+          <h3>Envía tu foto o idea</h3>
+          <p>Mándanos la foto de tu mascota, persona o personaje, o diseña aquí tu clicker o tu nombre para lápiz.</p>
+        </li>
+        <li>
+          <span class="steps__num">2</span>
+          <h3>Aprobamos y cotizamos</h3>
+          <p>Revisamos el modelo, los colores y el tamaño. Te enviamos el precio y el plazo antes de imprimir nada.</p>
+        </li>
+        <li>
+          <span class="steps__num">3</span>
+          <h3>Imprimimos y entregamos</h3>
+          <p>Lo imprimimos pieza por pieza, lo revisamos y coordinamos entrega en Cajamarca o envío a tu ciudad.</p>
+        </li>
+      </ol>
+
+      <div class="steps__note">
+        <img src="img/logo-redes.webp" alt="" width="40" height="40">
+        <p>¿Tienes una idea rara? Mejor. Los encargos personalizados son la parte que más disfrutamos.</p>
+        <a class="btn btn-outline btn-sm" href="#sube">Contar mi idea</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="section section--gallery" id="galeria">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">05 · Galería</p>
+        <h2>Cosas que ya salieron <em>de la impresora</em></h2>
+        <p class="section-lead">Piezas reales, encargos reales. Toca una para verla más grande.</p>
+      </header>
+
+      <div class="gallery">
+        <button class="gallery__item" type="button" data-full="img/mini-chihuahua.webp" data-caption="Figura de chihuahua negro con polera roja, pintada a mano">
+          <img src="img/mini-chihuahua.webp" alt="Figura 3D de un chihuahua negro con polera roja, pintada a mano" width="1100" height="1467" loading="lazy" decoding="async">
+          <span class="gallery__cap">Mascota a color</span>
+        </button>
+        <button class="gallery__item" type="button" data-full="img/mini-orange.webp" data-caption="Figura de perro naranja con pecho crema · encargo real">
+          <img src="img/mini-orange.webp" alt="Figura 3D de un perro naranja con pecho crema" width="1100" height="1467" loading="lazy" decoding="async">
+          <span class="gallery__cap">Retrato de mascota</span>
+        </button>
+        <button class="gallery__item" type="button" data-full="img/mini-blackwhite.webp" data-caption="Figura de mascota en blanco y negro · acabado limpio">
+          <img src="img/mini-blackwhite.webp" alt="Figura 3D de mascota en blanco y negro" width="960" height="1280" loading="lazy" decoding="async">
+          <span class="gallery__cap">Blanco y negro</span>
+        </button>
+        <button class="gallery__item" type="button" data-full="img/mini-yellow.webp" data-caption="Figura de mascota amarillo mango con detalles negros">
+          <img src="img/mini-yellow.webp" alt="Figura 3D de un perro amarillo con detalles negros" width="1100" height="1467" loading="lazy" decoding="async">
+          <span class="gallery__cap">Amarillo mango</span>
+        </button>
+      </div>
+      <p class="gallery__note">Fotos de figuras ya impresas, desde la foto de cada mascota. Los colores pueden variar un poco según el lote del filamento.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--faq" id="faq">
+    <div class="wrap faq-grid">
+      <header class="section-head section-head--left">
+        <p class="eyebrow">06 · Preguntas</p>
+        <h2>Lo que suelen preguntar</h2>
+        <p class="section-lead">Si falta algo, escríbenos: respondemos como personas, no como robot.</p>
+        <a class="btn btn-primary" href="#sube">
+          <svg class="icon"><use href="#i-upload"></use></svg>
+          Enviar mi foto
+        </a>
+      </header>
+
+      <div class="faq">
+        <details open>
+          <summary>¿Qué es un clicker?</summary>
+          <p>Es un llavero con teclas de verdad: cada tecla lleva un switch mecánico que suena y se siente como un teclado. Sirve para jugar, para calmar las manos o simplemente para presumir tu nombre.</p>
+        </details>
+        <details>
+          <summary>¿Puedo elegir los colores?</summary>
+          <p>Sí. Hay 17 colores de filamento en carta y puedes combinar uno distinto por tecla, incluso el color de la letra. Puede ser de un solo color o de dos: la base de un color y las teclas de otro. Si buscas un tono exacto, elige «otro color» o mándanos el código; lo confirmamos antes de imprimir.</p>
+        </details>
+        <details>
+          <summary>¿Cuántas teclas puede tener?</summary>
+          <p>De 2 a 10. Si tu palabra es más larga, se puede hacer en dos piezas o cambiar el diseño. Escríbenos y lo vemos.</p>
+        </details>
+        <details>
+          <summary>¿También hacen nombres para lápices?</summary>
+          <p>Sí. Hacemos el nombre en relieve adaptado al grosor de tu lápiz o lapicero. Puede ser de un solo color o de dos: la parte de atrás de un color y la de adelante de otro.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto cuesta y cuánto demora?</summary>
+          <p>Depende del número de teclas, del acabado y de si hay que modelar algo desde cero. Preferimos decirte el precio exacto antes de empezar. El plazo también se confirma al aprobar el diseño.</p>
+        </details>
+        <details>
+          <summary>¿Envían fuera de Cajamarca?</summary>
+          <p>Sí. Coordinamos el envío por WhatsApp y te pasamos el costo según tu ciudad. En Cajamarca se puede recoger o entregar en persona.</p>
+        </details>
+        <details>
+          <summary>¿De una foto hacen una figura 3D?</summary>
+          <p>Sí. Mándanos una foto clara de tu mascota, persona o personaje y la modelamos como figura estilo Funko. Antes de imprimir te mostramos una propuesta y la apruebas. Si la foto está oscura o borrosa, te pedimos otra o lo resolvemos juntos.</p>
+        </details>
+        <details>
+          <summary>¿Qué fotos me sirven para convertirlas en figura?</summary>
+          <p>Con una foto de frente alcanza; si tienes de perfil y de cuerpo, mejor. JPG, PNG, WEBP o HEIC, hasta 100 MB. Tu foto no se sube a ningún servidor: se queda en tu equipo hasta que la adjuntes en el chat.</p>
+        </details>
+        <details>
+          <summary>¿Y si mi idea no se puede imprimir?</summary>
+          <p>Te avisamos antes de cobrar. Muchas veces se arregla cambiando el grosor de una pared, el tamaño o la orientación de la pieza; te explicamos qué ajustamos y por qué.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final-cta">
+    <div class="wrap final-cta__inner">
+      <img src="img/logo-redes.webp" alt="" width="64" height="64" class="final-cta__mark">
+      <h2>Tu idea merece <em>forma</em>.</h2>
+      <p>Envía una foto y conviértela en figura 3D, o diseña tu clicker y el nombre de tu lápiz. Lo hacemos realidad en Cajamarca.</p>
+      <div class="final-cta__actions">
+        <a class="btn btn-primary btn-lg" href="#sube">Enviar mi foto</a>
+        <a class="btn btn-outline btn-lg" href="#disena">Diseñar mi clicker</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <a class="brand brand--footer" href="#top">
+        <img src="img/logo-redes.webp" alt="" width="46" height="46">
+        <span class="brand__text"><strong>Vicunia</strong><small>Un detalle tuyo, hecho en Cajamarca</small></span>
+      </a>
+      <p>Regalos personalizados con impresión 3D. Diseñamos contigo, imprimimos en casa y entregamos con cuidado.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Enlaces del sitio">
+      <h3>Explora</h3>
+      <a href="#sube">Tu foto a figura 3D</a>
+      <a href="#disena">Diseña tu clicker</a>
+      <a href="#lapices">Nombres para lápices</a>
+      <a href="#galeria">Galería</a>
+      <a href="#faq">Preguntas frecuentes</a>
+    </nav>
+    <div class="footer__contact">
+      <h3>Hablemos</h3>
+      <a href="#" data-wa="Hola Vicunia, quiero hacer un pedido personalizado.">
+        <svg class="icon"><use href="#i-whatsapp"></use></svg>
+        Pedidos por WhatsApp
+      </a>
+      <p>Cajamarca, Perú</p>
+      <p>Lun a sáb · 9:00 a 19:00</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/vicuniacax" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Vicunia">
+          <svg class="icon"><use href="#i-instagram"></use></svg>
+        </a>
+        <a href="https://www.tiktok.com/@vicuniacax" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Vicunia">
+          <svg class="icon"><use href="#i-tiktok"></use></svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61590919520057" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Vicunia">
+          <svg class="icon"><use href="#i-facebook"></use></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <p>© <span id="year">2026</span> Vicunia · Hecho en Cajamarca, Perú</p>
+    <p>Diseño y fabricación propia. No vendemos modelos de terceros sin licencia.</p>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-caption">
+  <button class="lightbox__close icon-btn" id="lightbox-close" type="button" aria-label="Cerrar imagen">
+    <svg class="icon"><use href="#i-x"></use></svg>
+  </button>
+  <img id="lightbox-img" alt="">
+  <p id="lightbox-caption"></p>
+</dialog>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<noscript>
+  <p class="noscript">Esta página necesita JavaScript para la vista 3D y el envío del pedido. Escríbenos por WhatsApp y lo armamos contigo.</p>
+</noscript>
+
+<script src="vendor/jscad-modeling.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

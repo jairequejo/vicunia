@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vicunia · identidad de marca</title>
+<style>
+  :root {
+    --lavanda: #E9EDFC;
+    --rosa-nube: #F6E4F1;
+    --indigo: #222446;
+    --indigo-noche: #1A1C33;
+    --violeta: #5A4FE0;
+    --rosado: #F0357E;
+    --amarillo: #FFC24D;
+    --celeste: #C0E4FF;
+    --indigo-apagado: #5D6086;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--lavanda); color: var(--indigo); font-family: Inter, Arial, sans-serif; }
+  .wrap { max-width: 1200px; margin: auto; padding: 32px; }
+  h1, h2 { font-family: Georgia, serif; }
+  h1 { font-size: clamp(2rem,5vw,4rem); margin: 0 0 10px; }
+  .lead { font-size: 1.2rem; color: var(--indigo-apagado); max-width: 720px; line-height: 1.55; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .panel { background: #fff; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px #22244618; }
+  .panel img { display: block; width: 100%; height: auto; }
+  .wide { grid-column: 1 / -1; }
+  .dark { background: var(--indigo-noche); color: var(--lavanda); padding: 30px; border-radius: 20px; }
+  .dark h2 { font-size: clamp(2rem,4vw,3.5rem); margin: 0; }
+  .dark p { font-size: 1.2rem; color: #cfd2ee; }
+  .colors { display: flex; gap: 10px; flex-wrap: wrap; }
+  .swatch { flex: 1; min-width: 120px; padding: 50px 12px 12px; border-radius: 12px; font-weight: bold; }
+  .swatch small { display: block; font-weight: normal; margin-top: 4px; }
+  .copy { line-height: 1.55; color: var(--indigo-apagado); }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } .wrap { padding: 18px; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p style="letter-spacing:.2em;color:var(--rosado);font-weight:bold">PROPUESTA DE IDENTIDAD</p>
+  <h1>Vicunia</h1>
+  <p class="lead">Un detalle tuyo, hecho en Cajamarca. Una marca cálida y clara para regalos personalizados, creada para verse bien tanto en una etiqueta pequeña como en una publicación.</p>
+  <div class="grid">
+    <section class="panel">
+      <h2>Logo</h2>
+      <img src="../logo-redes-vicunia.png" alt="Logo Vicunia" style="max-width:280px;border-radius:22%">
+    </section>
+    <section class="panel">
+      <h2>Tarjeta de producto</h2>
+      <img src="tarjeta-producto.svg" alt="Plantilla de tarjeta Vicunia">
+    </section>
+    <section class="dark wide">
+      <h2>Tu idea merece forma.</h2>
+      <p>Regalos con nombre, historia y un acabado pensado para quien los recibe.</p>
+    </section>
+    <section class="panel wide">
+      <h2>Colores</h2>
+      <div class="colors">
+        <div class="swatch" style="background:#E9EDFC">Lavanda<small>#E9EDFC</small></div>
+        <div class="swatch" style="background:#F6E4F1">Rosa nube<small>#F6E4F1</small></div>
+        <div class="swatch" style="background:#222446;color:white">Índigo tinta<small>#222446</small></div>
+        <div class="swatch" style="background:#5A4FE0;color:white">Violeta<small>#5A4FE0</small></div>
+        <div class="swatch" style="background:#F0357E;color:white">Rosado intenso<small>#F0357E</small></div>
+        <div class="swatch" style="background:#FFC24D">Amarillo<small>#FFC24D</small></div>
+        <div class="swatch" style="background:#C0E4FF">Celeste glaciar<small>#C0E4FF</small></div>
+      </div>
+      <p class="copy">Lavanda y rosa nube como base; índigo para leer; violeta para la acción de pedir; rosado para lo personalizado; amarillo para reseñas y celeste para etiquetas técnicas.</p>
+    </section>
+  </div>
+</main>
+</body>
+</html>

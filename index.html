@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vicuinia - Control de Inventario y Pedidos | Mundo Suni</title>
+  <meta name="description" content="Gestión inteligente y flexible de inventario, herramientas y costeo de pedidos para Mundo Suni.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Floating Navigation Bar (Mobile Native App Style) -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchTab('dashboard')" id="nav-dashboard">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Inicio</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('inventario')" id="nav-inventario">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      <span>Inventario</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('pedidos')" id="nav-pedidos">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Pedidos</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('ajustes')" id="nav-ajustes">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <span>Ajustes</span>
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="app-container">
+
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <span class="logo-icon">🦙</span>
+        <div class="logo-text">
+          <h1>Vicuinia</h1>
+          <p>Mundo Suni</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Cambiar tema">
+        <svg id="theme-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </header>
+
+    <!-- FLOATING ACTION BUTTON -->
+    <button class="fab" id="global-fab" onclick="handleFabClick()" aria-label="Acción rápida">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </button>
+
+    <!-- SECTION: DASHBOARD -->
+    <section id="section-dashboard" class="app-section active">
+      <div class="card">
+        <h2 style="margin-bottom: 12px; font-size: 1.25rem;">✨ ¡Hola Sulley!</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Aquí tienes el resumen de tu negocio <strong>Mundo Suni</strong> para hoy.</p>
+      </div>
+
+      <!-- Stat Grid -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">Materiales</span>
+          <span class="stat-value" id="stat-materiales">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Pendientes</span>
+          <span class="stat-value" id="stat-pedidos-pendientes">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Costo Inventario</span>
+          <span class="stat-value" id="stat-costo-inventario">S/. 0.00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Ganancia Proy.</span>
+          <span class="stat-value" id="stat-ganancia-proyectada">S/. 0.00</span>
+        </div>
+      </div>
+
+      <!-- Active Alerts Banner -->
+      <div id="dashboard-alerts" class="alert-banner" style="display: none;">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-content">
+          <strong>¡Alerta de inventario bajo!</strong>
+          <span style="display:block; font-size: 0.8rem; opacity: 0.85;">Revisa estos materiales antes de que se agoten:</span>
+          <ul id="alert-list">
+            <!-- Low stock alerts populated dynamically -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Upcoming Deliveries -->
+      <div class="card">
+        <h3 style="font-size: 1.05rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <span>📅 Próximas Entregas</span>
+          <span class="badge badge-proceso" id="count-proximas" style="font-size: 0.7rem;">0</span>
+        </h3>
+        <div id="dashboard-deliveries" class="dashboard-delivery-list">
+          <!-- Upcoming orders populated dynamically -->
+          <p style="color: var(--text-muted); text-align: center; padding: 12px; font-size: 0.85rem;">No tienes pedidos pendientes de entrega. ¡Gran trabajo!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INVENTARIO -->
+    <section id="section-inventario" class="app-section">
+      <div class="section-header">
+        <h2>Inventario</h2>
+        <button class="btn btn-primary btn-sm" onclick="openMaterialModal()">+ Nuevo</button>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="search-filter-bar">
+        <input type="text" class="search-input" id="search-inventory" placeholder="Buscar material o color..." oninput="renderInventory()">
+        <select class="filter-select" id="filter-inventory-category" onchange="renderInventory()">
+          <option value="todos">Todos</option>
+          <option value="Hilos">Hilos</option>
+          <option value="Limpiapipas">Limpiapipas</option>
+          <option value="Herramientas">Herramientas</option>
+          <option value="Otros">Otros</option>
+        </select>
+      </div>
+
+      <!-- Inventory list container -->
+      <div class="inventory-list" id="inventory-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- SECTION: PEDIDOS -->
+    <section id="section-pedidos" class="app-section">
+      <div class="section-header">
+        <h2>Pedidos y Costeo</h2>
+        <button class="btn btn-primary btn-sm" onclick="openOrderModal()">+ Nuevo Pedido</button>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="search-filter-bar">
+        <input type="text" class="search-input" id="search-orders" placeholder="Buscar cliente o producto..." oninput="renderOrders()">
+        <select class="filter-select" id="filter-orders-status" onchange="renderOrders()">
+          <option value="todos">Todos los Estados</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="En Proceso">En Proceso</option>
+          <option value="Entregado">Entregado</option>
+        </select>
+      </div>
+
+      <!-- Orders container -->
+      <div class="orders-list" id="orders-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- SECTION: AJUSTES -->
+    <section id="section-ajustes" class="app-section">
+      <h2>Ajustes y Sincronización</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Personaliza el funcionamiento de Vicuinia y conecta tus hojas de cálculo.</p>
+
+      <!-- Sync Settings Card -->
+      <div class="card">
+        <h3 style="font-size: 1.05rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <span>📊 Google Sheets Sync</span>
+          <span class="badge" id="sync-status-badge" style="margin-left:auto;">Desconectado</span>
+        </h3>
+        
+        <div class="form-group">
+          <label class="form-label">Modo de Almacenamiento</label>
+          <select class="form-select" id="setting-storage-mode" onchange="toggleStorageMode()">
+            <option value="local">Modo Local (localStorage - Rápido)</option>
+            <option value="sync">Sincronizado (Google Sheets - Respaldo total)</option>
+          </select>
+        </div>
+
+        <div id="sync-settings-fields" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="setting-sheet-url">URL de tu Web App (Google Apps Script)</label>
+            <input type="url" class="form-input" id="setting-sheet-url" placeholder="https://script.google.com/macros/s/.../exec" oninput="saveSyncUrl()">
+            <span style="font-size:0.75rem; color: var(--text-muted); display:block; margin-top:4px;">Crea el Apps Script en tu cuenta de Google e ingresa el enlace generado aquí.</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="testSyncConnection()">Probar Conexión</button>
+        </div>
+      </div>
+
+      <!-- Help Card (How to Setup Sheets) -->
+      <div class="card">
+        <h3 style="font-size: 1.05rem; margin-bottom: 8px;">📋 ¿Cómo sincronizar con Google Sheets?</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Para sincronizar los datos de Mundo Suni de forma gratuita, sigue estos 3 simples pasos:</p>
+        
+        <div class="instruction-box">
+          <ol>
+            <li>Crea un nuevo **Google Sheet** en tu cuenta de Google.</li>
+            <li>En el menú superior, ve a **Extensiones > Apps Script**.</li>
+            <li>Borra todo el código e inserta el script de abajo. Presiona guardar.</li>
+            <li>Haz clic en **Implementar > Nueva implementación**. Selecciona **Aplicación web**. Configura: *"Quién tiene acceso: Cualquiera"*. Copia la URL generada y pégala arriba.</li>
+          </ol>
+        </div>
+        <button class="btn btn-secondary" onclick="openAppsScriptModal()">📄 Ver código del Script</button>
+      </div>
+
+      <!-- Backup / Reset Card -->
+      <div class="card">
+        <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--danger);">Zona de Seguridad</h3>
+        <div style="display: flex; gap: 8px; flex-direction: column;">
+          <button class="btn btn-secondary" onclick="exportData()">📤 Exportar Copia de Seguridad (JSON)</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()">📥 Importar Copia de Seguridad</button>
+          <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="importData(event)">
+          <button class="btn btn-danger" style="margin-top: 8px;" onclick="clearAllData()">⚠️ Borrar Todos los Datos de la App</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- MODAL: ADD / EDIT MATERIAL -->
+  <div class="modal-overlay" id="modal-material">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="material-modal-title">Agregar Material</h3>
+        <button class="modal-close" onclick="closeMaterialModal()">&times;</button>
+      </div>
+      <form id="form-material" onsubmit="saveMaterial(event)">
+        <input type="hidden" id="material-id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="material-nombre">Nombre del Material</label>
+            <input type="text" class="form-input" id="material-nombre" required placeholder="Ej. Hilo de Algodón, Limpiapipas, Aguja...">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="material-categoria">Categoría</label>
+            <select class="form-select" id="material-categoria" onchange="handleCategoryChange()" required>
+              <option value="Hilos">Hilos</option>
+              <option value="Limpiapipas">Limpiapipas</option>
+              <option value="Herramientas">Herramientas</option>
+              <option value="Otros">Otros</option>
+            </select>
+          </div>
+
+          <!-- Color field wrapper (hidden if category is Tools or Others) -->
+          <div class="form-group" id="material-color-wrapper">
+            <label class="form-label" for="material-color">Color</label>
+            <div class="color-picker-wrapper">
+              <input type="text" class="form-input" id="material-color" placeholder="Ej. Amarillo Pastel, Azul Cielo...">
+              <input type="color" class="form-color-input" id="material-color-hex" value="#D97706" title="Elige un color para vista previa">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="material-cantidad">Cantidad en Stock</label>
+            <input type="number" step="any" class="form-input" id="material-cantidad" required placeholder="Ej. 100, 10, 50.5">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="material-unidad">Unidad de Medida</label>
+            <input type="text" class="form-input" id="material-unidad" required placeholder="Ej. metros, unidades, ovillos">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="material-costo">Costo Unitario (S/.)</label>
+            <input type="number" step="any" class="form-input" id="material-costo" required placeholder="Ej. 0.05, 1.20, 15.00">
+            <span style="font-size:0.75rem; color: var(--text-muted); display:block; margin-top:4px;" id="material-costo-help">Costo por cada metro/unidad.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="material-stock-minimo">Stock Mínimo (Alerta)</label>
+            <input type="number" step="any" class="form-input" id="material-stock-minimo" required placeholder="Ej. 10, 5, 2">
+            <span style="font-size:0.75rem; color: var(--text-muted); display:block; margin-top:4px;">Se generará una alerta cuando te quede menos de esta cantidad.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeMaterialModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT ORDER (COSTING CALCULATOR DRAWER) -->
+  <div class="modal-overlay" id="modal-order">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="order-modal-title">Nuevo Pedido y Costeo</h3>
+        <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+      </div>
+      <form id="form-order" onsubmit="saveOrder(event)">
+        <input type="hidden" id="order-id">
+        <div class="modal-body">
+          <!-- Client & Product Info -->
+          <div class="form-group">
+            <label class="form-label" for="order-cliente">Cliente</label>
+            <input type="text" class="form-input" id="order-cliente" required placeholder="Ej. Sulley, Juan Pérez...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-producto">Producto (Amigurumi / Proyecto)</label>
+            <input type="text" class="form-input" id="order-producto" required placeholder="Ej. Amigurumi Llama Grande, Ramo de Rosas...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-fecha">Fecha de Entrega</label>
+            <input type="date" class="form-input" id="order-fecha" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-estado">Estado del Pedido</label>
+            <select class="form-select" id="order-estado">
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Proceso">En Proceso</option>
+              <option value="Entregado">Entregado</option>
+            </select>
+          </div>
+
+          <!-- Costing Calculator section (The dynamic cart) -->
+          <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+              <span>🧵 Materiales Usados en este Pedido</span>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="openAddToCartModal()">+ Agregar</button>
+            </h4>
+            
+            <div id="order-cart-container">
+              <div class="cart-items" id="order-cart-items">
+                <!-- Selected materials rendered dynamically -->
+                <p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 12px;" id="cart-empty-text">No has agregado materiales a este pedido.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cost calculation summary -->
+          <div class="cost-summary-box">
+            <div class="cost-summary-row">
+              <span>Costo Materiales:</span>
+              <span id="calc-costo-materiales">S/. 0.00</span>
+            </div>
+            
+            <div class="form-group" style="margin: 6px 0;">
+              <label class="form-label" style="font-size:0.75rem;" for="order-mano-obra">Mano de Obra / Ganancia (S/.)</label>
+              <input type="number" step="any" class="form-input" id="order-mano-obra" style="padding:8px;" value="15" oninput="calculateCosts()" required>
+            </div>
+
+            <div class="cost-summary-row" style="color: var(--text-muted); font-size: 0.75rem;">
+              <span>Sugerencia Margen (30%):</span>
+              <span id="calc-precio-sugerido">S/. 0.00</span>
+            </div>
+
+            <div class="form-group" style="margin: 6px 0 0 0;">
+              <label class="form-label" style="font-size:0.75rem; color: var(--primary);" for="order-precio-final">Precio Cobrado al Cliente (S/.)</label>
+              <input type="number" step="any" class="form-input" id="order-precio-final" style="padding:8px; border-color: var(--primary); font-weight:bold;" value="0" required>
+            </div>
+
+            <div class="cost-summary-row total">
+              <span>Ganancia Estimada:</span>
+              <span id="calc-ganancia-final">S/. 0.00</span>
+            </div>
+          </div>
+
+          <!-- Adjust stock instantly toggle -->
+          <div class="form-group" style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="order-deduct-stock" checked style="width: 18px; height: 18px;">
+            <label for="order-deduct-stock" style="font-size: 0.8rem; cursor: pointer; user-select: none;">
+              Descontar materiales automáticamente del inventario al guardar
+            </label>
+          </div>
+
+          <div class="form-group" style="margin-top: 14px;">
+            <label class="form-label" for="order-notas">Notas del Pedido</label>
+            <textarea class="form-textarea" id="order-notas" rows="2" placeholder="Detalles de personalización, teléfono del cliente, etc..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeOrderModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Pedido</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MATERIAL TO ORDER (SUB-MODAL/SELECTOR) -->
+  <div class="modal-overlay" id="modal-add-to-cart" style="z-index: 250;">
+    <div class="modal-content" style="max-width: 380px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Agregar Material al Pedido</h3>
+        <button class="modal-close" onclick="closeAddToCartModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="cart-select-material">Seleccionar Material de Inventario</label>
+          <select class="form-select" id="cart-select-material" onchange="updateCartMaterialDetails()">
+            <!-- Populated dynamically with available materials -->
+          </select>
+          <span id="cart-stock-available-info" style="font-size:0.75rem; color: var(--text-muted); display:block; margin-top:4px;">Stock disponible: 0</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="cart-cantidad-usar">Cantidad a Usar</label>
+          <div class="material-selector-grid">
+            <input type="number" step="any" class="form-input" id="cart-cantidad-usar" required value="1" min="0.01">
+            <span id="cart-unit-label" style="display:flex; align-items:center; font-weight:600; font-size:0.9rem; padding-left:4px;">unidades</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeAddToCartModal()">Atrás</button>
+        <button type="button" class="btn btn-primary" onclick="addMaterialToOrderCart()">Añadir al Carrito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: APPS SCRIPT CODE VIEWER -->
+  <div class="modal-overlay" id="modal-apps-script">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Código Google Apps Script</h3>
+        <button class="modal-close" onclick="closeAppsScriptModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem; color: var(--text-muted); margin-bottom:12px;">Copia todo este código y pégalo dentro de tu editor de Apps Script en Google Sheets.</p>
+        
+        <div class="copy-code-container">
+          <button class="btn-copy" onclick="copyAppsScriptCode()">Copiar Código</button>
+          <pre class="code-snippet" id="apps-script-code-text">
+// Apps Script para Vicuinia (Mundo Suni)
+// Permite guardar y sincronizar inventario y pedidos desde Google Sheets
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet();
+  var res = {};
+  
+  // Aseguramos que existan las hojas
+  createSheetsIfNotExist(sheet);
+  
+  res.materiales = getSheetData(sheet.getSheetByName("materiales"));
+  res.pedidos = getSheetData(sheet.getSheetByName("pedidos"));
+  
+  return ContentService.createTextOutput(JSON.stringify(res))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet();
+    createSheetsIfNotExist(sheet);
+    
+    // Guardar Materiales
+    saveSheetData(sheet.getSheetByName("materiales"), data.materiales, ["id", "nombre", "categoria", "color", "colorHex", "cantidad", "unidad", "costo_unitario", "stock_minimo"]);
+    
+    // Guardar Pedidos
+    saveSheetData(sheet.getSheetByName("pedidos"), data.pedidos, ["id", "cliente", "producto", "fecha_entrega", "estado", "mano_obra", "precio_final", "materiales_usados", "notas"]);
+    
+    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function createSheetsIfNotExist(sheet) {
+  if (!sheet.getSheetByName("materiales")) {
+    var s = sheet.insertSheet("materiales");
+    s.appendRow(["id", "nombre", "categoria", "color", "colorHex", "cantidad", "unidad", "costo_unitario", "stock_minimo"]);
+  }
+  if (!sheet.getSheetByName("pedidos")) {
+    var s = sheet.insertSheet("pedidos");
+    s.appendRow(["id", "cliente", "producto", "fecha_entrega", "estado", "mano_obra", "precio_final", "materiales_usados", "notas"]);
+  }
+}
+
+function getSheetData(s) {
+  var rows = s.getDataRange().getValues();
+  if (rows.length <= 1) return [];
+  var headers = rows[0];
+  var data = [];
+  for (var i = 1; i < rows.length; i++) {
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      var val = rows[i][j];
+      // Si parece JSON (para materiales_usados) lo parseamos
+      if (headers[j] === "materiales_usados" && val && typeof val === "string") {
+        try { obj[headers[j]] = JSON.parse(val); } catch(err) { obj[headers[j]] = val; }
+      } else {
+        obj[headers[j]] = val;
+      }
+    }
+    data.push(obj);
+  }
+  return data;
+}
+
+function saveSheetData(s, dataList, headers) {
+  s.clear();
+  s.appendRow(headers);
+  if (!dataList || dataList.length === 0) return;
+  
+  for (var i = 0; i < dataList.length; i++) {
+    var item = dataList[i];
+    var row = [];
+    for (var j = 0; j < headers.length; j++) {
+      var val = item[headers[j]];
+      if (headers[j] === "materiales_usados") {
+        row.push(JSON.stringify(val));
+      } else {
+        row.push(val !== undefined ? val : "");
+      }
+    }
+    s.appendRow(row);
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeAppsScriptModal()">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
