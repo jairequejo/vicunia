@@ -1,16 +1,16 @@
 /**
- * Piezas de interfaz del armador: muestras de color y nombres de filamento.
- * Las usan los tres diseñadores (clicker, lápiz y siluetas).
+ * Muestras de color compartidas por la portada y por el armador de la ficha.
+ * Cada muestra es un botón con su nombre de filamento y, al final, un selector
+ * de color libre para quien quiera uno que no esté en la lista.
  */
-import { FILAMENTS, contrastInk } from '../palette.js';
+import { FILAMENTS, contrastInk } from './palette.js';
 
 /**
- * Dibuja una fila de muestras de color y devuelve el control.
- * Cada muestra es un botón; al final se añade el selector de color libre.
+ * Dibuja una fila de muestras de color.
  *
  * @param {HTMLElement} container
  * @param {Array<{id: string, name: string, hex: string, finish?: string}>} lista
- * @param {(id: string) => void} onPick  se llama con el id elegido
+ * @param {(id: string) => void} onPick  se llama con el id o el hex elegido
  * @param {{sufijo?: string}} [opciones]
  */
 export function crearSwatches(container, lista, onPick, { sufijo = '' } = {}) {
@@ -41,12 +41,26 @@ export function crearSwatches(container, lista, onPick, { sufijo = '' } = {}) {
   container.append(propio);
 }
 
-/** Marca la muestra activa de un grupo. */
+/** Marca la muestra activa de un grupo por id de filamento. */
 export function marcar(container, id) {
   if (!container) return;
   container.querySelectorAll('button.swatch').forEach((boton) => {
     boton.setAttribute('aria-pressed', String(boton.dataset.id === id));
   });
+}
+
+/** Marca la muestra activa comparando por color hex (lo usa el lápiz). */
+export function marcarHex(container, hex) {
+  if (!container) return;
+
+  const objetivo = String(hex).toLowerCase();
+  container.querySelectorAll('button.swatch').forEach((boton) => {
+    const activo = boton.dataset.id && colorHex(boton.dataset.id).toLowerCase() === objetivo;
+    boton.setAttribute('aria-pressed', String(activo));
+  });
+
+  const propio = container.querySelector('input[type=color]');
+  if (propio && propio.value.toLowerCase() !== objetivo) propio.value = hex;
 }
 
 /** Nombre legible de un color de filamento (o de un hex suelto). */

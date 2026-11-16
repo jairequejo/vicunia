@@ -2603,12 +2603,30 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
   margin-top: 1.2rem;
 }
 
+/* Escenario de la silueta: el ancho lo manda su columna, nunca el de la
+   portada. El relleno y el centrado vienen de `.stage--arm`. */
 .stage--arm {
+  width: 100%;
+  max-width: 100%;
   aspect-ratio: 4 / 3;
   min-height: 0;
 }
 @media (min-width: 980px) {
-  .stage--arm { aspect-ratio: 1 / 1; min-height: 300px; }
+  .stage--arm { aspect-ratio: 1 / 1; }
+}
+
+/* Visor 3D de la ficha (clicker y lápiz): sin relleno ni rejilla, el lienzo
+   ocupa todo el escenario y el tamaño lo decide su columna. */
+.stage--visor {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+  padding: 0;
+}
+@media (min-width: 980px) {
+  .stage--visor { aspect-ratio: 1 / 1; }
 }
 
 

@@ -8,7 +8,7 @@ import { PencilPreview } from '../pencil.js';
 import { engine, SLIDERS, PENCIL_DEF } from '../pencil-geo.js';
 import { FILAMENTS } from '../palette.js';
 import { $ } from '../dom.js';
-import { crearSwatches } from '../armador/ui.js';
+import { crearSwatches } from '../muestras.js';
 
 /**
  * @param {object} opciones
@@ -72,7 +72,7 @@ export function crearDisenadorLapiz({ mount, vista, onChange }) {
     </details>`;
 
   vista.innerHTML = `
-    <div class="stage" id="arm-stage">
+    <div class="stage stage--visor" id="arm-stage">
       <canvas id="ficha-pencil-canvas" aria-label="Vista 3D de tu nombre para lápiz"></canvas>
       <div class="stage__loading" id="ficha-loading"><span>Cargando el motor de letras…</span></div>
       <span class="chip" id="ficha-summary" aria-live="polite"></span>

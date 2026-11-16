@@ -39,13 +39,19 @@ vicunia/
 │   │   ├── catalogo-data.js   Datos de cada línea: textos, siluetas y colores
 │   │   ├── catalogo.js        Filtros del catálogo
 │   │   ├── producto.js        Ficha de producto: SEO, armador y recomendados
-│   │   ├── main.js            Portada: estado del clicker y del lápiz, formulario de foto
-│   │   ├── armador/           El personalizador, en piezas
+│   │   ├── main.js            Portada: arranca sus cuatro piezas
+│   │   ├── muestras.js        Muestras de color compartidas (portada y ficha)
+│   │   ├── portada/           Los editores de la portada, cada uno aparte
+│   │   │   ├── clicker.js       Clicker: estado, teclas, colores y visor 3D
+│   │   │   ├── lapiz.js         Lápiz: nombre, colores, medidas y STL
+│   │   │   ├── foto.js          Formulario de la foto y pedido por WhatsApp
+│   │   │   ├── galeria.js       Galería de trabajos
+│   │   │   └── comun.js         Aviso, sonido de clic y descargas
+│   │   ├── armador/           El personalizador de la ficha, en piezas
 │   │   │   ├── index.js         Une diseñador + entrega + resumen y expone la API
 │   │   │   ├── esquema.js       Esqueleto HTML del armador
 │   │   │   ├── entrega.js       Recoger o envío, cantidad, notas y nombre del cliente
-│   │   │   ├── mensaje.js       Resumen en vivo y borrador de WhatsApp
-│   │   │   └── ui.js            Muestras de color y nombres de filamento
+│   │   │   └── mensaje.js       Resumen en vivo y borrador de WhatsApp
 │   │   ├── disenadores/       Un diseñador por tipo de línea
 │   │   │   ├── carga.js         Carga bajo demanda (JSCAD y three solo si hacen falta)
 │   │   │   ├── clicker.js       Clicker con la malla real de producción

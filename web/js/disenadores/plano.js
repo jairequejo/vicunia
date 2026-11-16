@@ -7,7 +7,7 @@
  */
 import { FILAMENTS } from '../palette.js';
 import { $, $$ } from '../dom.js';
-import { crearSwatches, marcar, nombreColor, colorHex } from '../armador/ui.js';
+import { crearSwatches, marcar, nombreColor, colorHex } from '../muestras.js';
 
 const TAMANO_MAXIMO = 100 * 1024 * 1024; // 100 MB
 

@@ -19,15 +19,21 @@ web/js/
 │                    colores por defecto). Es la fuente de verdad del catálogo.
 ├── catalogo.js      Filtros del catálogo (por línea) y lectura del ancla #.
 ├── producto.js      Ficha de producto: SEO, armador, recomendados y compartir.
-├── main.js          Portada: estado del clicker y del lápiz, formulario de la
-│                    foto, exportaciones y galería.
+├── main.js          Portada: solo arranca sus cuatro piezas (ver portada/).
+├── muestras.js      Muestras de color compartidas por la portada y la ficha.
 │
-├── armador/         El personalizador, en piezas
+├── portada/         Los editores de la portada, cada uno en su archivo
+│   ├── clicker.js   Clicker: estado, teclas, símbolos, colores y visor 3D.
+│   ├── lapiz.js     Lápiz: nombre, uno o dos colores, medidas y STL.
+│   ├── foto.js      Formulario de la foto y pedido por WhatsApp.
+│   ├── galeria.js   Galería de trabajos con su cuadro de diálogo.
+│   └── comun.js     Aviso flotante, sonido de clic y descargas.
+│
+├── armador/         El personalizador de la ficha, en piezas
 │   ├── index.js     Une diseñador + entrega + resumen y expone la API.
 │   ├── esquema.js   Esqueleto HTML del armador (la parte que no cambia).
 │   ├── entrega.js   Recoger o envío, cantidad, notas y nombre del cliente.
-│   ├── mensaje.js   Resumen en vivo y borrador del mensaje de WhatsApp.
-│   └── ui.js        Muestras de color y nombres de filamento.
+│   └── mensaje.js   Resumen en vivo y borrador del mensaje de WhatsApp.
 │
 ├── disenadores/     Un diseñador por tipo de línea
 │   ├── carga.js     Elige el diseñador y carga lo justo (JSCAD, three).
@@ -47,7 +53,7 @@ web/js/
 2. El módulo de la página hace lo suyo:
    - `catalogo.js` → filtra las tarjetas y lee el ancla de la URL.
    - `producto.js` → pinta la SEO, arma el armador y los recomendados.
-   - `main.js` → arma el estado del clicker y del lápiz.
+   - `main.js` → arranca los editores de `portada/` (clicker, lápiz, foto y galería).
 3. En la ficha, `crearArmador()` hace esto:
 
 ```

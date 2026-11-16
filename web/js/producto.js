@@ -11,7 +11,7 @@ import { PRODUCTOS } from './catalogo-data.js';
 import { initSite } from './site.js';
 import { actualizarSeo, actualizarEsquema } from './seo.js';
 import { crearArmador } from './armador/index.js';
-import { colorHex } from './armador/ui.js';
+import { colorHex } from './muestras.js';
 import { $, setText } from './dom.js';
 
 /** Qué líneas se recomiendan desde cada línea. */

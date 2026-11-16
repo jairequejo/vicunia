@@ -16,7 +16,7 @@ import {
   normalizeChar
 } from '../palette.js';
 import { $, $$ } from '../dom.js';
-import { crearSwatches, marcar, nombreColor } from '../armador/ui.js';
+import { crearSwatches, marcar, nombreColor } from '../muestras.js';
 
 /** Colores con los que se van turnando las teclas por defecto. */
 const CICLO = ['rosado', 'azul', 'mango', 'verde', 'lavanda', 'naranja', 'azul-hielo', 'rojo', 'turquesa', 'seda'];
@@ -100,7 +100,7 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     </section>`;
 
   vista.innerHTML = `
-    <div class="stage" id="arm-stage">
+    <div class="stage stage--visor" id="arm-stage">
       <canvas id="ficha-clicker-canvas" aria-label="Vista 3D de tu clicker con tu nombre"></canvas>
       <div class="stage__loading" id="ficha-loading"><span>Cargando la malla real…</span></div>
       <span class="chip" id="ficha-summary" aria-live="polite"></span>
