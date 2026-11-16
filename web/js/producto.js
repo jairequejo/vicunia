@@ -6,7 +6,8 @@
  */
 import { waLink } from './config.js';
 import { PRODUCTOS } from './catalogo-data.js';
-import { crearArmador, hexColor } from './armador.js';
+import { crearArmador } from './armador.js';
+import { hexColor } from './disenador-utils.js';
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -178,7 +179,6 @@ function initShareButton(producto) {
 
 function renderProduct(key) {
   const producto = PRODUCTOS[key];
-
   if (!producto) {
     setText('#product-title', 'Explora el catálogo de Vicunia');
     setText('#product-description', 'Este enlace no corresponde a un producto disponible. Mira todas las líneas y elige la que buscas.');
@@ -232,10 +232,13 @@ function renderProduct(key) {
   const mount = $('#product-armador');
   let armador = null;
   if (mount) {
-    armador = crearArmador({
+    crearArmador({
       mount,
       producto,
       onChange: () => actualizarMensajes(producto, armador)
+    }).then((instancia) => {
+      armador = instancia;
+      actualizarMensajes(producto, armador);
     });
   }
   actualizarMensajes(producto, armador);

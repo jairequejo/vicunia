@@ -26,7 +26,7 @@ node server.js
 vicunia/
 ├── web/                       Web pública de Vicunia (lo que ve el cliente)
 │   ├── index.html             Landing: foto a 3D, clicker, lápiz, cómo funciona, galería, FAQ
-│   ├── catalogo.html          Catálogo de líneas con filtros
+│   ├── catalogo.html          Catálogo de líneas con filtros (la tarjeta es el botón)
 │   ├── producto.html          Ficha de cada línea (destino de los QR) con el armador
 │   ├── poster.html            Carteles con QR listos para imprimir
 │   ├── styles.css             Tokens de color, componentes y responsive
@@ -35,7 +35,11 @@ vicunia/
 │   │   ├── site.js            Tema, menú, año y enlaces de WhatsApp (común a todas)
 │   │   ├── catalogo.js        Filtros del catálogo
 │   │   ├── catalogo-data.js   Datos de cada línea: textos, siluetas y colores
-│   │   ├── armador.js         Personalizador (nombre, diseño, colores, entrega)
+│   │   ├── armador.js         Entrega, cantidad, resumen y borrador de WhatsApp
+│   │   ├── disenador-clicker.js  Clicker con la malla real dentro de la ficha
+│   │   ├── disenador-lapiz.js    Nombre para lápiz con el motor real de letras
+│   │   ├── disenador-plano.js    Siluetas de las líneas por encargo
+│   │   ├── disenador-utils.js    Muestras de color y nombres de filamento
 │   │   ├── producto.js        Ficha de producto, SEO y recomendaciones
 │   │   ├── main.js            Estado de la página, formulario de foto, exportaciones
 │   │   ├── clicker3d.js       Visor del clicker sobre la malla real de producción
@@ -107,7 +111,7 @@ Los enlaces viven en `web/js/config.js`; si cambian, se edita solo ese archivo.
 2. **Clicker de nombre** — visor 3D con la malla real, 1 a 9 teclas, 17 filamentos y 15 formas de tecla. Incluye argolla metálica estándar.
 3. **Lápiz con nombre** — hasta 24 caracteres, una o dos caras de color, medidas ajustables y descarga de STL.
 
-El catálogo amplía estas líneas con ideas por encargo: dummy con colores de esqueleto y carcasa, Navidad con nombre, recuerdos para eventos y siluetas de Cajamarca. Cada línea del catálogo abre su ficha (`producto.html?tipo=...`), donde la persona personaliza con la misma lógica del clicker y del lápiz —nombre, diseño o silueta, color del esqueleto y de la carcasa, y recoger en Cajamarca o envío— y el pedido queda escrito en WhatsApp. No hay pedido automatizado ni precios publicados.
+El catálogo amplía estas líneas con ideas por encargo: dummy con colores de esqueleto y carcasa, Navidad con nombre, recuerdos para eventos y siluetas de Cajamarca. Cada tarjeta del catálogo es un botón: al tocarla se abre la ficha de esa línea, que usa la misma lógica del clicker y del lápiz —nombre, diseño o silueta, color del esqueleto y de la carcasa, tamaño, cantidad y si se recoge en Cajamarca o se envía— y deja el pedido escrito en WhatsApp. El clicker y el lápiz de la ficha usan el visor 3D real (malla de producción y motor de letras). No hay pedido automatizado ni precios publicados.
 
 No se publican precios en la web: se confirman por WhatsApp según tamaño, colores y plazo.
 

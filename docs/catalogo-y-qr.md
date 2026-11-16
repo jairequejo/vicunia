@@ -6,6 +6,8 @@
 2. El catálogo (`catalogo.html`) muestra todas las líneas en un solo lugar, con filtros: todo, figuras, nombres, clickers, lápices, dummys, Navidad, eventos y Cajamarca. Cada tarjeta abre la ficha de esa línea.
 3. Un QR en una tienda o puesto lleva a la **ficha de ese producto**, no a una lista genérica. Abajo aparecen el resto de líneas y el botón **Ver catálogo completo**.
 4. En la ficha, la persona personaliza la pieza con la misma lógica del clicker y del lápiz: nombre o letras, diseño o silueta, color del esqueleto y de la carcasa, tamaño, cantidad y forma de entrega (recoger en Cajamarca o envío).
+   - El clicker y el lápiz usan el visor 3D real: la malla de producción del clicker y el motor de letras del lápiz, con sus medidas y colores reales.
+   - Las líneas por encargo muestran la silueta de la pieza y se pintan con los colores elegidos.
 5. El botón de WhatsApp abre el chat con un borrador que ya trae todos esos datos. No se envía nada automáticamente: la persona revisa y envía.
 
 ## Destinos para los QR
