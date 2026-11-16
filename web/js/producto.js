@@ -1,37 +1,40 @@
 /**
- * Ficha de producto: es la pantalla a la que llega la persona que escanea el QR
- * de un cartel. Muestra la pieza, permite personalizarla con la misma lógica del
- * clicker y del lápiz (nombre, diseño, colores y entrega) y deja el pedido
- * escrito en WhatsApp. No se envía nada automáticamente.
+ * Ficha de producto: la pantalla a la que llega quien escanea el QR de un
+ * cartel o quien toca una tarjeta del catálogo.
+ *
+ * Muestra la pieza, deja personalizarla con la misma lógica del clicker y del
+ * lápiz (nombre, diseño, colores, entrega) y prepara el borrador de WhatsApp.
+ * No se envía nada automáticamente.
  */
 import { waLink } from './config.js';
 import { PRODUCTOS } from './catalogo-data.js';
-import { crearArmador } from './armador.js';
-import { hexColor } from './disenador-utils.js';
+import { initSite } from './site.js';
+import { actualizarSeo, actualizarEsquema } from './seo.js';
+import { crearArmador } from './armador/index.js';
+import { colorHex } from './armador/ui.js';
+import { $, setText } from './dom.js';
 
-const $ = (selector) => document.querySelector(selector);
-
-/* Recomendaciones: se ofrecen según la línea abierta. */
-const recomendaciones = {
-  clicker: [
+/** Qué líneas se recomiendan desde cada línea. */
+const RECOMENDADOS = {
+  clickers: [
     ['Lápiz con nombre', 'Un detalle para usar todos los días.', 'producto.html?tipo=lapiz'],
     ['Figura desde tu foto', 'Transforma una foto en un regalo 3D.', 'producto.html?tipo=figuras'],
     ['Dummy a tu estilo', 'Combina los colores de una figura para armar.', 'producto.html?tipo=dummy']
   ],
-  lapiz: [
+  lápices: [
     ['Clicker con nombre', 'Lleva tus letras también en un llavero.', 'producto.html?tipo=clicker'],
     ['Recuerdos para eventos', 'Detalles para bautizos y promociones.', 'catalogo.html#eventos'],
     ['Dummy a tu estilo', 'Una figura para combinar a tu gusto.', 'producto.html?tipo=dummy']
-  ],
-  dummy: [
-    ['Clicker con nombre', 'Tu nombre en un llavero con teclas.', 'producto.html?tipo=clicker'],
-    ['Figura desde tu foto', 'Transforma una foto en un regalo 3D.', 'producto.html?tipo=figuras'],
-    ['Lápiz con nombre', 'Un detalle personalizado para regalar.', 'producto.html?tipo=lapiz']
   ],
   figuras: [
     ['Clicker con nombre', 'Tu nombre en un llavero con teclas.', 'producto.html?tipo=clicker'],
     ['Lápiz con nombre', 'Un detalle personalizado para regalar.', 'producto.html?tipo=lapiz'],
     ['Catálogo completo', 'Conoce todas las líneas impresas en Cajamarca.', 'catalogo.html']
+  ],
+  dummys: [
+    ['Clicker con nombre', 'Tu nombre en un llavero con teclas.', 'producto.html?tipo=clicker'],
+    ['Figura desde tu foto', 'Transforma una foto en un regalo 3D.', 'producto.html?tipo=figuras'],
+    ['Lápiz con nombre', 'Un detalle personalizado para regalar.', 'producto.html?tipo=lapiz']
   ],
   navidad: [
     ['Clicker con nombre', 'Tu nombre en un llavero con teclas.', 'producto.html?tipo=clicker'],
@@ -50,108 +53,55 @@ const recomendaciones = {
   ]
 };
 
-const fallback = [
+const POR_DEFECTO = [
   ['Clicker con nombre', 'Tu nombre en un llavero con teclas.', 'producto.html?tipo=clicker'],
   ['Lápiz con nombre', 'Un detalle personalizado para regalar.', 'producto.html?tipo=lapiz'],
   ['Catálogo completo', 'Conoce todas las líneas impresas en Cajamarca.', 'catalogo.html']
 ];
 
-function setText(selector, value) {
-  const element = $(selector);
-  if (element) element.textContent = value;
+/* ------------------------------------------------------------------ SEO */
+
+function pintarSeo(producto, tipo) {
+  const url = `${window.location.origin}/producto.html?tipo=${encodeURIComponent(tipo)}`;
+  actualizarSeo({
+    titulo: `${producto.nombre} · Vicunia 3D Cajamarca`,
+    descripcion: producto.descripcion,
+    imagen: producto.ogImage,
+    categoria: producto.categoria || producto.linea,
+    url
+  });
+  actualizarEsquema({
+    nombre: producto.nombre,
+    descripcion: producto.descripcion,
+    imagen: producto.ogImage,
+    categoria: producto.categoria || producto.linea
+  });
 }
 
-/* ------------------------------------------------------------------- SEO */
+/* ----------------------------------------------------------------- arte */
 
-function updateSeoMeta(producto, key) {
-  const origin = window.location.origin;
-  const canonicalUrl = `${origin}/producto.html?tipo=${encodeURIComponent(key)}`;
-  const ogImgUrl = `${origin}/${producto.ogImage || 'img/og-clicker.jpg'}`;
-
-  document.title = `${producto.nombre} · Vicunia 3D Cajamarca`;
-
-  const metaDesc = $('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute('content', producto.descripcion);
-
-  const setMeta = (prop, content) => {
-    let el = $(`meta[property="${prop}"]`);
-    if (!el) {
-      el = document.createElement('meta');
-      el.setAttribute('property', prop);
-      document.head.appendChild(el);
-    }
-    el.setAttribute('content', content);
-  };
-
-  const setTwitter = (name, content) => {
-    let el = $(`meta[name="${name}"]`);
-    if (!el) {
-      el = document.createElement('meta');
-      el.setAttribute('name', name);
-      document.head.appendChild(el);
-    }
-    el.setAttribute('content', content);
-  };
-
-  setMeta('og:title', `${producto.nombre} · Vicunia 3D Cajamarca`);
-  setMeta('og:description', producto.descripcion);
-  setMeta('og:url', canonicalUrl);
-  setMeta('og:image', ogImgUrl);
-  setMeta('og:image:secure_url', ogImgUrl);
-  setMeta('og:image:type', 'image/jpeg');
-  setMeta('og:image:width', '1200');
-  setMeta('og:image:height', '630');
-
-  setTwitter('twitter:card', 'summary_large_image');
-  setTwitter('twitter:title', `${producto.nombre} · Vicunia 3D Cajamarca`);
-  setTwitter('twitter:description', producto.descripcion);
-  setTwitter('twitter:image', ogImgUrl);
-
-  const canon = $('link[rel="canonical"]');
-  if (canon) canon.setAttribute('href', canonicalUrl);
-
-  const script = $('#product-schema');
-  if (script) {
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: producto.nombre,
-      description: producto.descripcion,
-      image: ogImgUrl,
-      brand: { '@type': 'Brand', name: 'Vicunia' },
-      category: producto.categoria || producto.linea,
-      offers: {
-        '@type': 'Offer',
-        priceCurrency: 'PEN',
-        availability: 'https://schema.org/InStock',
-        seller: { '@type': 'LocalBusiness', name: 'Vicunia 3D Cajamarca' }
-      }
-    });
-  }
-}
-
-/* ------------------------------------------------------------------ arte */
-
+/** Dibuja la silueta de la pieza en el escenario, con los colores por defecto. */
 function pintarArteHero(producto) {
   const caja = $('#product-visual-art');
-  if (!caja) return;
   const diseno = (producto.disenos || [])[0];
-  if (!diseno) return;
+  if (!caja || !diseno) return;
+
   caja.innerHTML = `<svg viewBox="0 0 64 64" role="img">${diseno.art}${diseno.extra || ''}</svg>`;
   caja.querySelectorAll('[data-slot]').forEach((parte) => {
-    const slot = producto.slots.find((s) => s.key === parte.dataset.slot);
-    if (slot) parte.style.color = hexColor(slot.porDefecto);
+    const slot = (producto.slots || []).find((entrada) => entrada.key === parte.dataset.slot);
+    if (slot) parte.style.color = colorHex(slot.porDefecto);
   });
 }
 
 /* ------------------------------------------------------------ compartir */
 
-function initShareButton(producto) {
-  const shareBtn = $('#product-share');
-  if (!shareBtn) return;
+/** Botón de compartir: usa el menú del móvil y si no, copia el enlace. */
+function iniciarCompartir(producto) {
+  const boton = $('#product-share');
+  if (!boton) return;
 
-  shareBtn.addEventListener('click', async () => {
-    const shareData = {
+  boton.addEventListener('click', async () => {
+    const datos = {
       title: `${producto.nombre} · Vicunia 3D`,
       text: `${producto.descripcion} - Diseñado en Cajamarca, Perú:`,
       url: window.location.href
@@ -159,61 +109,108 @@ function initShareButton(producto) {
 
     if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
       try {
-        await navigator.share(shareData);
+        await navigator.share(datos);
         return;
-      } catch (error) { /* sin compartir: seguimos con el portapapeles */ }
+      } catch (error) {
+        // el usuario canceló: seguimos con el portapapeles
+      }
     }
 
     try {
       await navigator.clipboard.writeText(window.location.href);
-      const originalText = shareBtn.innerHTML;
-      shareBtn.innerHTML = '¡Enlace copiado! ✓';
-      setTimeout(() => { shareBtn.innerHTML = originalText; }, 2600);
+      const original = boton.innerHTML;
+      boton.innerHTML = '¡Enlace copiado! ✓';
+      setTimeout(() => { boton.innerHTML = original; }, 2600);
     } catch (error) {
       window.prompt('Copia este enlace para compartir:', window.location.href);
     }
   });
 }
 
-/* --------------------------------------------------------------- ficha */
+/* -------------------------------------------------------- recomendados */
 
-function renderProduct(key) {
-  const producto = PRODUCTOS[key];
-  if (!producto) {
-    setText('#product-title', 'Explora el catálogo de Vicunia');
-    setText('#product-description', 'Este enlace no corresponde a un producto disponible. Mira todas las líneas y elige la que buscas.');
-    setText('#product-status', 'Catálogo completo');
-    $('#product-whatsapp')?.remove();
-    $('#product-share')?.remove();
-    $('.product-options')?.remove();
-    $('.product-delivery')?.remove();
-    $('.product-more')?.remove();
-    return;
-  }
+/** Miniatura de la línea recomendada, si es una ficha del catálogo. */
+function miniatura(linea) {
+  const tipo = /tipo=([a-z-]+)/.exec(linea.href || '')?.[1];
+  const producto = tipo ? PRODUCTOS[tipo] : null;
+  const diseno = producto?.disenos?.[0];
+  if (!diseno) return null;
 
-  updateSeoMeta(producto, key);
+  // Se arma en un elemento real para poder pintar cada parte con su color.
+  const caja = document.createElement('div');
+  caja.innerHTML = `<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">${diseno.art}${diseno.extra || ''}</svg>`;
+
+  const svg = caja.querySelector('svg');
+  svg.querySelectorAll('[data-slot]').forEach((parte) => {
+    const slot = (producto.slots || []).find((entrada) => entrada.key === parte.dataset.slot);
+    if (slot) parte.style.color = colorHex(slot.porDefecto);
+  });
+  return svg;
+}
+
+function pintarRecomendados(producto) {
+  const grid = $('#product-recommendations');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+  const lista = RECOMENDADOS[producto.linea.toLowerCase()] || POR_DEFECTO;
+
+  lista.forEach(([titulo, descripcion, href]) => {
+    const link = document.createElement('a');
+    link.className = 'product-recommendation';
+    link.href = href;
+
+    const art = document.createElement('span');
+    art.className = 'product-recommendation__art';
+    const svg = miniatura({ href });
+    if (svg) {
+      art.append(svg);
+    } else {
+      art.textContent = '✦';
+      art.setAttribute('aria-hidden', 'true');
+    }
+
+    const heading = document.createElement('strong');
+    heading.textContent = titulo;
+    const copy = document.createElement('small');
+    copy.textContent = descripcion;
+
+    link.append(art, heading, copy);
+    grid.append(link);
+  });
+}
+
+/* ----------------------------------------------------------------- ficha */
+
+/** Conecta los botones de WhatsApp con el borrador que arma el armador. */
+function conectarMensajes(producto, armador) {
+  if (!armador) return;
+  const url = waLink(armador.mensaje());
+  [$('#product-whatsapp'), $('#product-armar-whatsapp')].forEach((link) => {
+    if (link) link.href = url;
+  });
+}
+
+function pintarFicha(producto, tipo) {
+  pintarSeo(producto, tipo);
   setText('#product-crumb', producto.nombre);
   setText('#product-category', producto.categoria || producto.linea);
   setText('#product-title', producto.nombre);
   setText('#product-description', producto.descripcion);
-  setText('#product-status', producto.estado === 'listo'
-    ? 'Configurador en línea · pedido por WhatsApp'
-    : producto.estado === 'temporada'
-      ? 'Temporada · por encargo'
-      : 'Por encargo · colores y disponibilidad a confirmar');
+  setText('#product-status', estadoDeLinea(producto.estado));
   setText('#product-visual-label', 'Ilustración orientativa');
-  $('#product-visual').dataset.product = key;
+  $('#product-visual').dataset.product = tipo;
   pintarArteHero(producto);
 
-  /* CTA principal: si hay diseñador 3D, lleva ahí; si no, al armador. */
-  const primary = $('#product-primary');
-  if (primary) {
+  // Botón principal: si hay diseñador 3D en la portada, lleva allí.
+  const principal = $('#product-primary');
+  if (principal) {
     if (producto.diseno3d) {
-      primary.textContent = producto.diseno3d.label;
-      primary.href = producto.diseno3d.href;
+      principal.textContent = producto.diseno3d.label;
+      principal.href = producto.diseno3d.href;
     } else {
-      primary.textContent = 'Personalizar ahora';
-      primary.href = '#armador';
+      principal.textContent = 'Personalizar ahora';
+      principal.href = '#armador';
     }
   }
 
@@ -228,113 +225,59 @@ function renderProduct(key) {
     }
   }
 
-  /* Armador: nombre, diseño, colores, entrega y resumen. */
+  iniciarCompartir(producto);
+  pintarRecomendados(producto);
+
+  // El armador arma el resumen y el borrador de WhatsApp.
   const mount = $('#product-armador');
+  if (!mount) return;
+
   let armador = null;
-  if (mount) {
-    crearArmador({
-      mount,
-      producto,
-      onChange: () => actualizarMensajes(producto, armador)
-    }).then((instancia) => {
-      armador = instancia;
-      actualizarMensajes(producto, armador);
-    });
+  crearArmador({
+    mount,
+    producto,
+    onChange: () => conectarMensajes(producto, armador)
+  }).then((instancia) => {
+    armador = instancia;
+    conectarMensajes(producto, armador);
+  });
+}
+
+function estadoDeLinea(estado) {
+  if (estado === 'listo') return 'Configurador en línea · pedido por WhatsApp';
+  if (estado === 'temporada') return 'Temporada · por encargo';
+  return 'Por encargo · colores y disponibilidad a confirmar';
+}
+
+/* --------------------------------------------------------------- arranque */
+
+function mostrarCatalogo() {
+  setText('#product-title', 'Explora el catálogo de Vicunia');
+  setText('#product-description', 'Este enlace no corresponde a un producto disponible. Mira todas las líneas y elige la que buscas.');
+  setText('#product-status', 'Catálogo completo');
+  $('#product-whatsapp')?.remove();
+  $('#product-share')?.remove();
+  $('.product-options')?.remove();
+  $('.product-delivery')?.remove();
+  $('.product-more')?.remove();
+}
+
+function init() {
+  initSite();
+
+  const tipo = new URLSearchParams(window.location.search).get('tipo') || 'clicker';
+  const producto = PRODUCTOS[tipo];
+
+  if (!producto) {
+    mostrarCatalogo();
+    return;
   }
-  actualizarMensajes(producto, armador);
 
-  initShareButton(producto);
-
-  /* Recomendados */
-  const grid = $('#product-recommendations');
-  if (grid) {
-    grid.innerHTML = '';
-    const lista = recomendaciones[producto.linea.toLowerCase()] || fallback;
-    for (const [titulo, descripcion, href] of lista) {
-      const link = document.createElement('a');
-      link.className = 'product-recommendation';
-      link.href = href;
-      const art = document.createElement('span');
-      art.className = 'product-recommendation__art';
-      const recomendado = Recomendado(href);
-      if (recomendado) {
-        art.innerHTML = `<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">${recomendado}</svg>`;
-        art.querySelectorAll('[data-slot]').forEach((parte) => {
-          const slot = recomendado.slots.find((s) => s.key === parte.dataset.slot);
-          if (slot) parte.style.color = hexColor(slot.porDefecto);
-        });
-      } else {
-        art.textContent = '✦';
-        art.setAttribute('aria-hidden', 'true');
-      }
-      const heading = document.createElement('strong');
-      heading.textContent = titulo;
-      const copy = document.createElement('small');
-      copy.textContent = descripcion;
-      link.append(art, heading, copy);
-      grid.append(link);
-    }
-  }
+  pintarFicha(producto, tipo);
 }
 
-/** Miniatura de la línea que se recomienda, si es una ficha del catálogo. */
-function Recomendado(href) {
-  const match = /tipo=([a-z-]+)/.exec(href || '');
-  if (!match) return null;
-  const producto = PRODUCTOS[match[1]];
-  if (!producto) return null;
-  const diseno = (producto.disenos || [])[0];
-  if (!diseno) return null;
-  return { slots: producto.slots || [], svg: diseno.art + (diseno.extra || '') };
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init, { once: true });
+} else {
+  init();
 }
-
-function actualizarMensajes(producto, armador) {
-  if (!armador) return;
-  const mensaje = armador.mensaje();
-  const enlaces = [$('#product-whatsapp'), $('#product-armar-whatsapp')];
-  enlaces.forEach((link) => {
-    if (!link) return;
-    link.href = waLink(mensaje);
-  });
-}
-
-/* ----------------------------------------------------- tema y navegación */
-
-function initThemeAndHeader() {
-  const toggle = $('#theme-toggle');
-  const nav = $('#nav');
-  const navToggle = $('#nav-toggle');
-  const apply = (theme) => {
-    document.documentElement.dataset.theme = theme;
-    toggle?.setAttribute('aria-pressed', String(theme === 'dark'));
-    toggle?.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-    $('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#1C1008' : '#E9EDFC');
-  };
-  let saved = 'light';
-  try { saved = localStorage.getItem('vicunia.theme.v1') || 'light'; } catch (error) { saved = 'light'; }
-  apply(saved);
-  toggle?.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    apply(next);
-    try { localStorage.setItem('vicunia.theme.v1', next); } catch (error) { /* sin almacenamiento */ }
-  });
-  navToggle?.addEventListener('click', () => {
-    const open = nav.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', String(open));
-    navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-  });
-  nav?.addEventListener('click', (event) => {
-    if (event.target.closest('a')) {
-      nav.classList.remove('is-open');
-      navToggle?.setAttribute('aria-expanded', 'false');
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') nav.classList.remove('is-open');
-  });
-}
-
-const requestedType = new URLSearchParams(window.location.search).get('tipo') || 'clicker';
-renderProduct(requestedType);
-initThemeAndHeader();
-setText('#year', String(new Date().getFullYear()));

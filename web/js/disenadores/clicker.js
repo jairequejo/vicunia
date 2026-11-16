@@ -1,8 +1,10 @@
 /**
- * Diseñador de clicker para la ficha de producto: la misma lógica 3D de la
- * portada (malla real de producción), pero dentro de la ficha del QR.
+ * Diseñador del clicker: la misma lógica 3D de la portada (malla real de
+ * producción), pero dentro de la ficha de producto.
+ *
+ * Pasos: 1) tu palabra · 2) tecla seleccionada · 3) color del cuerpo.
  */
-import { ClickerPreview } from './clicker3d.js';
+import { ClickerPreview } from '../clicker3d.js';
 import {
   FILAMENTS,
   BASE_COLORS,
@@ -12,14 +14,19 @@ import {
   inkFor,
   normalizeWord,
   normalizeChar
-} from './palette.js';
-import { crearSwatches, marcar, nombreColor } from './disenador-utils.js';
+} from '../palette.js';
+import { $, $$ } from '../dom.js';
+import { crearSwatches, marcar, nombreColor } from '../armador/ui.js';
 
+/** Colores con los que se van turnando las teclas por defecto. */
 const CICLO = ['rosado', 'azul', 'mango', 'verde', 'lavanda', 'naranja', 'azul-hielo', 'rojo', 'turquesa', 'seda'];
 
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
+/**
+ * @param {object} opciones
+ * @param {HTMLElement} opciones.mount   panel de pasos
+ * @param {HTMLElement} opciones.vista   escenario con el visor 3D
+ * @param {() => void} [opciones.onChange]
+ */
 export function crearDisenadorClicker({ mount, vista, onChange }) {
   const estado = {
     word: 'VICUNIA',
@@ -29,13 +36,14 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     active: 0
   };
 
+  /** Reparte las letras del nombre entre las teclas y conserva los colores. */
   function crearCaps(word, slots, previos = []) {
     const letras = normalizeWord(word).slice(0, 10);
-    return Array.from({ length: slots }, (_, i) => ({
-      char: letras[i] || '',
+    return Array.from({ length: slots }, (_, indice) => ({
+      char: letras[indice] || '',
       symbol: null,
-      color: previos[i]?.color || CICLO[i % CICLO.length],
-      ink: previos[i]?.ink ?? null
+      color: previos[indice]?.color || CICLO[indice % CICLO.length],
+      ink: previos[indice]?.ink ?? null
     }));
   }
 
@@ -99,9 +107,9 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     </div>
     <p class="hint">Gira el modelo con el dedo. Es la misma pieza que vamos a imprimir.</p>`;
 
-  /* ------------------------------------------------------ controles */
+  /* --------------------------------------------------------- controles */
 
-  const controlSlots = $('#ficha-slots-control', mount);
+  const controlTeclas = $('#ficha-slots-control', mount);
   for (let total = 2; total <= 10; total += 1) {
     const boton = document.createElement('button');
     boton.type = 'button';
@@ -114,7 +122,7 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
       estado.active = Math.min(estado.active, total - 1);
       pintar();
     });
-    controlSlots.append(boton);
+    controlTeclas.append(boton);
   }
 
   const tira = $('#ficha-slot-strip', mount);
@@ -139,8 +147,7 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     boton.dataset.symbol = simbolo.id;
     boton.setAttribute('aria-label', simbolo.name);
     boton.title = simbolo.name;
-    const idIcono = simbolo.id === 'moon' ? 'i-moon-sym' : `i-${simbolo.id}`;
-    boton.innerHTML = `<svg aria-hidden="true"><use href="#${idIcono}"></use></svg>`;
+    boton.innerHTML = `<svg aria-hidden="true"><use href="#i-${simbolo.id === 'moon' ? 'moon-sym' : simbolo.id}"></use></svg>`;
     boton.addEventListener('click', () => {
       estado.caps[estado.active].symbol = simbolo.id;
       estado.caps[estado.active].char = '';
@@ -181,64 +188,20 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     pintar();
   });
 
-  /* --------------------------------------------------------- pintado */
+  /* ------------------------------------------------------------ pintado */
 
   function pintar() {
     $('#ficha-word', mount).value = estado.word;
     $('#ficha-word-count', mount).textContent = `${estado.word.length}/10`;
-    $$('.seg', controlSlots).forEach((boton) => {
+
+    $$('.seg', controlTeclas).forEach((boton) => {
       const activo = Number(boton.textContent) === estado.slots;
       boton.classList.toggle('is-active', activo);
       boton.setAttribute('aria-pressed', String(activo));
     });
 
-    if (tira.children.length !== estado.slots) {
-      tira.innerHTML = '';
-      estado.caps.forEach((_, index) => {
-        const boton = document.createElement('button');
-        boton.type = 'button';
-        boton.className = 'slot';
-        boton.innerHTML = '<span class="slot__cap" aria-hidden="true"><span class="slot__glyph"></span></span><span class="slot__num" aria-hidden="true" data-num="' + (index + 1) + '"></span>';
-        boton.addEventListener('click', () => {
-          estado.active = index;
-          pintar();
-        });
-        tira.append(boton);
-      });
-    }
-
-    Array.from(tira.children).forEach((boton, index) => {
-      const cap = estado.caps[index];
-      if (!cap) return;
-      const color = capColor(cap.color);
-      const activo = index === estado.active;
-      boton.classList.toggle('is-active', activo);
-      boton.setAttribute('aria-pressed', String(activo));
-      boton.style.setProperty('--slot-bg', color.hex);
-      boton.style.setProperty('--slot-ink', inkFor(color.hex));
-      boton.setAttribute('aria-label', `Tecla ${index + 1}: ${cap.symbol ? cap.symbol : (cap.char || 'en blanco')}, ${color.name}`);
-      const glifo = boton.querySelector('.slot__glyph');
-      if (!glifo) return;
-      if (cap.symbol) {
-        const idIcono = cap.symbol === 'moon' ? 'i-moon-sym' : `i-${cap.symbol}`;
-        glifo.innerHTML = `<svg aria-hidden="true"><use href="#${idIcono}"></use></svg>`;
-      } else {
-        glifo.textContent = cap.char || '·';
-      }
-    });
-
-    const cap = estado.caps[estado.active] || estado.caps[0];
-    $('#ficha-badge', mount).textContent = `Tecla ${estado.active + 1}`;
-    if (cap) $('#ficha-char', mount).value = cap.char || '';
-    $$('[data-symbol]', simbolos).forEach((boton) => {
-      const activo = (cap?.symbol || '') === boton.dataset.symbol;
-      boton.classList.toggle('is-active', activo);
-      boton.setAttribute('aria-pressed', String(activo));
-    });
-    marcar($('#ficha-cap-colors', mount), cap?.color);
-    marcar($('#ficha-ink-colors', mount), cap?.ink);
-    $('#ficha-ink-auto', mount).setAttribute('aria-pressed', String(!cap?.ink));
-    marcar($('#ficha-base-colors', mount), estado.baseColor);
+    pintarTira();
+    pintarTeclaActiva();
 
     const resumen = $('#ficha-summary', vista);
     if (resumen) {
@@ -249,6 +212,62 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     if (onChange) onChange();
   }
 
+  function pintarTira() {
+    if (tira.children.length !== estado.slots) {
+      tira.innerHTML = '';
+      estado.caps.forEach((_, indice) => {
+        const boton = document.createElement('button');
+        boton.type = 'button';
+        boton.className = 'slot';
+        boton.innerHTML = '<span class="slot__cap" aria-hidden="true"><span class="slot__glyph"></span></span><span class="slot__num" aria-hidden="true" data-num="' + (indice + 1) + '"></span>';
+        boton.addEventListener('click', () => {
+          estado.active = indice;
+          pintar();
+        });
+        tira.append(boton);
+      });
+    }
+
+    Array.from(tira.children).forEach((boton, indice) => {
+      const cap = estado.caps[indice];
+      if (!cap) return;
+      const color = capColor(cap.color);
+      const activo = indice === estado.active;
+      boton.classList.toggle('is-active', activo);
+      boton.setAttribute('aria-pressed', String(activo));
+      boton.style.setProperty('--slot-bg', color.hex);
+      boton.style.setProperty('--slot-ink', inkFor(color.hex));
+      boton.setAttribute('aria-label', `Tecla ${indice + 1}: ${cap.symbol || cap.char || 'en blanco'}, ${color.name}`);
+
+      const glifo = boton.querySelector('.slot__glyph');
+      if (!glifo) return;
+      if (cap.symbol) {
+        glifo.innerHTML = `<svg aria-hidden="true"><use href="#i-${cap.symbol === 'moon' ? 'moon-sym' : cap.symbol}"></use></svg>`;
+      } else {
+        glifo.textContent = cap.char || '·';
+      }
+    });
+  }
+
+  function pintarTeclaActiva() {
+    const cap = estado.caps[estado.active] || estado.caps[0];
+    $('#ficha-badge', mount).textContent = `Tecla ${estado.active + 1}`;
+    if (cap) $('#ficha-char', mount).value = cap.char || '';
+
+    $$('[data-symbol]', simbolos).forEach((boton) => {
+      const activo = (cap?.symbol || '') === boton.dataset.symbol;
+      boton.classList.toggle('is-active', activo);
+      boton.setAttribute('aria-pressed', String(activo));
+    });
+
+    marcar($('#ficha-cap-colors', mount), cap?.color);
+    marcar($('#ficha-ink-colors', mount), cap?.ink);
+    $('#ficha-ink-auto', mount).setAttribute('aria-pressed', String(!cap?.ink));
+    marcar($('#ficha-base-colors', mount), estado.baseColor);
+  }
+
+  /* ------------------------------------------------------------- visor 3D */
+
   const preview = new ClickerPreview($('#ficha-clicker-canvas', vista), {
     onReady: () => {
       $('#ficha-loading', vista)?.classList.add('is-hidden');
@@ -258,8 +277,8 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
       const carga = $('#ficha-loading', vista);
       if (carga) carga.textContent = 'La vista 3D no está disponible en este equipo; puedes igual escribir tu diseño.';
     },
-    onSelect: (index) => {
-      estado.active = index;
+    onSelect: (indice) => {
+      estado.active = indice;
       pintar();
     }
   });
@@ -273,13 +292,13 @@ export function crearDisenadorClicker({ mount, vista, onChange }) {
     filasResumen: () => [
       ['Nombre', estado.word || 'Sin nombre'],
       ['Teclas', String(estado.slots)],
-      ...estado.caps.map((cap, i) => [`Tecla ${i + 1}`, cap.symbol ? `símbolo ${cap.symbol}` : (cap.char || 'en blanco')]),
+      ...estado.caps.map((cap, indice) => [`Tecla ${indice + 1}`, cap.symbol ? `símbolo ${cap.symbol}` : (cap.char || 'en blanco')]),
       ['Cuerpo', baseColor(estado.baseColor).name]
     ],
     mensajeLineas: () => [
       `Nombre: ${estado.word || 'sin nombre'}`,
       `Teclas: ${estado.slots}`,
-      ...estado.caps.map((cap, i) => `Tecla ${i + 1}: ${cap.symbol ? `símbolo ${cap.symbol}` : (cap.char || 'en blanco')} · ${capColor(cap.color).name}${cap.ink ? ` · letra ${nombreColor(cap.ink)}` : ''}`),
+      ...estado.caps.map((cap, indice) => `Tecla ${indice + 1}: ${cap.symbol ? `símbolo ${cap.symbol}` : (cap.char || 'en blanco')} · ${capColor(cap.color).name}${cap.ink ? ` · letra ${nombreColor(cap.ink)}` : ''}`),
       `Cuerpo del clicker: ${baseColor(estado.baseColor).name}`
     ]
   };

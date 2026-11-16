@@ -1,14 +1,21 @@
 /**
- * Diseñador del nombre para lápiz en la ficha de producto: el motor real de
- * letras (JSCAD) con la vista 3D, un color o dos y las medidas ajustables.
+ * Diseñador del nombre para lápiz: el motor real de letras (JSCAD) con su
+ * vista 3D, en un color o dos y con las medidas ajustables.
+ *
+ * Pasos: 1) tu nombre · 2) colores (las medidas van en "avanzado").
  */
-import { PencilPreview } from './pencil.js';
-import { engine, SLIDERS, PENCIL_DEF } from './pencil-geo.js';
-import { FILAMENTS } from './palette.js';
-import { crearSwatches, nombreColor } from './disenador-utils.js';
+import { PencilPreview } from '../pencil.js';
+import { engine, SLIDERS, PENCIL_DEF } from '../pencil-geo.js';
+import { FILAMENTS } from '../palette.js';
+import { $ } from '../dom.js';
+import { crearSwatches } from '../armador/ui.js';
 
-const $ = (sel, root = document) => root.querySelector(sel);
-
+/**
+ * @param {object} opciones
+ * @param {HTMLElement} opciones.mount   panel de pasos
+ * @param {HTMLElement} opciones.vista   escenario con el visor 3D
+ * @param {() => void} [opciones.onChange]
+ */
 export function crearDisenadorLapiz({ mount, vista, onChange }) {
   const estado = {
     params: { ...PENCIL_DEF },
@@ -72,6 +79,8 @@ export function crearDisenadorLapiz({ mount, vista, onChange }) {
     </div>
     <p class="hint">Gira la pieza con el dedo. La geometría es la misma que usamos para imprimir.</p>`;
 
+  /* --------------------------------------------------------- controles */
+
   crearSwatches($('#ficha-front-colors', mount), FILAMENTS, (id) => {
     estado.front = id;
     correr();
@@ -93,37 +102,29 @@ export function crearDisenadorLapiz({ mount, vista, onChange }) {
     correr();
   });
 
-  function pintarTono() {
-    tonoUno.setAttribute('aria-pressed', String(!estado.twoTone));
-    tonoDos.setAttribute('aria-pressed', String(estado.twoTone));
-    tonoUno.classList.toggle('is-active', !estado.twoTone);
-    tonoDos.classList.toggle('is-active', estado.twoTone);
-    $('#ficha-back-wrap', mount).hidden = !estado.twoTone;
-  }
-
   const rangos = $('#ficha-ranges', mount);
-  SLIDERS.forEach(([key, label, min, max, step]) => {
+  SLIDERS.forEach(([clave, etiqueta, minimo, maximo, paso]) => {
     const wrap = document.createElement('div');
     wrap.className = 'range';
-    const lab = document.createElement('span');
-    lab.className = 'range__label';
-    lab.textContent = label;
-    const out = document.createElement('output');
-    out.className = 'range__output';
-    out.textContent = Number(estado.params[key]).toFixed(1);
+    const label = document.createElement('span');
+    label.className = 'range__label';
+    label.textContent = etiqueta;
+    const salida = document.createElement('output');
+    salida.className = 'range__output';
+    salida.textContent = Number(estado.params[clave]).toFixed(1);
     const input = document.createElement('input');
     input.type = 'range';
-    input.min = String(min);
-    input.max = String(max);
-    input.step = String(step);
-    input.value = String(estado.params[key]);
-    input.setAttribute('aria-label', label);
+    input.min = String(minimo);
+    input.max = String(maximo);
+    input.step = String(paso);
+    input.value = String(estado.params[clave]);
+    input.setAttribute('aria-label', etiqueta);
     input.addEventListener('input', () => {
-      estado.params[key] = Number(input.value);
-      out.textContent = Number(input.value).toFixed(1);
+      estado.params[clave] = Number(input.value);
+      salida.textContent = Number(input.value).toFixed(1);
       correr();
     });
-    wrap.append(lab, out, input);
+    wrap.append(label, salida, input);
     rangos.append(wrap);
   });
 
@@ -137,6 +138,52 @@ export function crearDisenadorLapiz({ mount, vista, onChange }) {
     correr();
   });
 
+  /* ------------------------------------------------------------- pintado */
+
+  function pintarTono() {
+    tonoUno.setAttribute('aria-pressed', String(!estado.twoTone));
+    tonoDos.setAttribute('aria-pressed', String(estado.twoTone));
+    tonoUno.classList.toggle('is-active', !estado.twoTone);
+    tonoDos.classList.toggle('is-active', estado.twoTone);
+    $('#ficha-back-wrap', mount).hidden = !estado.twoTone;
+  }
+
+  function correr() {
+    $('#ficha-pencil-word', mount).value = estado.nombre;
+    $('#ficha-pencil-count', mount).textContent = `${estado.nombre.length}/24`;
+    pintarTono();
+
+    let parametros;
+    let disposicion;
+    try {
+      parametros = engine.validar({
+        ...estado.params,
+        nombre: estado.nombre,
+        refuerzo: $('#ficha-tube', mount).checked
+      });
+      disposicion = engine.layout(parametros);
+    } catch (error) {
+      return; // nombre no válido: se espera a la siguiente tecla
+    }
+
+    estado.params = { ...parametros };
+    estado.medidas = `${disposicion.length.toFixed(1)} × ${Number(parametros.espesor).toFixed(1)} × ${Number(parametros.agujero).toFixed(1)} mm`;
+
+    const resumen = $('#ficha-summary', vista);
+    if (resumen) resumen.textContent = `${estado.nombre || 'Sin nombre'} · ${estado.medidas}`;
+
+    preview?.setState({
+      p: parametros,
+      lay: disposicion,
+      frontColor: estado.front,
+      backColor: estado.twoTone ? estado.back : estado.front,
+      showPen: estado.showPen
+    });
+    if (onChange) onChange();
+  }
+
+  /* ------------------------------------------------------------- visor 3D */
+
   const preview = new PencilPreview($('#ficha-pencil-canvas', vista), {
     onReady: () => {
       $('#ficha-loading', vista)?.classList.add('is-hidden');
@@ -149,39 +196,10 @@ export function crearDisenadorLapiz({ mount, vista, onChange }) {
   });
   preview.init();
 
-  function correr() {
-    $('#ficha-pencil-word', mount).value = estado.nombre;
-    $('#ficha-pencil-count', mount).textContent = `${estado.nombre.length}/24`;
-    pintarTono();
-
-    let p;
-    let lay;
-    try {
-      p = engine.validar({ ...estado.params, nombre: estado.nombre, refuerzo: $('#ficha-tube', mount).checked });
-      lay = engine.layout(p);
-    } catch (error) {
-      return;
-    }
-    estado.params = { ...p };
-    estado.medidas = `${lay.length.toFixed(1)} × ${Number(p.espesor).toFixed(1)} × ${Number(p.agujero).toFixed(1)} mm`;
-
-    const resumen = $('#ficha-summary', vista);
-    if (resumen) resumen.textContent = `${estado.nombre || 'Sin nombre'} · ${estado.medidas}`;
-
-    preview?.setState({
-      p,
-      lay,
-      frontColor: estado.front,
-      backColor: estado.twoTone ? estado.back : estado.front,
-      showPen: estado.showPen
-    });
-    if (onChange) onChange();
-  }
-
   pintarTono();
   correr();
 
-  const color = (hex) => FILAMENTS.find((f) => f.hex.toLowerCase() === String(hex).toLowerCase())?.name || 'Color propio';
+  const color = (hex) => FILAMENTS.find((filamento) => filamento.hex.toLowerCase() === String(hex).toLowerCase())?.name || 'Color propio';
 
   return {
     estado,
@@ -200,5 +218,3 @@ export function crearDisenadorLapiz({ mount, vista, onChange }) {
     ]
   };
 }
-
-export { nombreColor };

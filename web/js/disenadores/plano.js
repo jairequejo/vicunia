@@ -1,19 +1,30 @@
 /**
  * Diseñador de las líneas por encargo: silueta plana con el nombre, el
  * diseño y los colores que elige la persona.
+ *
+ * Pasos: 1) tu texto (y la foto, si la pieza la lleva) · 2) diseño o silueta
+ * · 3) colores.
  */
-import { FILAMENTS } from './palette.js';
-import { crearSwatches, marcar, nombreColor, colorHex } from './disenador-utils.js';
+import { FILAMENTS } from '../palette.js';
+import { $, $$ } from '../dom.js';
+import { crearSwatches, marcar, nombreColor, colorHex } from '../armador/ui.js';
 
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const TAMANO_MAXIMO = 100 * 1024 * 1024; // 100 MB
 
+/**
+ * @param {object} opciones
+ * @param {HTMLElement} opciones.mount   panel de pasos
+ * @param {HTMLElement} opciones.vista   escenario con la silueta
+ * @param {object} opciones.producto     línea del catálogo
+ * @param {() => void} [opciones.onChange]
+ */
 export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
   const estado = {
     nombre: '',
     extra: '',
     diseno: producto.disenos[0].id,
-    colores: {}
+    colores: {},
+    foto: null
   };
   producto.slots.forEach((slot) => { estado.colores[slot.key] = slot.porDefecto; });
 
@@ -31,6 +42,17 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
         <label for="arm-extra" id="arm-extra-label">Texto extra</label>
         <input class="input" id="arm-extra" type="text" placeholder="Ej. 12 de mayo de 2026">
       </div>
+      ${producto.foto ? `
+      <div class="field" id="arm-foto-campo">
+        <div class="dropzone dropzone--compact" id="arm-dropzone" tabindex="0" role="button" aria-describedby="arm-foto-hint">
+          <input type="file" id="arm-foto" accept=".jpg,.jpeg,.png,.webp,.heic,.heif" hidden>
+          <span class="dropzone__icon"><svg class="icon"><use href="#i-upload"></use></svg></span>
+          <strong>Adjunta tu foto aquí</strong>
+          <span>o toca para elegirla</span>
+          <span class="dropzone__hint" id="arm-foto-hint">Se queda en tu equipo hasta que la envíes en el chat</span>
+        </div>
+        <p class="arm-file" id="arm-archivo" hidden></p>
+      </div>` : ''}
     </section>
 
     <section class="arm-step">
@@ -50,6 +72,8 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
     </div>
     <p class="hint">La silueta se pinta con los colores que eliges. El texto grabado va en el color de la letra.</p>`;
 
+  /* --------------------------------------------------------- texto */
+
   const inputNombre = $('#arm-nombre', mount);
   inputNombre.placeholder = texto.placeholder;
   inputNombre.maxLength = texto.max;
@@ -67,10 +91,43 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
     estado.nombre = inputNombre.value;
     pintar();
   });
+
   $('#arm-extra', mount).addEventListener('input', (event) => {
     estado.extra = event.target.value;
     pintar();
   });
+
+  /* ---------------------------------------------------------- foto */
+
+  const zonaFoto = $('#arm-dropzone', mount);
+  const inputFoto = $('#arm-foto', mount);
+  const archivo = $('#arm-archivo', mount);
+
+  if (zonaFoto && inputFoto) {
+    zonaFoto.addEventListener('click', () => inputFoto.click());
+    zonaFoto.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        inputFoto.click();
+      }
+    });
+    inputFoto.addEventListener('change', () => {
+      const file = inputFoto.files[0];
+      if (!file) return;
+      if (file.size > TAMANO_MAXIMO) {
+        archivo.hidden = false;
+        archivo.textContent = 'Esa foto pesa demasiado (máximo 100 MB). Elige otra.';
+        estado.foto = null;
+      } else {
+        estado.foto = { name: file.name, size: file.size };
+        archivo.hidden = false;
+        archivo.textContent = file.name + ' · ' + Math.max(1, Math.round(file.size / 1024)) + ' KB · adjúntala en el chat';
+      }
+      if (onChange) onChange();
+    });
+  }
+
+  /* ------------------------------------------------------- diseños */
 
   const contDisenos = $('#arm-disenos', mount);
   producto.disenos.forEach((diseno) => {
@@ -89,19 +146,24 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
     contDisenos.append(boton);
   });
 
+  /* ------------------------------------------------------- colores */
+
   const contSlots = $('#arm-slots', mount);
   producto.slots.forEach((slot) => {
     const wrap = document.createElement('div');
     wrap.className = 'arm-slot';
+
     const head = document.createElement('div');
     head.className = 'field__head field__head--sp';
     const label = document.createElement('span');
     label.className = 'field__label';
     label.textContent = slot.label;
     head.append(label);
+
     const hint = document.createElement('p');
     hint.className = 'hint';
     hint.textContent = slot.hint || '';
+
     const swatches = document.createElement('div');
     swatches.className = 'swatches';
     swatches.setAttribute('role', 'group');
@@ -111,25 +173,30 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
       marcar(swatches, id);
       pintar();
     }, { sufijo: ` para ${slot.label}` });
+
     wrap.append(head, hint, swatches);
     contSlots.append(wrap);
   });
 
+  /* ------------------------------------------------------------ pintado */
+
   function disenoActual() {
-    return producto.disenos.find((d) => d.id === estado.diseno) || producto.disenos[0];
+    return producto.disenos.find((diseno) => diseno.id === estado.diseno) || producto.disenos[0];
   }
 
   function pintar() {
     const diseno = disenoActual();
+
     const arte = $('#arm-art', vista);
     if (arte) {
       arte.innerHTML = diseno.art + (diseno.extra || '');
       arte.querySelectorAll('[data-slot]').forEach((parte) => {
-        const key = parte.dataset.slot;
-        if (!estado.colores[key]) return;
-        parte.style.color = colorHex(estado.colores[key]);
+        const clave = parte.dataset.slot;
+        if (!estado.colores[clave]) return;
+        parte.style.color = colorHex(estado.colores[clave]);
       });
     }
+
     const nombre = $('#arm-name', vista);
     if (nombre) {
       const limpio = estado.nombre.trim();
@@ -137,6 +204,7 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
       nombre.classList.toggle('is-vacio', !limpio);
       nombre.style.color = estado.colores.letra ? colorHex(estado.colores.letra) : '';
     }
+
     $('#arm-cuenta', mount).textContent = `${estado.nombre.length}/${texto.max}`;
     if (onChange) onChange();
   }
@@ -152,6 +220,7 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
       if (producto.textoExtra && estado.extra.trim()) filas.push([producto.textoExtra.etiqueta, estado.extra.trim()]);
       filas.push(['Diseño', disenoActual().nombre]);
       producto.slots.forEach((slot) => filas.push([slot.label, nombreColor(estado.colores[slot.key])]));
+      if (estado.foto) filas.push(['Foto', estado.foto.name]);
       return filas;
     },
     mensajeLineas: () => {
@@ -160,6 +229,7 @@ export function crearDisenadorPlano({ mount, vista, producto, onChange }) {
       if (producto.textoExtra && estado.extra.trim()) lineas.push(`${producto.textoExtra.etiqueta}: ${estado.extra.trim()}`);
       lineas.push(`Diseño: ${disenoActual().nombre}`);
       producto.slots.forEach((slot) => lineas.push(`${slot.label}: ${nombreColor(estado.colores[slot.key])}`));
+      if (estado.foto) lineas.push(`Foto: ${estado.foto.name} — la adjunto en este chat.`);
       return lineas;
     }
   };

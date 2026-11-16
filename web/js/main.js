@@ -1,3 +1,8 @@
+/**
+ * Portada de Vicunia: estado del clicker y del lápiz, formulario de la foto,
+ * exportación de archivos y galería. El tema, el menú y los enlaces de
+ * WhatsApp son comunes a toda la web y viven en site.js.
+ */
 import { ClickerPreview } from './clicker3d.js';
 import { PencilPreview } from './pencil.js';
 import { engine, SLIDERS, PENCIL_DEF } from './pencil-geo.js';
@@ -14,20 +19,19 @@ import {
   isValidColor
 } from './palette.js';
 import { CONFIG, openWhatsApp } from './config.js';
+import { initSite } from './site.js';
+import { $, $$ } from './dom.js';
 
-/* -------------------------------------------------------------- utilidades */
-
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+/* -------------------------------------------------------------- constantes */
 
 const STORAGE_KEY = 'vicunia.design.v1';
-const THEME_KEY = 'vicunia.theme.v1';
 const PENCIL_STORAGE_KEY = 'vicunia.pencil.v2';
 const MAX_FILE = 100 * 1024 * 1024;
 const HEX_COLOR = /^#[0-9a-f]{6}$/i;
 const ALLOWED_EXT = ['.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif', '.gif'];
 const DEFAULT_CYCLE = ['rosado', 'azul', 'mango', 'verde', 'lavanda', 'naranja', 'azul-hielo', 'rojo', 'turquesa', 'seda'];
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 const symbolName = (id) => SYMBOLS.find((symbol) => symbol.id === id)?.name || 'Símbolo';
 
@@ -235,74 +239,6 @@ function toast(message, timeout = 3200) {
     el.classList.remove('is-visible');
     window.setTimeout(() => { el.hidden = true; }, 260);
   }, timeout);
-}
-
-/* ------------------------------------------------------------------- tema */
-
-const themeToggle = $('#theme-toggle');
-
-function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-  const dark = theme === 'dark';
-  themeToggle?.setAttribute('aria-pressed', String(dark));
-  themeToggle?.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', dark ? '#1C1008' : '#E9EDFC');
-}
-
-function initTheme() {
-  let saved = null;
-  try { saved = window.localStorage.getItem(THEME_KEY); } catch (error) { saved = null; }
-  applyTheme(saved || 'light');
-
-  themeToggle?.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    try { window.localStorage.setItem(THEME_KEY, next); } catch (error) { /* sin almacenamiento */ }
-  });
-}
-
-/* ------------------------------------------------------------------ header */
-
-function initHeader() {
-  const header = $('.site-header');
-  const nav = $('#nav');
-  const toggle = $('#nav-toggle');
-
-  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  const closeNav = () => {
-    nav?.classList.remove('is-open');
-    toggle?.setAttribute('aria-expanded', 'false');
-    toggle?.setAttribute('aria-label', 'Abrir menú');
-  };
-
-  toggle?.addEventListener('click', () => {
-    const open = !nav?.classList.contains('is-open');
-    nav?.classList.toggle('is-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-  });
-
-  nav?.addEventListener('click', (event) => {
-    if (event.target.closest('a')) closeNav();
-  });
-
-  document.addEventListener('click', (event) => {
-    if (!nav?.classList.contains('is-open')) return;
-    if (nav.contains(event.target) || toggle?.contains(event.target)) return;
-    closeNav();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeNav();
-  });
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 900) closeNav();
-  });
 }
 
 /* --------------------------------------------------------------- controles */
@@ -1252,30 +1188,13 @@ function initLightbox() {
 
 /* -------------------------------------------------------------------- init */
 
-function initYear() {
-  const year = $('#year');
-  if (year) year.textContent = String(new Date().getFullYear());
-}
-
-function initFooterLinks() {
-  $$('[data-wa]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      openWhatsApp(link.dataset.wa);
-    });
-  });
-}
-
 function init() {
-  initTheme();
-  initHeader();
-  initYear();
+  initSite();
   initDesigner();
   initPencil();
   initStageControls();
   initUpload();
   initLightbox();
-  initFooterLinks();
 
   paint();
   preview.select(state.active);

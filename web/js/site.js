@@ -1,49 +1,62 @@
 /**
- * Piezas comunes de todas las páginas: tema claro/oscuro, menú, año y
- * enlaces de WhatsApp. Cada página llama a initSite() una vez.
+ * Piezas comunes de todas las páginas: tema claro/oscuro, menú, año del pie y
+ * enlaces de WhatsApp. Cada página llama a initSite() una sola vez.
  */
 import { waLink } from './config.js';
+import { $, $$, setText } from './dom.js';
 
 export const THEME_KEY = 'vicunia.theme.v1';
 
-const $ = (selector, context = document) => context.querySelector(selector);
-const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
-
 /* ------------------------------------------------------------------ tema */
 
-const themeToggle = $('#theme-toggle');
-
-function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
+/**
+ * Aplica el tema al documento y actualiza el botón y el color de la barra del
+ * navegador para que coincidan con el modo elegido.
+ */
+export function applyTheme(theme) {
   const dark = theme === 'dark';
-  themeToggle?.setAttribute('aria-pressed', String(dark));
-  themeToggle?.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-  const meta = document.querySelector('meta[name="theme-color"]');
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+
+  const toggle = $('#theme-toggle');
+  toggle?.setAttribute('aria-pressed', String(dark));
+  toggle?.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+
+  const meta = $('meta[name="theme-color"]');
   if (meta) meta.setAttribute('content', dark ? '#1C1008' : '#E9EDFC');
 }
 
-function initTheme() {
+/** Recupera el tema guardado (si el navegador lo permite) y lo aplica. */
+export function initTheme() {
   let saved = null;
-  try { saved = window.localStorage.getItem(THEME_KEY); } catch (error) { saved = null; }
+  try {
+    saved = window.localStorage.getItem(THEME_KEY);
+  } catch (error) {
+    saved = null; // almacenamiento no disponible
+  }
   applyTheme(saved || 'light');
 
-  themeToggle?.addEventListener('click', () => {
+  $('#theme-toggle')?.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     applyTheme(next);
-    try { window.localStorage.setItem(THEME_KEY, next); } catch (error) { /* sin almacenamiento */ }
+    try {
+      window.localStorage.setItem(THEME_KEY, next);
+    } catch (error) {
+      // sin almacenamiento: el tema solo dura esta visita
+    }
   });
 }
 
 /* ---------------------------------------------------------------- header */
 
-function initHeader() {
+/** Menú móvil: abrir, cerrar, cerrar al navegar y al pulsar Escape. */
+export function initHeader() {
   const header = $('.site-header');
   const nav = $('#nav');
   const toggle = $('#nav-toggle');
 
-  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  const marcarScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  marcarScroll();
+  window.addEventListener('scroll', marcarScroll, { passive: true });
 
   const closeNav = () => {
     nav?.classList.remove('is-open');
@@ -79,12 +92,16 @@ function initHeader() {
 
 /* ----------------------------------------------------------------- otros */
 
-function initYear() {
-  const year = $('#year');
-  if (year) year.textContent = String(new Date().getFullYear());
+/** Año del pie de página. */
+export function initYear() {
+  setText('#year', String(new Date().getFullYear()));
 }
 
-function initWhatsApp() {
+/**
+ * Los enlaces con `data-wa` abren WhatsApp con el mensaje del atributo.
+ * Sin JavaScript, el href sigue llevando a la conversación.
+ */
+export function initWhatsApp() {
   $$('[data-wa]').forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
@@ -95,6 +112,7 @@ function initWhatsApp() {
   });
 }
 
+/** Arranque común de cualquier página de la web. */
 export function initSite() {
   initTheme();
   initHeader();

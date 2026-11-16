@@ -1,11 +1,21 @@
 /**
- * Utilidades compartidas por los diseñadores de la ficha: muestras de color,
- * nombres de filamento y Conversion de color.
+ * Piezas de interfaz del armador: muestras de color y nombres de filamento.
+ * Las usan los tres diseñadores (clicker, lápiz y siluetas).
  */
-import { FILAMENTS, contrastInk } from './palette.js';
+import { FILAMENTS, contrastInk } from '../palette.js';
 
+/**
+ * Dibuja una fila de muestras de color y devuelve el control.
+ * Cada muestra es un botón; al final se añade el selector de color libre.
+ *
+ * @param {HTMLElement} container
+ * @param {Array<{id: string, name: string, hex: string, finish?: string}>} lista
+ * @param {(id: string) => void} onPick  se llama con el id elegido
+ * @param {{sufijo?: string}} [opciones]
+ */
 export function crearSwatches(container, lista, onPick, { sufijo = '' } = {}) {
   if (!container) return;
+
   container.innerHTML = '';
   lista.forEach((item) => {
     const boton = document.createElement('button');
@@ -31,6 +41,7 @@ export function crearSwatches(container, lista, onPick, { sufijo = '' } = {}) {
   container.append(propio);
 }
 
+/** Marca la muestra activa de un grupo. */
 export function marcar(container, id) {
   if (!container) return;
   container.querySelectorAll('button.swatch').forEach((boton) => {
@@ -38,19 +49,18 @@ export function marcar(container, id) {
   });
 }
 
+/** Nombre legible de un color de filamento (o de un hex suelto). */
 export function nombreColor(id) {
-  const encontrado = FILAMENTS.find((f) => f.id === id);
+  const encontrado = FILAMENTS.find((filamento) => filamento.id === id);
   if (encontrado) return encontrado.name;
   if (typeof id === 'string' && id.startsWith('#')) return 'Color propio (' + id.toUpperCase() + ')';
   return 'A coordinar';
 }
 
+/** Hex de un color de filamento (o el hex suelto si ya lo es). */
 export function colorHex(id) {
-  const encontrado = FILAMENTS.find((f) => f.id === id);
+  const encontrado = FILAMENTS.find((filamento) => filamento.id === id);
   if (encontrado) return encontrado.hex;
   if (typeof id === 'string' && id.startsWith('#')) return id;
   return '#8A8FA8';
 }
-
-/** Alias con el nombre que usa la ficha de producto. */
-export const hexColor = colorHex;

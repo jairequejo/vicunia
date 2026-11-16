@@ -32,19 +32,27 @@ vicunia/
 │   ├── styles.css             Tokens de color, componentes y responsive
 │   ├── js/
 │   │   ├── config.js          WhatsApp y redes oficiales
+│   │   ├── dom.js             Helpers de DOM compartidos ($, $$, setText…)
 │   │   ├── site.js            Tema, menú, año y enlaces de WhatsApp (común a todas)
-│   │   ├── catalogo.js        Filtros del catálogo
+│   │   ├── seo.js             Título, Open Graph, Twitter, canónico y datos estructurados
+│   │   ├── palette.js         Filamentos, colores base, formas y teclas
 │   │   ├── catalogo-data.js   Datos de cada línea: textos, siluetas y colores
-│   │   ├── armador.js         Entrega, cantidad, resumen y borrador de WhatsApp
-│   │   ├── disenador-clicker.js  Clicker con la malla real dentro de la ficha
-│   │   ├── disenador-lapiz.js    Nombre para lápiz con el motor real de letras
-│   │   ├── disenador-plano.js    Siluetas de las líneas por encargo
-│   │   ├── disenador-utils.js    Muestras de color y nombres de filamento
-│   │   ├── producto.js        Ficha de producto, SEO y recomendaciones
-│   │   ├── main.js            Estado de la página, formulario de foto, exportaciones
+│   │   ├── catalogo.js        Filtros del catálogo
+│   │   ├── producto.js        Ficha de producto: SEO, armador y recomendados
+│   │   ├── main.js            Portada: estado del clicker y del lápiz, formulario de foto
+│   │   ├── armador/           El personalizador, en piezas
+│   │   │   ├── index.js         Une diseñador + entrega + resumen y expone la API
+│   │   │   ├── esquema.js       Esqueleto HTML del armador
+│   │   │   ├── entrega.js       Recoger o envío, cantidad, notas y nombre del cliente
+│   │   │   ├── mensaje.js       Resumen en vivo y borrador de WhatsApp
+│   │   │   └── ui.js            Muestras de color y nombres de filamento
+│   │   ├── disenadores/       Un diseñador por tipo de línea
+│   │   │   ├── carga.js         Carga bajo demanda (JSCAD y three solo si hacen falta)
+│   │   │   ├── clicker.js       Clicker con la malla real de producción
+│   │   │   ├── lapiz.js         Nombre para lápiz con el motor real de letras
+│   │   │   └── plano.js         Siluetas de las líneas por encargo
 │   │   ├── clicker3d.js       Visor del clicker sobre la malla real de producción
 │   │   ├── geo-manifest.js    Índices de la malla del clicker
-│   │   ├── palette.js         Filamentos, colores base, formas y teclas
 │   │   ├── pencil.js          Vista 3D del lápiz (Three.js)
 │   │   └── pencil-geo.js      Generador real de nombres (motor JSCAD)
 │   ├── vendor/                Three.js, addons, JSCAD y la malla comprimida del clicker
