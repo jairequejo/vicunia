@@ -2629,3 +2629,84 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
 
 /* La silueta de las teclas del clicker en las miniaturas de diseño */
 .opcion__art svg [data-slot="teclas"] { color: color-mix(in srgb, var(--superficie) 75%, var(--texto)); }
+
+/* ==========================================================================
+   La tarjeta entera es el botón: se toca la tarjeta y se abre el armador
+   ========================================================================== */
+
+.cat-card { position: relative; }
+
+.cat-card__title { display: flex; }
+
+.cat-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* El enlace se estira sobre toda la tarjeta */
+.cat-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radio-l);
+}
+
+.cat-card__link:focus-visible { outline: none; }
+
+.cat-card:has(.cat-card__link:focus-visible) {
+  outline: 3px solid var(--accion);
+  outline-offset: 3px;
+}
+
+.cat-card__arrow {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--accion);
+  transition: transform .18s ease;
+}
+.cat-card:hover .cat-card__arrow,
+.cat-card__link:focus-visible .cat-card__arrow { transform: translateX(4px); }
+
+/* El atajo de WhatsApp queda por encima del enlace de la tarjeta */
+.cat-card__actions {
+  position: relative;
+  z-index: 2;
+}
+
+.cat-card__wa {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 40px;
+  color: var(--accion);
+  font-size: .78rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cat-card__wa:hover { text-decoration-thickness: 2px; }
+
+.cat-card__hint {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  margin: 0 0 1rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--texto-2);
+}
+.cat-card__hint .icon { color: var(--accion); }
+
+/* Miniaturas de los recomendados en la ficha de producto */
+.product-recommendation__art svg {
+  display: block;
+  width: 62%;
+  height: auto;
+  max-height: 92px;
+  filter: drop-shadow(0 8px 10px rgba(34, 36, 70, .16));
+}
+.product-recommendation__art svg [data-slot="teclas"] { color: color-mix(in srgb, var(--superficie) 75%, var(--texto)); }

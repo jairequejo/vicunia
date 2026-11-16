@@ -253,8 +253,17 @@ function renderProduct(key) {
       link.href = href;
       const art = document.createElement('span');
       art.className = 'product-recommendation__art';
-      art.textContent = '✦';
-      art.setAttribute('aria-hidden', 'true');
+      const recomendado = Recomendado(href);
+      if (recomendado) {
+        art.innerHTML = `<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">${recomendado}</svg>`;
+        art.querySelectorAll('[data-slot]').forEach((parte) => {
+          const slot = recomendado.slots.find((s) => s.key === parte.dataset.slot);
+          if (slot) parte.style.color = hexColor(slot.porDefecto);
+        });
+      } else {
+        art.textContent = '✦';
+        art.setAttribute('aria-hidden', 'true');
+      }
       const heading = document.createElement('strong');
       heading.textContent = titulo;
       const copy = document.createElement('small');
@@ -263,6 +272,17 @@ function renderProduct(key) {
       grid.append(link);
     }
   }
+}
+
+/** Miniatura de la línea que se recomienda, si es una ficha del catálogo. */
+function Recomendado(href) {
+  const match = /tipo=([a-z-]+)/.exec(href || '');
+  if (!match) return null;
+  const producto = PRODUCTOS[match[1]];
+  if (!producto) return null;
+  const diseno = (producto.disenos || [])[0];
+  if (!diseno) return null;
+  return { slots: producto.slots || [], svg: diseno.art + (diseno.extra || '') };
 }
 
 function actualizarMensajes(producto, armador) {
