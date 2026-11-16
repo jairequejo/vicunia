@@ -81,7 +81,6 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log('  🦙  Vicunia — Un detalle tuyo, hecho en Cajamarca');
   console.log('');
   console.log(`  ✅  Web pública (Vicunia):       http://localhost:${PORT}/web/`);
-  console.log(`  📦  Inventario (Mundo Suni):     http://localhost:${PORT}/mundo-suni/`);
   console.log(`  🎨  Presentación de Marca:       http://localhost:${PORT}/identidad-vicunia/brand_presentation.html`);
   console.log('');
   console.log('  Presiona Ctrl+C para detener.');

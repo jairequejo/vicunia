@@ -16,7 +16,6 @@ node server.js
 ```
 
 - Web pública (Vicunia): <http://localhost:8080/web/>
-- App de inventario (Vicuña · Mundo Suni): <http://localhost:8080/mundo-suni/>
 - Presentación de marca: <http://localhost:8080/identidad-vicunia/brand_presentation.html>
 
 ---
@@ -65,13 +64,6 @@ vicunia/
 │   ├── vendor/                Three.js, addons, JSCAD y la malla comprimida del clicker
 │   └── img/                   Fotos reales de producto, logo y códigos QR
 │
-├── mundo-suni/                App histórica de inventario y pedidos (Mundo Suni)
-│   ├── index.html             Interfaz de la app (móvil y local-first)
-│   ├── app.js                 Lógica de inventario, pedidos y costeo
-│   ├── styles.css             Tema Cozy Craft
-│   ├── google-apps-script.js  Webhook de respaldo a Google Sheets
-│   └── favicon.png
-│
 ├── identidad-vicunia/         Identidad, comunicación y manual visual
 │   ├── README.md              Paleta, tono, promesa y reglas de uso del logo
 │   ├── brand_presentation.html Presentación interactiva de la marca
@@ -84,7 +76,6 @@ vicunia/
 │
 ├── tools/                     Herramientas de producción y marketing
 │   ├── generar-qr.py          Genera los códigos QR de los carteles
-│   ├── calculadora_costos.py  Costos y precio sugerido por pieza (PLA, luz, MO)
 │   ├── marketing/             Creatividades y redes sociales
 │   │   ├── banners_ideas_vicunia.py   Banners de campaña (SVG + PNG)
 │   │   └── generate_og.py             Generador de imágenes Open Graph
@@ -97,9 +88,7 @@ vicunia/
 │
 ├── docs/                      Documentación de apoyo y arquitectura
 │   ├── estructura-web.md      Mapa de módulos y flujo de la web pública
-│   ├── catalogo-y-qr.md       Recorrido comercial y destinos de QR
-│   ├── inventario-mundo-suni.md Instrucciones de la app de inventario
-│   └── coordinacion-antigravity.md Historial de relevo técnico
+│   └── catalogo-y-qr.md       Recorrido comercial y destinos de QR
 │
 └── server.js                  Servidor estático local en el puerto 8080
 ```

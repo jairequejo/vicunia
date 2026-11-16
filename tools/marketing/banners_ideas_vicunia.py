@@ -22,7 +22,7 @@ SLATE = "#41504B"
 IDEAS = [
     ("01", "MINI DE TU", "MASCOTA", "Su figura, su nombre y un video recuerdo.", "MASCOTAS", "pet"),
     ("02", "PINTA TU", "MASCOTA", "Una figura para crear juntos y conservar.", "KIT CREATIVO", "paint"),
-    ("03", "AMIGURUMI", "+ TU NOMBRE", "Tejido y una base 3D hecha para esa persona.", "TEJIDO + 3D", "yarn"),
+    ("03", "CLICKER", "+ TU NOMBRE", "Llavero mecánico y teclas hechas para esa persona.", "CLICKERS 3D", "yarn"),
     ("04", "NAVIDAD CON", "TU MASCOTA", "Un adorno con su nombre y el año.", "RECUERDOS", "ornament"),
     ("05", "CHARMS CON", "HISTORIA", "Pequeños detalles para llevar contigo.", "ACCESORIOS", "charms"),
     ("06", "TU ESCRITORIO,", "A TU MODO", "Elige módulos según lo que usas cada día.", "ORGANIZACIÓN", "desk"),
