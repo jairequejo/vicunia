@@ -2626,3 +2626,6 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
   text-decoration: none;
 }
 .site-footer .footer__bottom a:hover { color: var(--crema); text-decoration: underline; text-underline-offset: 3px; }
+
+/* La silueta de las teclas del clicker en las miniaturas de diseño */
+.opcion__art svg [data-slot="teclas"] { color: color-mix(in srgb, var(--superficie) 75%, var(--texto)); }
