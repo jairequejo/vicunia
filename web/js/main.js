@@ -10,6 +10,7 @@ import { initClicker } from './portada/clicker.js';
 import { initPencil } from './portada/lapiz.js';
 import { initFoto } from './portada/foto.js';
 import { initGaleria } from './portada/galeria.js';
+import { initCatalogoFiltros } from './portada/catalogo-filtro.js';
 
 function init() {
   initSite();
@@ -17,6 +18,7 @@ function init() {
   initPencil();
   initFoto();
   initGaleria();
+  initCatalogoFiltros();
 }
 
 if (document.readyState === 'loading') {

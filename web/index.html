@@ -158,8 +158,8 @@
       <a href="#disena">Clicker</a>
       <a href="#lapices">Lápices</a>
       <a href="#galeria">Galería</a>
+      <a href="#catalogo">Catálogo</a>
       <a href="#faq">Preguntas</a>
-      <a href="catalogo.html">Catálogo</a>
     </nav>
 
     <div class="header__actions">
@@ -628,35 +628,397 @@
           <img src="img/mini-yellow.webp" alt="Figura 3D de un perro amarillo con detalles negros" width="1100" height="1467" loading="lazy" decoding="async">
           <span class="gallery__cap">Amarillo mango</span>
         </button>
+        <button class="gallery__item" type="button" data-full="img/cat-clicker.webp" data-caption="Clicker mecánico táctil con switch Outemu Blue y nombre en relieve">
+          <img src="img/cat-clicker.webp" alt="Clicker mecánico con nombre personalizado en 3D" width="688" height="384" loading="lazy" decoding="async">
+          <span class="gallery__cap">Clicker mecánico</span>
+        </button>
+        <button class="gallery__item" type="button" data-full="img/cat-lapiz.webp" data-caption="Nombre en relieve para lápiz con agujero a medida en 2 colores">
+          <img src="img/cat-lapiz.webp" alt="Nombre personalizado para lápiz en 3D" width="688" height="384" loading="lazy" decoding="async">
+          <span class="gallery__cap">Nombre para lápiz</span>
+        </button>
+        <button class="gallery__item" type="button" data-full="img/cat-dummy.webp" data-caption="Figura Dummy 13 multieje articulada en PLA y PETG">
+          <img src="img/cat-dummy.webp" alt="Dummy 13 articulado en 3D" width="688" height="384" loading="lazy" decoding="async">
+          <span class="gallery__cap">Dummy 13</span>
+        </button>
+        <button class="gallery__item" type="button" data-full="img/cat-navidad-esfera.webp" data-caption="Esfera navideña artesanal personalizada con nombre familiar">
+          <img src="img/cat-navidad-esfera.webp" alt="Esfera navideña con nombre en 3D" width="688" height="384" loading="lazy" decoding="async">
+          <span class="gallery__cap">Navidad personalizada</span>
+        </button>
       </div>
-      <p class="gallery__note">Fotos de figuras ya impresas, desde la foto de cada mascota. Los colores pueden variar un poco según el lote del filamento.</p>
+      <p class="gallery__note">Fotos de figuras, clickers y encargos ya entregados en Cajamarca. Toca cualquier pieza para ampliarla.</p>
     </div>
   </section>
 
   <!-- CATÁLOGO COMPLETO -->
-  <section class="section cat-teaser" id="catalogo">
+  <section class="section section--catalog" id="catalogo">
     <div class="wrap">
-      <div class="cat-teaser__card">
+      <header class="section-head">
+        <p class="eyebrow">06 · Catálogo</p>
+        <h2>Todas nuestras creaciones <em>en impresión 3D</em></h2>
+        <p class="section-lead">Clickers mecánicos, figuras desde tu foto, nombres para lápices, dummys articulados y regalos en 17 colores reales. Todo hecho en Cajamarca.</p>
+      </header>
+
+      <div class="cat-toolbar">
+        <div class="cat-filters" role="group" aria-label="Filtrar catálogo de productos">
+          <button class="cat-filter" type="button" data-filter="todo" aria-pressed="true">Todo</button>
+          <button class="cat-filter" type="button" data-filter="clickers" aria-pressed="false">Clickers</button>
+          <button class="cat-filter" type="button" data-filter="figuras" aria-pressed="false">Figuras</button>
+          <button class="cat-filter" type="button" data-filter="nombres" aria-pressed="false">Lápices y Nombres</button>
+          <button class="cat-filter" type="button" data-filter="dummys" aria-pressed="false">Dummys</button>
+          <button class="cat-filter" type="button" data-filter="navidad" aria-pressed="false">Navidad</button>
+          <button class="cat-filter" type="button" data-filter="cajamarca" aria-pressed="false">Cajamarca</button>
+          <button class="cat-filter" type="button" data-filter="eventos" aria-pressed="false">Eventos</button>
+        </div>
+        <p class="cat-count" id="cat-count" role="status" aria-live="polite">12 opciones destacadas</p>
+      </div>
+
+      <div class="cat-grid" id="cat-grid">
+        <!-- 1. Clicker con nombre -->
+        <article class="cat-card" data-cats="clickers nombres">
+          <div class="cat-card__art">
+            <img src="img/cat-clicker.webp" alt="Clicker mecánico con nombre personalizado en 3D" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Clickers</span>
+              <span class="cat-card__flag">Listo para diseñar</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="#disena">Clicker con tu nombre
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Llavero fidget con switch mecánico genuino y clic táctil. Elige tus letras en relieve y combina hasta 17 colores.</p>
+            <p class="cat-card__spec">PLA · 1 o 2 colores · switch mecánico táctil</p>
+            <div class="cat-card__actions">
+              <a class="btn btn-primary btn-sm" href="#disena">
+                <svg class="icon"><use href="#i-arrow"></use></svg>
+                Personalizar en 3D
+              </a>
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20pedir%20un%20Clicker%20con%20mi%20nombre." aria-label="Pedir por WhatsApp: Clicker con tu nombre">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Clicker mini -->
+        <article class="cat-card" data-cats="clickers">
+          <div class="cat-card__art">
+            <img src="img/cat-clicker-mini.webp" alt="Clicker mini mecánico llavero de 2 a 3 teclas con iniciales" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Clickers</span>
+              <span class="cat-card__flag">Ultra portátil</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="#disena">Clicker mini de 2 a 3 teclas
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>La versión compacta: tus iniciales o palabra breve. Liviano para llevar de llavero en el bolsillo o colgado de la mochila.</p>
+            <p class="cat-card__spec">PLA · hasta 3 teclas · switch mecánico</p>
+            <div class="cat-card__actions">
+              <a class="btn btn-outline btn-sm" href="#disena">
+                <svg class="icon"><use href="#i-arrow"></use></svg>
+                Diseñar teclas
+              </a>
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20pedir%20un%20Clicker%20mini%20de%202%20a%203%20teclas." aria-label="Pedir por WhatsApp: Clicker mini">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Figura Funko -->
+        <article class="cat-card" data-cats="figuras">
+          <div class="cat-card__art">
+            <img src="img/cat-figura-funko.webp" alt="Figura 3D personalizada estilo Funko desde tu foto" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Figuras</span>
+              <span class="cat-card__flag">Desde tu foto</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="#sube">Figura 3D desde tu foto
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Mándanos una foto de frente. La modelamos estilo Funko con peinado, atuendo y postura, y te mostramos el render antes de imprimir.</p>
+            <p class="cat-card__spec">PLA · modelado personalizado · 17 colores</p>
+            <div class="cat-card__actions">
+              <a class="btn btn-primary btn-sm" href="#sube">
+                <svg class="icon"><use href="#i-upload"></use></svg>
+                Enviar mi foto
+              </a>
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20convertir%20una%20foto%20en%20figura%203D." aria-label="Consultar por WhatsApp: Figura 3D desde foto">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Consultar por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Figura mascota -->
+        <article class="cat-card" data-cats="figuras">
+          <div class="cat-card__art">
+            <img src="img/cat-figura-mascota.webp" alt="Figura 3D personalizada de mascota perro o gato" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Figuras</span>
+              <span class="cat-card__flag">Mascotas</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="#sube">Figura de tu mascota
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>El retrato tridimensional de tu perrito o gato, respetando sus manchas, orejas y expresión. Un regalo y recuerdo para siempre.</p>
+            <p class="cat-card__spec">PLA · pintado a mano o colores directos</p>
+            <div class="cat-card__actions">
+              <a class="btn btn-outline btn-sm" href="#sube">
+                <svg class="icon"><use href="#i-upload"></use></svg>
+                Enviar foto de mascota
+              </a>
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20una%20figura%203D%20de%20mi%20mascota." aria-label="Consultar por WhatsApp: Figura de mascota">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Consultar por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Lápiz con nombre -->
+        <article class="cat-card" data-cats="nombres lapices">
+          <div class="cat-card__art">
+            <img src="img/cat-lapiz.webp" alt="Nombre personalizado en relieve 3D para lápiz" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Lápices</span>
+              <span class="cat-card__flag">Listo para diseñar</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="#lapices">Nombre para lápiz
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Letras en relieve con alturas alternas que se deslizan por el lápiz. Dos colores (frente y fondo) para que nunca se confundan.</p>
+            <p class="cat-card__spec">PLA · agujero a medida · 2 tonos contrastados</p>
+            <div class="cat-card__actions">
+              <a class="btn btn-primary btn-sm" href="#lapices">
+                <svg class="icon"><use href="#i-arrow"></use></svg>
+                Diseñar mi lápiz
+              </a>
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20pedir%20nombres%20para%20l%C3%A1pices." aria-label="Pedir por WhatsApp: Nombre para lápiz">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. Dummy 13 -->
+        <article class="cat-card" data-cats="dummys">
+          <div class="cat-card__art">
+            <img src="img/cat-dummy.webp" alt="Figura Dummy 13 articulada impresa en 3D" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Dummys</span>
+              <span class="cat-card__flag">Articulado</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20un%20Dummy%2013%20articulado%20personalizado.">Dummy 13 articulado
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Figura de acción articulada multieje con esqueleto interno robusto y placas de armadura intercambiables en combinaciones bicolores.</p>
+            <p class="cat-card__spec">PETG/PLA · articulaciones móviles · accesorios</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20un%20Dummy%2013%20articulado%20personalizado." aria-label="Pedir por WhatsApp: Dummy 13">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7. Clip lapicero / pluma -->
+        <article class="cat-card" data-cats="nombres lapices">
+          <div class="cat-card__art">
+            <img src="img/cat-lapicero.webp" alt="Clip con nombre personalizado en relieve para lapicero o pluma" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Nombres</span>
+              <span class="cat-card__flag">Oficina</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20nombres%20para%20lapiceros.">Clip para lapicero o pluma
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Tu nombre o iniciales adaptadas con agarre seguro para lapiceros y plumas estándar. Ideal para oficina, regalos y docentes.</p>
+            <p class="cat-card__spec">PLA · acabado fino · ajuste a presión</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20nombres%20para%20lapiceros." aria-label="Pedir por WhatsApp: Clip para lapicero">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 8. Esfera Navideña -->
+        <article class="cat-card" data-cats="navidad">
+          <div class="cat-card__art">
+            <img src="img/cat-navidad-esfera.webp" alt="Esfera navideña personalizada 3D con nombre en relieve y lazo" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Navidad</span>
+              <span class="cat-card__flag">Temporada</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20esferas%20navide%C3%B1as%20personalizadas%20con%20nombre.">Esfera navideña con nombre
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Adorno esférico calado con el nombre de cada miembro de tu familia. Incluye cinta y acabado brillante en tonos festivos.</p>
+            <p class="cat-card__spec">PLA sedoso · blanco, rojo u oro · con cinta</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20esferas%20navide%C3%B1as%20personalizadas%20con%20nombre." aria-label="Pedir por WhatsApp: Esfera navideña">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 9. Estrella navideña -->
+        <article class="cat-card" data-cats="navidad">
+          <div class="cat-card__art">
+            <img src="img/cat-navidad-estrella.webp" alt="Estrella navideña 3D con nombre o inicial personalizada" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Navidad</span>
+              <span class="cat-card__flag">Edición especial</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20adornos%20en%20estrella%20navide%C3%B1a.">Estrella con nombre
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Estrella geométrica para el árbol con nombre o iniciales al centro. Diseño ligero que no vence las ramas del pino.</p>
+            <p class="cat-card__spec">PLA oro sedoso o plata · 8 cm de diámetro</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20adornos%20en%20estrella%20navide%C3%B1a." aria-label="Pedir por WhatsApp: Estrella navideña">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 10. Recuerdos eventos -->
+        <article class="cat-card" data-cats="eventos">
+          <div class="cat-card__art">
+            <img src="img/cat-evento-bautizo.webp" alt="Recuerdo 3D personalizado para bautizo y primera comunión" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Eventos</span>
+              <span class="cat-card__flag">Por docena</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20cotizar%20recuerdos%20para%20un%20evento.">Recuerdos para eventos
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Piezas conmemorativas con fecha y nombre grabados para bautizos, comuniones, promociones y aniversarios en Cajamarca.</p>
+            <p class="cat-card__spec">Precios por volumen · entrega programada</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20cotizar%20recuerdos%20para%20un%20evento." aria-label="Cotizar por WhatsApp: Recuerdos para eventos">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Cotizar por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 11. Plaza de Armas Cajamarca -->
+        <article class="cat-card" data-cats="cajamarca">
+          <div class="cat-card__art">
+            <img src="img/cat-cajamarca-plaza.webp" alt="Silueta 3D decorativa de la Plaza de Armas de Cajamarca" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Cajamarca</span>
+              <span class="cat-card__flag">Identidad</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20Silueta%20de%20la%20Plaza%20de%20Armas.">Silueta Plaza de Armas
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Relieve arquitectónico 3D de la catedral y pileta de Cajamarca con base estable para escritorio o repisa.</p>
+            <p class="cat-card__spec">PLA bicapa · recuerdo representativo</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20Silueta%20de%20la%20Plaza%20de%20Armas." aria-label="Pedir por WhatsApp: Silueta Plaza de Armas">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 12. Ventanillas de Otuzco Cajamarca -->
+        <article class="cat-card" data-cats="cajamarca">
+          <div class="cat-card__art">
+            <img src="img/cat-cajamarca-otuzco.webp" alt="Silueta 3D de las Ventanillas de Otuzco Cajamarca" width="688" height="384" loading="lazy" decoding="async">
+          </div>
+          <div class="cat-card__body">
+            <div class="cat-card__top">
+              <span class="cat-card__tag">Cajamarca</span>
+              <span class="cat-card__flag">Patrimonio</span>
+            </div>
+            <h3 class="cat-card__title">
+              <a class="cat-card__link" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20la%20Silueta%20de%20las%20Ventanillas%20de%20Otuzco.">Ventanillas de Otuzco
+                <svg class="icon cat-card__arrow" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+              </a>
+            </h3>
+            <p>Homenaje arqueológico tridimensional al icónico complejo de nichos tallados en roca volcánica de Otuzco.</p>
+            <p class="cat-card__spec">PLA tonos piedra · base grabada</p>
+            <div class="cat-card__actions">
+              <a class="cat-card__wa" href="https://wa.me/51907677175?text=Hola%20Vicunia%2C%20quiero%20la%20Silueta%20de%20las%20Ventanillas%20de%20Otuzco." aria-label="Pedir por WhatsApp: Ventanillas de Otuzco">
+                <svg class="icon"><use href="#i-whatsapp"></use></svg>
+                Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tarjeta de catálogo extendido -->
+      <div class="cat-teaser__card" style="margin-top: 1.5rem;">
         <div>
-          <p class="eyebrow">Catálogo completo</p>
-          <h2>¿Buscas algo más que un <em>clicker</em>?</h2>
-          <p>Además de figuras, clickers y lápices, puedes explorar dummys por encargo, esferas y adornos circulares navideños con nombre, siluetas de Cajamarca y recuerdos para bautizos, primeras comuniones, promociones y chocolatadas.</p>
-          <ul class="cat-teaser__chips" aria-label="Líneas del catálogo">
-            <li>Figuras desde tu foto</li>
-            <li>Clickers</li>
-            <li>Nombres para lápiz</li>
-            <li>Dummys</li>
-            <li>Navidad</li>
-            <li>Eventos</li>
-            <li>Cajamarca</li>
-          </ul>
+          <p class="eyebrow">¿Buscas una línea específica?</p>
+          <h3 style="margin:.3rem 0 .6rem;font-size:1.3rem;">Explora todas las 20 opciones en el catálogo completo</h3>
+          <p>Bautizos, placas conmemorativas, siluetas personalizadas y recuerdos por docena para eventos en Cajamarca.</p>
         </div>
         <div class="cat-teaser__actions">
           <a class="btn btn-primary" href="catalogo.html">
-            Ver el catálogo completo
+            Ver las 20 opciones
             <svg class="icon"><use href="#i-arrow"></use></svg>
           </a>
-          <a class="btn btn-ghost" href="catalogo.html#navidad">Navidad con nombre</a>
+          <a class="btn btn-ghost" href="catalogo.html#navidad">Línea navideña</a>
         </div>
       </div>
     </div>
