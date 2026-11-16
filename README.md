@@ -26,9 +26,17 @@ node server.js
 vicunia/
 ├── web/                       Web pública de Vicunia (lo que ve el cliente)
 │   ├── index.html             Landing: foto a 3D, clicker, lápiz, cómo funciona, galería, FAQ
+│   ├── catalogo.html          Catálogo de líneas con filtros
+│   ├── producto.html          Ficha de cada línea (destino de los QR) con el armador
+│   ├── poster.html            Carteles con QR listos para imprimir
 │   ├── styles.css             Tokens de color, componentes y responsive
 │   ├── js/
 │   │   ├── config.js          WhatsApp y redes oficiales
+│   │   ├── site.js            Tema, menú, año y enlaces de WhatsApp (común a todas)
+│   │   ├── catalogo.js        Filtros del catálogo
+│   │   ├── catalogo-data.js   Datos de cada línea: textos, siluetas y colores
+│   │   ├── armador.js         Personalizador (nombre, diseño, colores, entrega)
+│   │   ├── producto.js        Ficha de producto, SEO y recomendaciones
 │   │   ├── main.js            Estado de la página, formulario de foto, exportaciones
 │   │   ├── clicker3d.js       Visor del clicker sobre la malla real de producción
 │   │   ├── geo-manifest.js    Índices de la malla del clicker
@@ -36,7 +44,7 @@ vicunia/
 │   │   ├── pencil.js          Vista 3D del lápiz (Three.js)
 │   │   └── pencil-geo.js      Generador real de nombres (motor JSCAD)
 │   ├── vendor/                Three.js, addons, JSCAD y la malla comprimida del clicker
-│   └── img/                   Fotos reales de producto y logo de la marca
+│   └── img/                   Fotos reales de producto, logo y códigos QR
 │
 ├── identidad-vicunia/         Identidad y comunicación
 │   ├── README.md              Paleta, tono, promesa y reglas de uso del logo
@@ -48,7 +56,9 @@ vicunia/
 │                              App "Vicuña" de inventario y costos (Mundo Suni)
 │                              Instrucciones: docs/inventario-mundo-suni.md
 ├── server.js                  Servidor estático local en el puerto 8080
+├── tools/generar-qr.py        Genera los códigos QR de los carteles
 ├── docs/                      Documentación de apoyo
+│   └── catalogo-y-qr.md       Recorrido comercial y destinos de QR
 │
 ├── calculadora_costos.py      Costos y precio sugerido por pieza
 ├── banners_ideas_vicunia.py   Banners de campaña (SVG + PNG)
@@ -97,4 +107,19 @@ Los enlaces viven en `web/js/config.js`; si cambian, se edita solo ese archivo.
 2. **Clicker de nombre** — visor 3D con la malla real, 1 a 9 teclas, 17 filamentos y 15 formas de tecla. Incluye argolla metálica estándar.
 3. **Lápiz con nombre** — hasta 24 caracteres, una o dos caras de color, medidas ajustables y descarga de STL.
 
+El catálogo amplía estas líneas con ideas por encargo: dummy con colores de esqueleto y carcasa, Navidad con nombre, recuerdos para eventos y siluetas de Cajamarca. Cada línea del catálogo abre su ficha (`producto.html?tipo=...`), donde la persona personaliza con la misma lógica del clicker y del lápiz —nombre, diseño o silueta, color del esqueleto y de la carcasa, y recoger en Cajamarca o envío— y el pedido queda escrito en WhatsApp. No hay pedido automatizado ni precios publicados.
+
 No se publican precios en la web: se confirman por WhatsApp según tamaño, colores y plazo.
+
+---
+
+## 📎 Carteles con QR para tiendas y puestos
+
+`web/poster.html` trae los carteles listos para imprimir (clicker, lápiz, dummy, figura desde foto y catálogo), cada uno con su código QR. Los QR se generan con:
+
+```bash
+pip install qrcode pillow
+python3 tools/generar-qr.py https://vicunia.pe
+```
+
+Si la web cambia de dominio, vuelve a correr el script con la URL nueva y vuelve a imprimir los carteles: un QR con una URL provisional lleva a nadie a ningún lado.

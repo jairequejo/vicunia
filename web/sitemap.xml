@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://vicunia.pe/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://vicunia.pe/img/og-vicunia.jpg</image:loc>
+      <image:title>Vicunia 3D Cajamarca - Diseñador de Clickers y Figuras</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vicunia.pe/catalogo.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://vicunia.pe/img/og-catalogo.jpg</image:loc>
+      <image:title>Catálogo Completo Vicunia Impresión 3D</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vicunia.pe/clicker.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://vicunia.pe/img/og-clicker.jpg</image:loc>
+      <image:title>Clicker Mecánico con Nombre en 3D</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vicunia.pe/lapiz.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://vicunia.pe/img/og-lapiz.jpg</image:loc>
+      <image:title>Lápiz con Nombre Personalizado en 3D</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vicunia.pe/dummy.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://vicunia.pe/img/og-dummy.jpg</image:loc>
+      <image:title>Dummy 13 Articulado en 3D</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vicunia.pe/figuras.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://vicunia.pe/img/og-vicunia.jpg</image:loc>
+      <image:title>Tu Foto en Figura 3D estilo Funko</image:title>
+    </image:image>
+  </url>
+</urlset>

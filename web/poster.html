@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carteles QR · Vicunia</title>
+<meta name="description" content="Carteles listos para imprimir con el código QR de cada línea de Vicunia.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/logo-redes.webp" type="image/webp">
+<style>
+  :root {
+    --lavanda: #E9EDFC;
+    --rosa: #F0357E;
+    --violeta: #5A4FE0;
+    --indigo: #222446;
+    --amarillo: #FFC24D;
+    --linea: #D6DAF2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 1.5rem 1rem 3rem;
+    background: #F1F3FB;
+    color: var(--indigo);
+    font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  }
+  .top { max-width: 1000px; margin: 0 auto 1.5rem; display: grid; gap: .8rem; }
+  .top h1 { margin: 0; font-size: 1.6rem; }
+  .top p { margin: 0; color: #4A4E70; font-size: .95rem; max-width: 70ch; }
+  .top code { background: #fff; padding: .1rem .35rem; border-radius: 6px; border: 1px solid var(--linea); }
+  .acciones { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .4rem; min-height: 44px;
+    padding: .6rem 1.1rem; border-radius: 999px; border: 1px solid transparent;
+    background: var(--violeta); color: #fff; font-weight: 700; font-size: .9rem;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn--ghost { background: #fff; color: var(--indigo); border-color: var(--linea); }
+
+  .carteles { max-width: 1000px; margin: 0 auto; display: grid; gap: 1.2rem; }
+  .cartel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.4rem;
+    background: #fff;
+    border: 1px solid var(--linea);
+    border-radius: 24px;
+    box-shadow: 0 18px 40px -28px rgba(34, 36, 70, .5);
+  }
+  .cartel h2 { margin: 0 0 .4rem; font-size: 1.5rem; line-height: 1.1; }
+  .cartel p { margin: 0 0 .5rem; color: #4A4E70; font-size: .95rem; }
+  .cartel__url { font-size: .8rem; color: #6A6E90; word-break: break-all; }
+  .cartel__qr { width: 190px; }
+  .cartel__qr img { width: 100%; height: auto; display: block; }
+  .cartel__marca { display: flex; align-items: center; gap: .5rem; margin-top: .8rem; }
+  .cartel__marca img { width: 34px; height: 34px; border-radius: 10px; }
+  .cartel__marca strong { font-size: .9rem; letter-spacing: .12em; }
+  .cartel--rosa { background: linear-gradient(140deg, #fff 55%, #FDE7F1); }
+  .cartel--violeta { background: linear-gradient(140deg, #fff 55%, #E7E4FB); }
+  .cartel--amarillo { background: linear-gradient(140deg, #fff 55%, #FFF0C9); }
+
+  @media (max-width: 560px) {
+    .cartel { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+    .cartel__qr { width: 150px; }
+  }
+
+  @media print {
+    @page { margin: 12mm; }
+    body { background: #fff; padding: 0; }
+    .top, .acciones { display: none; }
+    .carteles { display: block; }
+    .cartel {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin: 0 0 10mm;
+      border-radius: 16px;
+      box-shadow: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main>
+<div class="top">
+  <h1>Carteles QR · Vicunia</h1>
+  <p>Imprime esta página y ponla en la tienda o en el puesto. Cada QR lleva a la ficha de esa línea: ahí la persona personaliza su pieza (nombre, diseño, colores del esqueleto y la carcasa, y si la recoge en Cajamarca o le llega por envío) y se le abre WhatsApp con el pedido escrito.</p>
+  <p>Los códigos apuntan a <code>https://vicunia.pe</code>. Cuando la web se publique en otro dominio, vuelve a generarlos con <code>python3 tools/generar-qr.py https://tudominio.pe</code> y vuelve a imprimir.</p>
+  <div class="acciones">
+    <button class="btn" type="button" onclick="window.print()">Imprimir los carteles</button>
+    <a class="btn btn--ghost" href="catalogo.html">Ver el catálogo</a>
+  </div>
+</div>
+
+<div class="carteles">
+
+  <section class="cartel cartel--violeta">
+    <div>
+      <h2>Diseña tu propio clicker</h2>
+      <p>De 2 a 10 teclas, cada una con tu letra y su color. Switch mecánico real.</p>
+      <p class="cartel__url">vicunia.pe/producto.html?tipo=clicker</p>
+      <div class="cartel__marca">
+        <img src="img/logo-redes.webp" alt="">
+        <strong>VICUNIA</strong>
+      </div>
+    </div>
+    <div class="cartel__qr">
+      <img src="img/qr-clicker.png" alt="Código QR de la página del clicker de Vicunia" width="190" height="190">
+    </div>
+  </section>
+
+  <section class="cartel cartel--rosa">
+    <div>
+      <h2>Tu lápiz con nombre</h2>
+      <p>En relieve, en una o dos piezas de color, ajustado a tu lápiz.</p>
+      <p class="cartel__url">vicunia.pe/producto.html?tipo=lapiz</p>
+      <div class="cartel__marca">
+        <img src="img/logo-redes.webp" alt="">
+        <strong>VICUNIA</strong>
+      </div>
+    </div>
+    <div class="cartel__qr">
+      <img src="img/qr-lapiz.png" alt="Código QR de la página del lápiz con nombre de Vicunia" width="190" height="190">
+    </div>
+  </section>
+
+  <section class="cartel cartel--amarillo">
+    <div>
+      <h2>Pide tu propio dummy</h2>
+      <p>Elige el color del esqueleto y el de la armadura. Por encargo.</p>
+      <p class="cartel__url">vicunia.pe/producto.html?tipo=dummy</p>
+      <div class="cartel__marca">
+        <img src="img/logo-redes.webp" alt="">
+        <strong>VICUNIA</strong>
+      </div>
+    </div>
+    <div class="cartel__qr">
+      <img src="img/qr-dummy.png" alt="Código QR de la página del dummy de Vicunia" width="190" height="190">
+    </div>
+  </section>
+
+  <section class="cartel">
+    <div>
+      <h2>Tu foto en figura 3D</h2>
+      <p>Mándanos una foto y la convertimos en figura estilo Funko.</p>
+      <p class="cartel__url">vicunia.pe/producto.html?tipo=figuras</p>
+      <div class="cartel__marca">
+        <img src="img/logo-redes.webp" alt="">
+        <strong>VICUNIA</strong>
+      </div>
+    </div>
+    <div class="cartel__qr">
+      <img src="img/qr-figuras.png" alt="Código QR de la página de figuras de Vicunia" width="190" height="190">
+    </div>
+  </section>
+
+  <section class="cartel cartel--violeta">
+    <div>
+      <h2>Ver el catálogo completo</h2>
+      <p>Figuras, clickers, lápices, dummys, Navidad, eventos y Cajamarca.</p>
+      <p class="cartel__url">vicunia.pe/catalogo.html</p>
+      <div class="cartel__marca">
+        <img src="img/logo-redes.webp" alt="">
+        <strong>VICUNIA</strong>
+      </div>
+    </div>
+    <div class="cartel__qr">
+      <img src="img/qr-catalogo.png" alt="Código QR del catálogo de Vicunia" width="190" height="190">
+    </div>
+  </section>
+
+</div>
+</main>
+
+</body>
+</html>

@@ -72,7 +72,30 @@ function sanitizeState(raw) {
 
 const FILAMENTOS_POR_DEFECTO = DEFAULT_CYCLE;
 
+function loadStateFromUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash.includes('?') ? new URLSearchParams(window.location.hash.split('?')[1]) : null;
+    const name = params.get('n') || params.get('nombre') || hash?.get('n');
+    const base = params.get('b') || params.get('base') || hash?.get('b');
+    const caps = params.get('c') || params.get('color') || hash?.get('c');
+    if (name) {
+      const def = createDefault(name);
+      if (base && BASE_COLORS.some((entry) => entry.id === base)) def.baseColor = base;
+      if (caps && isValidColor(caps)) {
+        def.caps.forEach((cap) => { cap.color = caps; });
+      }
+      return def;
+    }
+  } catch (error) {
+    return null;
+  }
+  return null;
+}
+
 function loadState() {
+  const fromUrl = loadStateFromUrl();
+  if (fromUrl) return fromUrl;
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (!saved) return null;
@@ -306,6 +329,7 @@ const els = {
   spin: $('#btn-spin'),
   soundBtn: $('#btn-sound'),
   reset: $('#btn-reset'),
+  share: $('#btn-share-design'),
   save: $('#btn-save'),
   dropzone: $('#dropzone'),
   fileInput: $('#file'),
@@ -454,6 +478,11 @@ function paintSlotStrip() {
 function paint() {
   if (els.word) els.word.value = state.word;
   if (els.wordCount) els.wordCount.textContent = `${state.word.length}/10`;
+  if (state.word) {
+    document.title = `Clicker "${state.word}" en 3D · Vicunia Cajamarca`;
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', `Clicker "${state.word}" en 3D · Diseñado en Vicunia`);
+  }
 
   ensureSlotStrip();
   paintSlotStrip();
@@ -652,6 +681,36 @@ function initStageControls() {
   els.reset?.addEventListener('click', () => {
     preview.resetView();
     toast('Vista centrada.');
+  });
+
+  els.share?.addEventListener('click', async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('n', state.word || 'VICUNIA');
+    url.searchParams.set('b', state.baseColor || 'marfil');
+    if (state.caps[0]?.color) url.searchParams.set('c', state.caps[0].color);
+    window.history.replaceState({}, '', url.toString());
+
+    const shareData = {
+      title: `Clicker "${state.word}" en 3D · Vicunia Cajamarca`,
+      text: `¡Mira el diseño de clicker en 3D que armé para "${state.word}"! Puedes probar tus propios colores aquí:`,
+      url: url.toString()
+    };
+
+    if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (e) {
+        // Fallback a clipboard
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      toast('¡Enlace de tu diseño copiado! Listo para enviar por WhatsApp.');
+    } catch (e) {
+      prompt('Copia este enlace de tu diseño:', url.toString());
+    }
   });
 
   els.save?.addEventListener('click', async () => {
