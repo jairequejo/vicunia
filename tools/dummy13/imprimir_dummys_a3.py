@@ -13,7 +13,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 SOURCE = Path(r"C:\Users\Jair\Downloads\JORDANLANDIA.pdf")
 DOWNLOADS = Path(r"C:\Users\Jair\Downloads")
 OUT = ROOT / "output" / "pdf"

@@ -9,7 +9,8 @@ import cairosvg
 from PIL import Image, ImageFont
 
 
-OUT = Path("outputs/banners-ideas-2026-11-14")
+ROOT = Path(__file__).resolve().parent.parent.parent
+OUT = ROOT / "output" / "banners-ideas-2026-11-14"
 OUT.mkdir(parents=True, exist_ok=True)
 
 GREEN = "#183E36"

@@ -33,8 +33,8 @@ Este sistema ha sido diseñado con un enfoque **Mobile-First** (ideal para usarl
 
 Para abrir la aplicación y verla funcionando en tu máquina:
 
-1. Ve a la carpeta donde están los archivos (`/home/jair/vicunia`).
-2. Abre el archivo `index.html` haciendo doble clic en él en tu navegador web.
+1. Ve a la carpeta donde están los archivos (`mundo-suni/`).
+2. Abre el archivo `mundo-suni/index.html` haciendo doble clic en él en tu navegador web (o inicia el servidor con `node server.js` y entra a <http://localhost:8080/mundo-suni/>).
 3. ¡Eso es todo! La aplicación cargará con datos de demostración para que puedas probarla inmediatamente.
 
 ---
@@ -50,7 +50,7 @@ Si deseas que los datos se guarden automáticamente en un Google Sheet para verl
 ### Paso 2: Configurar el Google Apps Script
 1. Dentro de tu Google Sheet, ve al menú superior y selecciona **Extensiones** > **Apps Script**.
 2. Borra todo el código que aparezca por defecto.
-3. Abre el archivo [google-apps-script.js](file:///home/jair/vicunia/google-apps-script.js), copia todo su contenido y pégalo en el editor de Apps Script.
+3. Abre el archivo `mundo-suni/google-apps-script.js`, copia todo su contenido y pégalo en el editor de Apps Script.
 4. Presiona el ícono de **Guardar** (el disquete).
 
 ### Paso 3: Publicar la API

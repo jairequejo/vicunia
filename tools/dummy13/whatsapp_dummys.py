@@ -6,7 +6,7 @@ import pypdfium2 as pdfium
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 SOURCE = Path(r"C:\Users\Jair\Downloads\JORDANLANDIA.pdf")
 OUT = ROOT / "output" / "png"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -36,7 +36,7 @@ def make_sheet(page, half: str, section: str, variant: str, filename: str) -> No
     draw = ImageDraw.Draw(sheet)
 
     draw.rectangle((0, 0, width, 198), fill=GREEN)
-    logo = Image.open(ROOT / "logo-redes-vicunia.png").convert("RGBA")
+    logo = Image.open(ROOT / "identidad-vicunia" / "logo-redes-vicunia.png").convert("RGBA")
     logo.thumbnail((140, 140), Image.Resampling.LANCZOS)
     sheet.paste(logo, (76, 29), logo)
     draw.text((245, 36), "VICUNIA", font=font("arialbd.ttf", 74), fill="white")

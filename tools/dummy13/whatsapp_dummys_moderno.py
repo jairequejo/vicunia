@@ -7,7 +7,7 @@ import pypdfium2 as pdfium
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 SOURCE = Path(r"C:\Users\Jair\Downloads\JORDANLANDIA.pdf")
 DEST = Path(r"C:\Users\Jair\Downloads\vicunia-guia-dummy-rojo-moderno.png")
 PROJECT_DEST = ROOT / "output" / "png" / DEST.name

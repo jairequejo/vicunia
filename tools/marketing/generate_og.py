@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-IMG_DIR = "/home/jair/Workspace/Projects/vicunia/web/img"
-ASSETS_DIR = "/home/jair/Workspace/Projects/vicunia"
+ROOT = Path(__file__).resolve().parent.parent.parent
+IMG_DIR = str(ROOT / "web" / "img")
+ASSETS_DIR = str(ROOT / "identidad-vicunia")
 
 # Colors matching Vicunia's palette
 BG_COLOR = (233, 237, 252) # #E9EDFC

@@ -34,7 +34,14 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  let filePath = path.join(ROOT, rawPath === '/' ? 'index.html' : rawPath);
+  // Redirigir la raíz a la web pública de Vicunia
+  if (rawPath === '/' || rawPath === '') {
+    res.writeHead(302, { Location: '/web/' });
+    res.end();
+    return;
+  }
+
+  let filePath = path.join(ROOT, rawPath);
 
   try {
     if (fs.statSync(filePath).isDirectory()) filePath = path.join(filePath, 'index.html');
@@ -71,9 +78,11 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log('');
-  console.log('  🦙  Vicuinia — Mundo Suni');
+  console.log('  🦙  Vicunia — Un detalle tuyo, hecho en Cajamarca');
   console.log('');
-  console.log(`  ✅  Servidor listo en → http://localhost:${PORT}`);
+  console.log(`  ✅  Web pública (Vicunia):       http://localhost:${PORT}/web/`);
+  console.log(`  📦  Inventario (Mundo Suni):     http://localhost:${PORT}/mundo-suni/`);
+  console.log(`  🎨  Presentación de Marca:       http://localhost:${PORT}/identidad-vicunia/brand_presentation.html`);
   console.log('');
   console.log('  Presiona Ctrl+C para detener.');
   console.log('');

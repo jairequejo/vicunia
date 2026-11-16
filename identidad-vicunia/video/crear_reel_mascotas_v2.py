@@ -27,7 +27,7 @@ TRANSITIONS = ['wipeleft','fade','wipeleft','smoothleft','circleopen','fade','fa
 OVERLAP = .38
 OUT = BASE / 'reel-funkos-mascotas-vicunia-v4.mp4'
 # El cuadrado multicolor es foto de perfil. Para video usamos la silueta vectorial.
-LOGO_SVG = (BASE.parent.parent / 'vicunia.svg').read_text(encoding='utf-8')
+LOGO_SVG = (BASE.parent / 'vicunia.svg').read_text(encoding='utf-8')
 LOGO_PNG = cairosvg.svg2png(bytestring=LOGO_SVG.replace('fill="#000000"','fill="#F6F1E7"').encode(), output_width=320, output_height=350)
 LOGO_DATA = base64.b64encode(LOGO_PNG).decode('ascii')
 

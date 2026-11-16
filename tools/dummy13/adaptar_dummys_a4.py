@@ -8,7 +8,7 @@ from pypdf._page import PageObject
 from reportlab.lib.pagesizes import A4, landscape
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 OUT = ROOT / "output" / "pdf"
 OUT.mkdir(parents=True, exist_ok=True)
 DOWNLOADS = Path(r"C:\Users\Jair\Downloads")

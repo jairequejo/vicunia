@@ -5,7 +5,7 @@ import pypdfium2 as pdfium
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 SOURCE = Path(r"C:\Users\Jair\Downloads\JORDANLANDIA.pdf")
 DEST = Path(r"C:\Users\Jair\Downloads\vicunia-guia-dummy-rojo-afiche.png")
 BRAND = {"cream": "#F5F2EB", "green": "#3C5846", "gold": "#D49D4F", "terracotta": "#C26753", "ink": "#232D27"}

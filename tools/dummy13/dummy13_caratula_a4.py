@@ -10,7 +10,7 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 SOURCE = Path(r"C:\Users\Jair\Downloads\JORDANLANDIA.pdf")
 OUT_PNG = ROOT / "output" / "png" / "vicunia-dummy13-caratula-instrucciones-A4.png"
 OUT_PDF = ROOT / "output" / "pdf" / "vicunia-dummy13-caratula-instrucciones-A4.pdf"
