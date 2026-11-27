@@ -61,6 +61,7 @@ export function crearEntrega({ mount, estado, onChange }) {
   avanzado.append(cliente);
   $('#arm-cliente', cliente).addEventListener('input', (event) => {
     estado.cliente = event.target.value;
+    onChange();
   });
 
   const cantidad = document.createElement('div');
@@ -82,6 +83,7 @@ export function crearEntrega({ mount, estado, onChange }) {
   avanzado.append(notas);
   $('#arm-notas', notas).addEventListener('input', (event) => {
     estado.notas = event.target.value;
+    onChange();
   });
 
   pintarDetalle();

@@ -167,6 +167,7 @@ export const PRODUCTOS = {
     resumen: 'Llavero con teclas que suenan, de 2 a 10 teclas.',
     descripcion: 'Switch mecánico real, teclas con tu nombre en relieve y 17 colores de filamento. Lleva un aro metálico estándar para colgarlo.',
     ogImage: 'img/og-clicker.jpg',
+    imagen: 'img/cat-clicker.webp',
     texto: T('Nombre o palabra', 'Ej. TUYO', 10),
     textoExtra: T('Símbolo junto al nombre', 'Ej. corazón', 12, false),
     disenos: [
@@ -193,6 +194,7 @@ export const PRODUCTOS = {
     resumen: 'El nombre en relieve que se adapta al grosor de tu lápiz.',
     descripcion: 'Se imprime en una o dos piezas de color. Ajustamos el diámetro interior al lápiz o lapicero que uses.',
     ogImage: 'img/og-lapiz.jpg',
+    imagen: 'img/cat-lapiz.webp',
     texto: T('Nombre', 'Ej. KAREN', 24),
     textoExtra: null,
     disenos: [
@@ -217,6 +219,7 @@ export const PRODUCTOS = {
     resumen: 'Figura articulada para combinar a tu gusto.',
     descripcion: 'Impresión 3D con combinaciones de color para el esqueleto y la armadura. Disponibilidad y accesorios se confirman antes de imprimir.',
     ogImage: 'img/og-dummy.jpg',
+    imagen: 'img/cat-dummy.webp',
     texto: T('Nombre en la base', 'Ej. HÉROE', 18),
     textoExtra: T('Frase o fecha', 'Ej. Cumple 2026', 22, false),
     disenos: [
@@ -241,6 +244,7 @@ export const PRODUCTOS = {
     resumen: 'Tu foto convertida en figura 3D estilo Funko.',
     descripcion: 'Modelamos tu foto y te enviamos la propuesta antes de imprimir. La foto se queda en tu equipo hasta que la adjuntes en el chat.',
     ogImage: 'img/og-vicunia.jpg',
+    imagen: 'img/mini-orange.webp',
     foto: true,
     texto: T('Nombre en la base', 'Ej. FIRULAIS', 18),
     textoExtra: T('Frase o fecha', 'Ej. 12 de mayo', 24, false),
@@ -267,6 +271,7 @@ export const PRODUCTOS = {
     resumen: 'Esfera para el árbol con el nombre de cada uno de la familia.',
     descripcion: 'Se puede sumar el año o una fecha especial en la misma pieza.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-navidad-esfera.webp',
     texto: T('Nombre', 'Ej. Familia Rojas', 16),
     textoExtra: T('Año o fecha', 'Ej. 2026', 16, false),
     disenos: [
@@ -275,8 +280,8 @@ export const PRODUCTOS = {
       { id: 'banda', nombre: 'Con banda de color', art: ART.sphere, extra: ART.banda }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / esfera', hint: 'El cuerpo de la esfera', porDefecto: 'rosado' },
-      { key: 'esqueleto', label: 'Esqueleto / colgante', hint: 'El tapón y el aro', porDefecto: 'blanco' }
+      { key: 'carcasa', label: 'Cuerpo de la esfera', hint: 'El cuerpo principal', porDefecto: 'rosado' },
+      { key: 'esqueleto', label: 'Aro y colgante', hint: 'El tapón y el aro', porDefecto: 'blanco' }
     ],
     medidas: ['6 cm', '7.5 cm', '9 cm']
   },
@@ -290,6 +295,7 @@ export const PRODUCTOS = {
     resumen: 'Un círculo colgante con el nombre como protagonista.',
     descripcion: 'Para el árbol, la puerta o una ventana. Se entrega con su aro para colgar.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-navidad-esfera.webp',
     texto: T('Nombre', 'Ej. Ana y Pedro', 16),
     textoExtra: T('Año o mensaje', 'Ej. Navidad 2026', 20, false),
     disenos: [
@@ -297,8 +303,8 @@ export const PRODUCTOS = {
       { id: 'banda', nombre: 'Con banda de color', art: ART.cilindro, extra: ART.banda }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / cuerpo', hint: 'El cuerpo del adorno', porDefecto: 'lavanda' },
-      { key: 'esqueleto', label: 'Esqueleto / colgante', hint: 'El aro y la base', porDefecto: 'blanco' }
+      { key: 'carcasa', label: 'Cuerpo del adorno', hint: 'La pieza principal', porDefecto: 'lavanda' },
+      { key: 'esqueleto', label: 'Aro y detalle', hint: 'El aro y la banda', porDefecto: 'blanco' }
     ],
     medidas: ['8 cm', '10 cm', '12 cm']
   },
@@ -312,6 +318,7 @@ export const PRODUCTOS = {
     resumen: 'Estrella con nombre o inicial para la punta del árbol.',
     descripcion: 'También sirve para regalar en diciembre a la familia y a los padrinos.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-navidad-estrella.webp',
     texto: T('Nombre o inicial', 'Ej. M', 14),
     textoExtra: T('Año', 'Ej. 2026', 10, false),
     disenos: [
@@ -319,8 +326,8 @@ export const PRODUCTOS = {
       { id: 'puntos', nombre: 'Con puntos', art: ART.star, extra: ART.banda }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / estrella', hint: 'El cuerpo de la estrella', porDefecto: 'seda' },
-      { key: 'esqueleto', label: 'Esqueleto / colgante', hint: 'El aro superior', porDefecto: 'blanco' }
+      { key: 'carcasa', label: 'Cuerpo de la estrella', hint: 'La estrella principal', porDefecto: 'seda' },
+      { key: 'esqueleto', label: 'Aro superior', hint: 'El aro para colgar', porDefecto: 'blanco' }
     ],
     medidas: ['7 cm', '9 cm', '11 cm']
   },
@@ -334,6 +341,7 @@ export const PRODUCTOS = {
     resumen: 'Cuatro esferas con los nombres de la casa, en colores combinados.',
     descripcion: 'Se entregan listas para colgar.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-navidad-esfera.webp',
     texto: T('Nombres', 'Ej. Ana, Pedro, Sofi y Leo', 40),
     textoExtra: T('Año', 'Ej. 2026', 10, false),
     disenos: [
@@ -341,8 +349,8 @@ export const PRODUCTOS = {
       { id: 'tres', nombre: 'Tres esferas', art: ART.spheres }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / esferas', hint: 'Los cuerpos de las esferas', porDefecto: 'azul-hielo' },
-      { key: 'esqueleto', label: 'Esqueleto / colgantes', hint: 'Los aros', porDefecto: 'blanco' }
+      { key: 'carcasa', label: 'Cuerpo de las esferas', hint: 'Las piezas principales', porDefecto: 'azul-hielo' },
+      { key: 'esqueleto', label: 'Aros para colgar', hint: 'Los aros superiores', porDefecto: 'blanco' }
     ],
     medidas: ['Set de 4 (6 cm)', 'Set de 4 (7.5 cm)']
   },
@@ -356,6 +364,7 @@ export const PRODUCTOS = {
     resumen: 'Un detalle para los invitados, con el nombre y la fecha del bautizo.',
     descripcion: 'También hacemos la versión grande para la mesa.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-evento-bautizo.webp',
     texto: T('Nombre', 'Ej. Mateo Jesús', 20),
     textoExtra: T('Fecha del bautizo', 'Ej. 12 de mayo de 2026', 24, false),
     disenos: [
@@ -365,8 +374,8 @@ export const PRODUCTOS = {
       { id: 'figura', nombre: 'Figurita', art: ART.funko }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / cuerpo', hint: 'La parte principal del recuerdo', porDefecto: 'blanco' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base, el aro o el soporte', porDefecto: 'arena' },
+      { key: 'carcasa', label: 'Pieza principal', hint: 'El cuerpo del recuerdo', porDefecto: 'blanco' },
+      { key: 'esqueleto', label: 'Base o aro', hint: 'La base, el aro o el soporte', porDefecto: 'arena' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del nombre', porDefecto: 'lavanda' }
     ],
     medidas: ['Llavero (6 cm)', 'Mediano (10 cm)', 'Grande (14 cm)']
@@ -381,6 +390,7 @@ export const PRODUCTOS = {
     resumen: 'Recuerdos con nombre, fecha y el símbolo que elijas.',
     descripcion: 'Se coordinan por cantidad con anticipación.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-evento-bautizo.webp',
     texto: T('Nombre', 'Ej. María José', 20),
     textoExtra: T('Fecha', 'Ej. 8 de junio', 24, false),
     disenos: [
@@ -390,8 +400,8 @@ export const PRODUCTOS = {
       { id: 'figura', nombre: 'Figurita', art: ART.funko }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / cuerpo', hint: 'La parte principal del recuerdo', porDefecto: 'blanco' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base, el aro o el soporte', porDefecto: 'seda' },
+      { key: 'carcasa', label: 'Pieza principal', hint: 'El cuerpo del recuerdo', porDefecto: 'blanco' },
+      { key: 'esqueleto', label: 'Base o aro', hint: 'La base, el aro o el soporte', porDefecto: 'seda' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del nombre', porDefecto: 'rosado' }
     ],
     medidas: ['Llavero (6 cm)', 'Mediano (10 cm)', 'Grande (14 cm)']
@@ -406,6 +416,7 @@ export const PRODUCTOS = {
     resumen: 'Llaveros, placas o figuras con el nombre del salón y la promoción.',
     descripcion: 'Para cerrar el año escolar.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-evento-bautizo.webp',
     texto: T('Nombre', 'Ej. Joselyn Ramón', 22),
     textoExtra: T('Salón y año', 'Ej. 5to A · 2026', 24, false),
     disenos: [
@@ -415,8 +426,8 @@ export const PRODUCTOS = {
       { id: 'topper', nombre: 'Topper de mesa', art: ART.topper }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / cuerpo', hint: 'La parte principal del recuerdo', porDefecto: 'azul' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base, el aro o el soporte', porDefecto: 'blanco' },
+      { key: 'carcasa', label: 'Pieza principal', hint: 'El cuerpo del recuerdo', porDefecto: 'azul' },
+      { key: 'esqueleto', label: 'Base o aro', hint: 'La base, el aro o el soporte', porDefecto: 'blanco' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del nombre', porDefecto: 'seda' }
     ],
     medidas: ['Llavero (6 cm)', 'Mediano (10 cm)', 'Grande (14 cm)']
@@ -431,6 +442,7 @@ export const PRODUCTOS = {
     resumen: 'Toppers y detalles con el nombre del evento, del colegio o de la familia.',
     descripcion: 'Listos para repartir en la chocolatada.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-navidad-estrella.webp',
     texto: T('Nombre o mensaje', 'Ej. 5to A · ¡Gracias!', 24),
     textoExtra: T('Fecha o colegio', 'Ej. Colegio San José', 24, false),
     disenos: [
@@ -440,8 +452,8 @@ export const PRODUCTOS = {
       { id: 'figura', nombre: 'Figurita', art: ART.funko }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / cuerpo', hint: 'La parte principal del topper', porDefecto: 'rosa-pastel' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base o el palo', porDefecto: 'naranja' },
+      { key: 'carcasa', label: 'Pieza principal', hint: 'El cuerpo del topper', porDefecto: 'rosa-pastel' },
+      { key: 'esqueleto', label: 'Base o palito', hint: 'La base o el soporte', porDefecto: 'naranja' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del mensaje', porDefecto: 'rojo' }
     ],
     medidas: ['Pequeño (5 cm)', 'Mediano (7 cm)', 'Grande (9 cm)']
@@ -456,6 +468,7 @@ export const PRODUCTOS = {
     resumen: 'La Catedral y la plaza en una pieza de perfil para escritorio o recuerdo.',
     descripcion: 'Sale bien en un solo color.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-cajamarca-plaza.webp',
     texto: T('Nombre del lugar (opcional)', 'Ej. Plaza de Armas', 20, false),
     textoExtra: T('Fecha o frase', 'Ej. Cajamarca 2026', 24, false),
     disenos: [
@@ -464,8 +477,8 @@ export const PRODUCTOS = {
       { id: 'marco', nombre: 'En marco', art: ART.marco }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / silueta', hint: 'El perfil del lugar', porDefecto: 'arena' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base o el marco', porDefecto: 'negro' },
+      { key: 'carcasa', label: 'Silueta principal', hint: 'El perfil del lugar', porDefecto: 'arena' },
+      { key: 'esqueleto', label: 'Base o marco', hint: 'El soporte inferior', porDefecto: 'negro' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del lugar', porDefecto: 'negro' }
     ],
     medidas: ['12 cm', '16 cm', '20 cm']
@@ -480,6 +493,7 @@ export const PRODUCTOS = {
     resumen: 'El arco de piedra de Otuzco en una silueta de escritorio.',
     descripcion: 'Con el nombre del lugar si lo quieres.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-cajamarca-otuzco.webp',
     texto: T('Nombre del lugar (opcional)', 'Ej. Ventanilla de Otuzco', 24, false),
     textoExtra: T('Fecha o frase', 'Ej. Otuzco 2026', 24, false),
     disenos: [
@@ -488,8 +502,8 @@ export const PRODUCTOS = {
       { id: 'marco', nombre: 'En marco', art: ART.marco }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / silueta', hint: 'El perfil del lugar', porDefecto: 'arena' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base o el marco', porDefecto: 'negro' },
+      { key: 'carcasa', label: 'Silueta principal', hint: 'El perfil del lugar', porDefecto: 'arena' },
+      { key: 'esqueleto', label: 'Base o marco', hint: 'El soporte inferior', porDefecto: 'negro' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del lugar', porDefecto: 'negro' }
     ],
     medidas: ['12 cm', '16 cm', '20 cm']
@@ -504,6 +518,7 @@ export const PRODUCTOS = {
     resumen: 'Tu barrio, tu chacra o tu negocio convertidos en silueta.',
     descripcion: 'Mándanos una foto o un dibujo y lo modelamos.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-cajamarca-plaza.webp',
     foto: true,
     texto: T('Nombre del lugar', 'Ej. Mi chacra en Llacta', 22, false),
     textoExtra: T('Frase o fecha', 'Ej. Cajamarca 2026', 24, false),
@@ -513,8 +528,8 @@ export const PRODUCTOS = {
       { id: 'base', nombre: 'Con base', art: ART.pin, extra: ART.base }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / silueta', hint: 'El perfil del lugar', porDefecto: 'arena' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base o el marco', porDefecto: 'negro' },
+      { key: 'carcasa', label: 'Silueta principal', hint: 'El perfil del lugar', porDefecto: 'arena' },
+      { key: 'esqueleto', label: 'Base o marco', hint: 'El soporte inferior', porDefecto: 'negro' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del lugar', porDefecto: 'negro' }
     ],
     medidas: ['12 cm', '16 cm', '20 cm']
@@ -529,6 +544,7 @@ export const PRODUCTOS = {
     resumen: 'Ajustamos el diámetro interior a la medida de tu lapicero.',
     descripcion: 'Para lapiceros, plumones y plumas de distinto grosor.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-lapicero.webp',
     texto: T('Nombre', 'Ej. KAREN', 14),
     textoExtra: null,
     disenos: [
@@ -537,7 +553,7 @@ export const PRODUCTOS = {
       { id: 'doble', nombre: 'Dos piezas', art: ART.pen }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / cuerpo', hint: 'La parte que abraza el lapicero', porDefecto: 'violeta' },
+      { key: 'carcasa', label: 'Cuerpo principal', hint: 'La parte que abraza el lapicero', porDefecto: 'violeta' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del nombre', porDefecto: 'blanco' }
     ],
     medidas: ['Grueso 8 mm', 'Grueso 10 mm', 'Grueso 12 mm']
@@ -552,6 +568,7 @@ export const PRODUCTOS = {
     resumen: 'Para el escritorio, el aula o el negocio, con el nombre en relieve.',
     descripcion: 'La base y el color los eliges tú.',
     ogImage: 'img/og-catalogo.jpg',
+    imagen: 'img/cat-lapicero.webp',
     texto: T('Nombre', 'Ej. Lic. Jair Requejo', 22),
     textoExtra: T('Cargo o empresa', 'Ej. Vicunia', 22, false),
     disenos: [
@@ -560,8 +577,8 @@ export const PRODUCTOS = {
       { id: 'marco', nombre: 'En marco', art: ART.marco }
     ],
     slots: [
-      { key: 'carcasa', label: 'Carcasa / placa', hint: 'La cara con el nombre', porDefecto: 'negro' },
-      { key: 'esqueleto', label: 'Esqueleto / base', hint: 'La base o el marco', porDefecto: 'arena' },
+      { key: 'carcasa', label: 'Placa principal', hint: 'La cara con el nombre', porDefecto: 'negro' },
+      { key: 'esqueleto', label: 'Base o marco', hint: 'El soporte inferior', porDefecto: 'arena' },
       { key: 'letra', label: 'Letra grabada', hint: 'El texto del nombre', porDefecto: 'seda' }
     ],
     medidas: ['Pequeña (10 cm)', 'Mediana (14 cm)', 'Grande (18 cm)']

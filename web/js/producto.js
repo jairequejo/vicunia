@@ -80,17 +80,35 @@ function pintarSeo(producto, tipo) {
 
 /* ----------------------------------------------------------------- arte */
 
-/** Dibuja la silueta de la pieza en el escenario, con los colores por defecto. */
+/** Muestra la foto real del producto o, si no hay, la silueta pintada. */
 function pintarArteHero(producto) {
+  const visual = $('#product-visual');
   const caja = $('#product-visual-art');
-  const diseno = (producto.disenos || [])[0];
-  if (!caja || !diseno) return;
+  if (!caja) return;
 
+  if (producto.imagen) {
+    visual?.classList.add('product-visual--photo');
+    visual?.removeAttribute('aria-hidden');
+    const img = document.createElement('img');
+    img.className = 'product-visual__photo';
+    img.src = producto.imagen;
+    img.alt = `${producto.nombre} impreso en 3D por Vicunia`;
+    img.decoding = 'async';
+    caja.replaceChildren(img);
+    setText('#product-visual-label', 'Foto real de referencia');
+    return;
+  }
+
+  const diseno = (producto.disenos || [])[0];
+  if (!diseno) return;
+
+  visual?.classList.remove('product-visual--photo');
   caja.innerHTML = `<svg viewBox="0 0 64 64" role="img">${diseno.art}${diseno.extra || ''}</svg>`;
   caja.querySelectorAll('[data-slot]').forEach((parte) => {
     const slot = (producto.slots || []).find((entrada) => entrada.key === parte.dataset.slot);
     if (slot) parte.style.color = colorHex(slot.porDefecto);
   });
+  setText('#product-visual-label', 'Ilustración orientativa');
 }
 
 /* ------------------------------------------------------------ compartir */
@@ -186,7 +204,7 @@ function pintarRecomendados(producto) {
 function conectarMensajes(producto, armador) {
   if (!armador) return;
   const url = waLink(armador.mensaje());
-  [$('#product-whatsapp'), $('#product-armar-whatsapp')].forEach((link) => {
+  [$('#product-whatsapp'), $('#product-armar-whatsapp'), $('#product-sticky-whatsapp')].forEach((link) => {
     if (link) link.href = url;
   });
 }
@@ -198,7 +216,6 @@ function pintarFicha(producto, tipo) {
   setText('#product-title', producto.nombre);
   setText('#product-description', producto.descripcion);
   setText('#product-status', estadoDeLinea(producto.estado));
-  setText('#product-visual-label', 'Ilustración orientativa');
   $('#product-visual').dataset.product = tipo;
   pintarArteHero(producto);
 

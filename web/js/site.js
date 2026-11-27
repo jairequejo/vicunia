@@ -98,14 +98,17 @@ export function initYear() {
 }
 
 /**
- * Los enlaces con `data-wa` abren WhatsApp con el mensaje del atributo.
- * Sin JavaScript, el href sigue llevando a la conversación.
+ * Los enlaces con `data-wa` actualizan su href desde CONFIG.whatsapp y abren
+ * WhatsApp con el mensaje del atributo.
  */
 export function initWhatsApp() {
   $$('[data-wa]').forEach((link) => {
+    const initialText = link.dataset.wa || '';
+    if (link.tagName === 'A') link.setAttribute('href', waLink(initialText));
+
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      const url = waLink(link.dataset.wa);
+      const url = waLink(link.dataset.wa || '');
       const win = window.open(url, '_blank', 'noopener');
       if (!win) window.location.href = url;
     });

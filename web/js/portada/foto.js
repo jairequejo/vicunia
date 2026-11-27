@@ -95,8 +95,8 @@ function validateForm() {
   }
 
   const digits = (phone?.value || '').replace(/\D/g, '');
-  if (digits.length < 6) {
-    setError('phone', 'Escribe tu WhatsApp con el código de tu país.');
+  if (digits.length > 0 && digits.length < 6) {
+    setError('phone', 'Si escribes tu número, ingresa al menos 6 dígitos.');
     firstInvalid = firstInvalid || phone;
   }
 
@@ -174,12 +174,12 @@ export function initFoto() {
       `Quiero encargar: ${kind} (x${qty}).`,
       fileLine,
       notes ? `Idea: ${notes}` : '',
-      `Mi WhatsApp: ${phone}`,
+      phone ? `Mi WhatsApp: ${phone}` : '',
       '',
-      '¿Me confirman precio y tiempo de entrega?'
+      '¿Me confirman vista previa, precio y tiempo de entrega?'
     ].filter(Boolean).join('\n');
 
     openWhatsApp(message);
-    toast('Abrimos WhatsApp con tu pedido. Adjunta tu foto y envíala.');
+    toast('Abrimos WhatsApp con tu pedido. Adjunta tu foto directo en el chat.');
   });
 }
